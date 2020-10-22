@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Home = () => {
   return (
     <View>
-      <Text>Home</Text>
+      <Text style={styles.text}>Home</Text>
       <Link to="/SignIn">Get Started</Link>
     </View>
   );
@@ -13,4 +13,9 @@ const Home = () => {
 
 export default Home;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  text:{
+    fontFamily: "NexaBold",
+    fontSize: 40
+  }
+});

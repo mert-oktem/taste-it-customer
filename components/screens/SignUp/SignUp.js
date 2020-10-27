@@ -8,10 +8,10 @@ import {
   Image
 } from "react-native";
 import H1 from "../../Texts/H1";
-import InputField from "../../inputFields/InputField";
-import ReusableBtn from "../../buttons/ReusableBtn";
+import InputField from "../../InputFields/InputField";
+import ReusableBtn from "../../Buttons/ReusableBtn";
 
-const SignUp = () => {
+function SignUp() {
   return (
     <ScrollView>
       <Image style={styles.image} />

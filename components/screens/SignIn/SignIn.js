@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import {
   Text,
@@ -7,17 +7,14 @@ import {
   StyleSheet,
   Dimensions,
   View,
-  TouchableOpacity,
-  Linking
+  TouchableOpacity
 } from "react-native";
 import H1 from "../../Texts/H1";
-import { Link } from "react-router-dom";
-import InputField from "../../inputFields/InputField";
-import ReusableBtn from "../../buttons/ReusableBtn";
-// import { Link } from "@material-ui/core";
+import InputField from "../../InputFields/InputField";
+import ReusableBtn from "../../Buttons/ReusableBtn";
 
-export class SignIn extends Component {
-  render() {
+export  default function SignIn({navigation}) {
+  
     return (
       <ScrollView>
         <Image style={styles.image} />
@@ -36,16 +33,16 @@ export class SignIn extends Component {
           <ReusableBtn btnText="Sign In" />
           <View style={styles.signUpText}>
             <Text style={styles.smallText}>Don't have an account?</Text>
-            <Link to="./SignUp">
-              <TouchableOpacity>
+
+              <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
                 <Text style={styles.forgot}>Sign up now</Text>
               </TouchableOpacity>
-            </Link>
+
           </View>
         </ScrollView>
       </ScrollView>
-    );
-  }
+    )
+  
 }
 
 const styles = StyleSheet.create({
@@ -77,4 +74,4 @@ const styles = StyleSheet.create({
     marginBottom: Dimensions.get("screen").width * 0.08
   }
 });
-export default SignIn;
+

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { Text, StyleSheet, View, ScrollView, Dimensions } from "react-native";
 import H1 from "../../Texts/H1";
-import InputField from "../../inputFields/InputField";
+import InputField from "../../InputFields/InputField";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
-import ReusableBtn from "../../buttons/ReusableBtn";
+import ReusableBtn from "../../Buttons/ReusableBtn";
 
 const countries = [
   {

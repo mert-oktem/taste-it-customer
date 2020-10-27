@@ -8,7 +8,7 @@ const HomeScreen = () => {
                 <View>
                     <Image />
                     Delivery now
-                </View>
+                </View> 
                 <Text style={styles.address}></Text>
             </View>
         </ScrollView>

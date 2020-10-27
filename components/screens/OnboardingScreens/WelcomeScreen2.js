@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View, ScrollView, Dimensions, Image } from 'react-native'
-import ReusableBtn from '../../buttons/ReusableBtn'
+import ReusableBtn from '../../Buttons/ReusableBtn'
 
 const WelcomeScreen2 = () => {
     return (

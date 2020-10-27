@@ -1,35 +1,36 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View, Dimensions } from "react-native";
-import ResusableBtn from "./components/buttons/ReusableBtn";
-import InputField from "./components/inputFields/InputField";
-import SignIn from "./components/screens/SignIn/SignIn";
-import SignUp from "./components/screens/SignUp/SignUp";
-import DeliveryInfo from "./components/screens/OnboardingScreens/DeliveryInfo";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Home from "./components/screens/Home/Home";
-import WelcomeScreen from "./components/screens/WelcomeScreen/WelcomeScreen";
-import WelcomeScreen2 from "./components/screens/OnboardingScreens/WelcomeScreen2";
+import { StyleSheet, Dimensions, View, Text } from "react-native";
+import SignIn from "./components/Screens/SignIn/SignIn";
+import SignUp from "./components/Screens/SignUp/SignUp";
+import DeliveryInfo from "./components/Screens/OnboardingScreens/DeliveryInfo";
+import Home from "./components/Screens/Home/Home";
+import WelcomeScreen from "./components/Screens/WelcomeScreen/WelcomeScreen";
+import WelcomeScreen2 from "./components/Screens/OnboardingScreens/WelcomeScreen2";
+import {NavigationContainer} from "@react-navigation/native";
+import {createStackNavigator} from "@react-navigation/stack"
+import AllergyOptions from "./components/Screens/OnboardingScreens/FlavourProfile/AllergyOptions";
+
+const Stack = createStackNavigator()
 
 export default function App() {
   return (
-    <Router>
-      <View style={styles.container}>
-        {/* <SignIn /> */}
-        {/* <SignUp /> */}
-        {/* <DeliveryInfo /> */}
+    <NavigationContainer>
+      <Stack.Navigator style={styles.container} initialRouteName="Home">
+       
 
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/SignUp" component={SignUp} />
-          <Route path="/SignIn" exact component={SignIn} />
-          <Route path="/DeliveryInfo" component={DeliveryInfo} />
-          <Route path="/WelcomeScreen1" component={WelcomeScreen} />
-          <Route path="/WelcomeScreen2" component={WelcomeScreen2} />
-        </Switch>
-      </View>
-    </Router>
-  );
+
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="SignUp" component={SignUp} />
+          <Stack.Screen name="SignIn" component={SignIn} />
+          <Stack.Screen name="DeliveryInfo" component={DeliveryInfo} />
+          <Stack.Screen name="WelcomeScreen1" component={WelcomeScreen} />
+          <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
+
+      </Stack.Navigator>
+      
+    </NavigationContainer>
+    // <AllergyOptions />
+  )
 }
 
 const styles = StyleSheet.create({

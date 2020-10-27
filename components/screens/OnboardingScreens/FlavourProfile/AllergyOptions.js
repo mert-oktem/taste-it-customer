@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View } from 'react-native'
-import CheckBox from '@react-native-community/checkbox';
+import {CheckBox} from 'react-native-elements';
 
 
 export default class AllergyOptions extends Component {
@@ -39,7 +39,7 @@ export default class AllergyOptions extends Component {
                     <Text> Soybeans </Text>
                     <CheckBox />
                 </View>
-            </View>
+            </View> 
         )
     }
 }

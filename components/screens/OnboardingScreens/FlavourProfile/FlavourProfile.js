@@ -1,88 +1,46 @@
-import {createAppContainer} from 'react-navigation';
-import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
-import {createStackNavigator} from 'react-navigation-stack';
-import React, {Component} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import React, { Component } from "react";
+import { Text, StyleSheet, ScrollView, View, Button } from "react-native";
+import AllergyOptions from "./AllergyOptions";
+import CuisineOptions from "./CuisineOptions";
+import DietTypes from "./DietTypes";
+import H1 from "../../../texts/H1";
 
-const Tabs = createMaterialTopTabNavigator(
-  {
-    Home: {
-      screen: Home,
-      navigationOptions: {
-        tabBarLabel: ({tintColor}) => (
-          <View style={styles.iconCOntainer}>
-            <Icon name="ios-home" color={tintColor} size={22} />
-            <Text style={{color: tintColor}}>Home</Text>
-          </View>
-        ),
-      },
-    },
-    Profile: {
-      screen: Profile,
-      navigationOptions: {
-        tabBarLabel: ({tintColor}) => (
-          <View style={styles.iconCOntainer}>
-            <Icon name="ios-person" color={tintColor} size={22} />
-            <Text style={{color: tintColor}}>Profile</Text>
-          </View>
-        ),
-      },
-    },
-    Settings: {
-      screen: Settings,
-      navigationOptions: {
-        tabBarLabel: ({tintColor}) => (
-          <View style={styles.iconCOntainer}>
-            <Icon name="ios-settings" color={tintColor} size={22} />
-            <Text style={{color: tintColor}}>Settings</Text>
-          </View>
-        ),
-      },
-    },
-  },
-  {
-    initialRouteName: 'Home',
-    lazyLoad: true,
-    tabBarPosition: 'top',
-    swipeEnabled: true,
-    tabBarOptions: {
-      style: {
-        height: 70,
-        backgroundColor: '#40404c',
-        paddingBottom: 3,
-        paddingTop: 3,
-      },
-      indicatorStyle: {
-        backgroundColor: '#fff',
-        elevation: 10,
-      },
-      activeTintColor: '#fff',
-      inactiveTintColor: 'gray',
-    },
-  },
-);
+const MaterialTopTabs = createMaterialTopTabNavigator();
 
-const MainScreenNavigator = createStackNavigator({
-  Tabs: {
-    screen: Tabs,
-    navigationOptions: {
-      title: 'My App',
-      headerStyle: {
-        backgroundColor: '#2b2b39',
-      },
-      headerTitleStyle: {
-        color: '#fff',
-      },
-    },
-  },
-});
+export default class FlavourProfile extends Component {
+  createTopTabs = () => {
+    return (
+      <MaterialTopTabs.Navigator>
+        <MaterialTopTabs.Screen name="Allergies" component={AllergyOptions} />
+        <MaterialTopTabs.Screen name="Cuisines" component={CuisineOptions} />
+        <MaterialTopTabs.Screen name="Diet Choices" component={DietTypes} />
+      </MaterialTopTabs.Navigator>
+    );
+  };
 
-export default createAppContainer(MainScreenNavigator);
+  render() {
+    return (
+      <ScrollView>
+        <View style={styles.page}>
+          <H1 h1Text="Flavour Profile" />
+          <Text>Tell us what you love</Text>
+          <NavigationContainer independent={true}>
+            {this.createTopTabs()}
+          </NavigationContainer>
+          <Button
+            title="Next"
+            onPress={() => this.props.navigation.navigate("DeliveryInfo1")}
+          />
+        </View>
+      </ScrollView>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
-  iconCOntainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center',
+  page: {
+    marginTop: 50,
   },
 });

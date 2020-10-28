@@ -7,11 +7,11 @@ const useStyles = makeStyles({
   inputField: {
     borderRadius: 20,
     width: Dimensions.get("screen").width * 0.8,
-    paddingLeft: 1
-  }
+    paddingLeft: 1,
+  },
 });
 
-const InputField = props => {
+const InputField = (props) => {
   const classes = useStyles();
 
   return (
@@ -25,10 +25,10 @@ const InputField = props => {
       InputLabelProps={{
         required: true,
         color: "primary",
-        shrink: true
+        shrink: true,
       }}
       InputProps={{
-        className: classes.inputField
+        className: classes.inputField,
       }}
     />
   );

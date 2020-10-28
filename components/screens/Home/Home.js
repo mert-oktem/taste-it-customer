@@ -1,12 +1,15 @@
+import { NavigationContainer } from "@react-navigation/native";
+import {createStackNavigator} from "@react-navigation/stack"
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Link } from "react-router-dom";
+import { StyleSheet, Text, View, Button } from "react-native";
 
-const Home = () => {
+
+function Home ({navigation})  {
   return (
     <View>
       <Text style={styles.text}>Home</Text>
-      <Link to="/SignIn">Get Started</Link>
+      <Button title="Get Started"
+      onPress={() => navigation.navigate('SignIn')} />
     </View>
   );
 };

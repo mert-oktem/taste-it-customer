@@ -1,59 +1,66 @@
 import React, { Component } from "react";
-import { Text, StyleSheet, View, ScrollView, Dimensions } from "react-native";
-import H1 from "../../Texts/H1";
-import InputField from "../../InputFields/InputField";
+import {
+  Text,
+  StyleSheet,
+  View,
+  ScrollView,
+  Dimensions,
+  Button,
+  TextInput,
+} from "react-native";
+import H1 from "../../texts/H1";
+
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
-import ReusableBtn from "../../Buttons/ReusableBtn";
 
 const countries = [
   {
     value: "Canada",
-    label: "Canada"
+    label: "Canada",
   },
   {
     value: "USA",
-    label: "USA"
+    label: "USA",
   },
   {
     value: "UK",
-    label: "UK"
-  }
+    label: "UK",
+  },
 ];
 
 const provinces = [
   {
     value: "British Columbia",
-    label: "BC"
+    label: "BC",
   },
   {
     value: "Ontario",
-    label: "ON"
+    label: "ON",
   },
   {
     value: "Alberta",
-    label: "AB"
-  }
+    label: "AB",
+  },
 ];
 
 const cities = [
   {
     value: "Vancouver",
-    label: "Vancouver"
+    label: "Vancouver",
   },
   {
     value: "Burnaby",
-    label: "Burnaby"
+    label: "Burnaby",
   },
   {
     value: "Surrey",
-    label: "Surrey"
+    label: "Surrey",
   },
   {
     value: "Richmond",
-    label: "Richmond"
-  }
+    label: "Richmond",
+  },
 ];
 
 const useStyles = makeStyles({
@@ -61,8 +68,8 @@ const useStyles = makeStyles({
     borderRadius: 20,
     width: Dimensions.get("screen").width * 0.8,
     paddingLeft: 1,
-    marginBottom: 20
-  }
+    marginBottom: 20,
+  },
 });
 
 export default function DeliveryInfo() {
@@ -71,15 +78,15 @@ export default function DeliveryInfo() {
   const [province, setProvince] = React.useState("null");
   const [city, setCity] = React.useState("null");
 
-  const handleChange1 = event => {
+  const handleChange1 = (event) => {
     setCountry(event.target.value);
   };
 
-  const handleChange2 = event => {
+  const handleChange2 = (event) => {
     setProvince(event.target.value);
   };
 
-  const handleChange3 = event => {
+  const handleChange3 = (event) => {
     setCity(event.target.value);
   };
   return (
@@ -96,10 +103,10 @@ export default function DeliveryInfo() {
         onChange={handleChange1}
         variant="outlined"
         InputProps={{
-          className: classes.inputField
+          className: classes.inputField,
         }}
       >
-        {countries.map(option => (
+        {countries.map((option) => (
           <MenuItem key={option.value} value={option.value}>
             {option.label}
           </MenuItem>
@@ -114,10 +121,10 @@ export default function DeliveryInfo() {
         onChange={handleChange2}
         variant="outlined"
         InputProps={{
-          className: classes.inputField
+          className: classes.inputField,
         }}
       >
-        {provinces.map(option => (
+        {provinces.map((option) => (
           <MenuItem key={option.value} value={option.value}>
             {option.label}
           </MenuItem>
@@ -132,21 +139,29 @@ export default function DeliveryInfo() {
         onChange={handleChange3}
         variant="outlined"
         InputProps={{
-          className: classes.inputField
+          className: classes.inputField,
         }}
       >
-        {cities.map(option => (
+        {cities.map((option) => (
           <MenuItem key={option.value} value={option.value}>
             {option.label}
           </MenuItem>
         ))}
       </TextField>
 
-      <InputField fieldLabel="Address" fieldName="address" />
-      <InputField fieldLabel="Postcode" fieldName="postcode" />
-      <InputField fieldLabel="Delivery Instruction" fieldName="" />
+      <TextInput
+        placeholder={"Address"}
+        textContentType={"fullStreetAddress"}
+      />
 
-      <ReusableBtn btnText="Done" />
+      <TextInput placeholder={"Postcode"} textContentType={"postalCode"} />
+
+      <TextInput
+        placeholder={"Delivery Instruction"}
+        textContentType={"none"}
+      />
+
+      <Button title="Done" />
     </ScrollView>
   );
 }
@@ -154,6 +169,6 @@ export default function DeliveryInfo() {
 const styles = StyleSheet.create({
   text: {
     marginTop: 30,
-    marginBottom: 30
-  }
+    marginBottom: 30,
+  },
 });

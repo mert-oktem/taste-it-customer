@@ -76,13 +76,13 @@ export default function App() {
 
         const userToken = foundUser;
         
-        console.log(userToken)
+       
         try {
           await AsyncStorage.setItem("userToken", userToken);
         } catch (e) {
           console.log(e);
         }
-        console.log("user token: ", userToken);
+        // console.log("user token: ", userToken);
         dispatch({ type: "LOGIN", token: userToken });
       },
       signOut: async () => {
@@ -96,9 +96,17 @@ export default function App() {
         }
         dispatch({ type: "LOGOUT" });
       },
-      signUp: () => {
-        setUserToken("fgkj");
-        setIsLoading(false);
+      signUp: async (foundUser) => {
+        const userToken = foundUser;
+        
+        
+        try {
+          await AsyncStorage.setItem("userToken", userToken);
+        } catch (e) {
+          console.log(e);
+        }
+        // console.log("user token: ", userToken);
+        dispatch({ type: "REGISTER", token: userToken });
       },
       // toggleTheme: () => {
       //   setIsDarkTheme((isDarkTheme) => !isDarkTheme);
@@ -138,15 +146,17 @@ export default function App() {
           <Stack.Navigator style={styles.container}>
             <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
             <Stack.Screen name="WelcomeScreen1" component={WelcomeScreen} />
-
+            
             <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
             <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
+            
           </Stack.Navigator>
         ) : (
           <Stack.Navigator initialRouteName="Home">
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="SignIn" component={SignIn} />
             <Stack.Screen name="SignUp" component={SignUp} />
+            
           </Stack.Navigator>
         )}
       </NavigationContainer>

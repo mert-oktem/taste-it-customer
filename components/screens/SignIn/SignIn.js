@@ -102,11 +102,12 @@ export default function SignIn({ navigation }) {
       });
 
       const res = await response.json();
+      // console.log(res);
 
       if (response.status >= 200 && response.status < 300) {
         //Handle success
         let accessToken = res.token;
-        console.log(accessToken);
+        // console.log(accessToken);
         //On success we will store the access_token in the AsyncStorage
         // this.storeToken(accessToken);
         // this.redirect('home');
@@ -127,50 +128,7 @@ export default function SignIn({ navigation }) {
     }
   };
 
-  // const loginHandle = (email, password) => {
-
-  //   console.log(email);
-  //   console.log(password);
-  //   axios.post(`http://localhost:5000/api/restaurants/login`, {
-  //       "email": email,
-  //       "password": password
-  //     }).then(res => {
-
-  //       console.log(res.data.token);
-
-  //     }).catch(err => {
-  //       // Handle Error Here
-  //       console.error(err);
-  //   });
-
-  //   // const foundUser = Users.filter((item) => {
-  //   //   return email == item.email && password == item.password;
-  //   // });
-
-  //   // if (data.email.length == 0 || data.password.length == 0) {
-  //   //   Alert.alert(
-  //   //     "Wrong Input!",
-  //   //     "email or password field cannot be empty.",
-  //   //     [{ text: "Okay" }]
-  //   //   );
-  //   //   return;
-  //   // }
-
-  //   // if (foundUser.length == 0) {
-  //   //   Alert.alert("Invalid User!", "email or password is incorrect.", [
-  //   //     { text: "Okay" },
-  //   //   ]);
-  //   //   return;
-  //   // }
-  //   // signIn(foundUser);
-  //   Alert.alert(
-  //     "Done",
-  //     "user logged In",
-  //     [{ text: "Okay" }]
-  //   );
-  //   // navigation.navigate("WelcomeScreen")
-  // };
-
+  
   return (
     <ScrollView>
       <Image style={styles.image} />

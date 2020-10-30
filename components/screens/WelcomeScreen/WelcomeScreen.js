@@ -11,7 +11,7 @@ import {
 import ReusableBtn from "../../buttons/ReusableBtn";
 import AsyncStorage from "@react-native-community/async-storage";
 
-const WelcomeScreen = () => {
+const WelcomeScreen = ({navigation}) => {
   return (
     <ScrollView style={styles.page}>
       <Image style={styles.image} />
@@ -26,7 +26,7 @@ const WelcomeScreen = () => {
           
           onPress={() => {
             AsyncStorage.clear()
-            navigation.navigate('Home', { screen: 'SignIn' })
+            navigation.navigate('SignIn')
           }}
           
         />

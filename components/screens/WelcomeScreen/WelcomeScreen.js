@@ -6,8 +6,10 @@ import {
   ScrollView,
   Image,
   Dimensions,
+  Button
 } from "react-native";
 import ReusableBtn from "../../buttons/ReusableBtn";
+import AsyncStorage from "@react-native-community/async-storage";
 
 const WelcomeScreen = () => {
   return (
@@ -19,8 +21,17 @@ const WelcomeScreen = () => {
           Get a unique culinary experience by having a delivered surprise meal
           picked out to suit your preferences.
         </Text>
+        <Button
+          title="Sign out"
+          
+          onPress={() => {
+            AsyncStorage.clear()
+            navigation.navigate('Home', { screen: 'SignIn' })
+          }}
+          
+        />
       </View>
-      <ReusableBtn btnText="Get Started" />
+      {/* <ReusableBtn btnText="Get Started" /> */}
     </ScrollView>
   );
 };

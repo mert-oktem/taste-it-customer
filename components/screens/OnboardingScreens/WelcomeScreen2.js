@@ -9,6 +9,7 @@ import {
   Button,
 } from "react-native";
 import ReusableBtn from "../../buttons/ReusableBtn";
+import AsyncStorage from "@react-native-community/async-storage";
 
 const WelcomeScreen2 = ({ navigation }) => {
   return (
@@ -25,6 +26,16 @@ const WelcomeScreen2 = ({ navigation }) => {
         <Button
           title="Create Flavour Profile"
           onPress={() => navigation.navigate("FlavourProfile")}
+        />
+        <Button
+          title="Sign out"
+          
+          onPress={() => {
+            
+            AsyncStorage.clear()
+            navigation.navigate("SignIn")
+          }}
+          
         />
       </View>
     </ScrollView>

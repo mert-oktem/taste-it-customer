@@ -95,7 +95,7 @@ export default function DeliveryInfo() {
         <H1 h1Text="Delivery Information" />
         <Text>You say when and where</Text>
       </View>
-      <TextField
+      {/* <TextField
         id="select-country"
         select
         label="Country"
@@ -147,7 +147,7 @@ export default function DeliveryInfo() {
             {option.label}
           </MenuItem>
         ))}
-      </TextField>
+      </TextField> */}
 
       <TextInput
         placeholder={"Address"}

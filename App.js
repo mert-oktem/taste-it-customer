@@ -19,6 +19,8 @@ import FlavourProfile from "./components/screens/onboardingScreens/flavourProfil
 import { AuthContext } from "./components/Context";
 import AsyncStorage from "@react-native-community/async-storage";
 import RootStack from "./components/RootStack";
+import HomeScreen from "./components/screens/homeScreen/HomeScreen";
+import Footer from "./components/footer/Footer";
 
 const Stack = createStackNavigator();
 
@@ -76,13 +78,13 @@ export default function App() {
 
         const userToken = foundUser;
         
-       
+        console.log(userToken)
         try {
           await AsyncStorage.setItem("userToken", userToken);
         } catch (e) {
           console.log(e);
         }
-        // console.log("user token: ", userToken);
+        console.log("user token: ", userToken);
         dispatch({ type: "LOGIN", token: userToken });
       },
       signOut: async () => {
@@ -96,17 +98,9 @@ export default function App() {
         }
         dispatch({ type: "LOGOUT" });
       },
-      signUp: async (foundUser) => {
-        const userToken = foundUser;
-        
-        
-        try {
-          await AsyncStorage.setItem("userToken", userToken);
-        } catch (e) {
-          console.log(e);
-        }
-        // console.log("user token: ", userToken);
-        dispatch({ type: "REGISTER", token: userToken });
+      signUp: () => {
+        setUserToken("fgkj");
+        setIsLoading(false);
       },
       // toggleTheme: () => {
       //   setIsDarkTheme((isDarkTheme) => !isDarkTheme);
@@ -143,20 +137,23 @@ export default function App() {
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
         {loginState.userToken !== null ? (
-          <Stack.Navigator style={styles.container}>
+          <Stack.Navigator style={styles.container} independent={true}>
             <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
             <Stack.Screen name="WelcomeScreen1" component={WelcomeScreen} />
-            
             <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
             <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
-            
+            <Stack.Screen name="SignIn" component={SignIn} />
           </Stack.Navigator>
         ) : (
-          <Stack.Navigator initialRouteName="Home">
+          <Stack.Navigator initialRouteName="FlavourProfile" independent={true}>
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="SignIn" component={SignIn} />
             <Stack.Screen name="SignUp" component={SignUp} />
-            
+            <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
+            <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
+            <Stack.Screen name="HomeScreen" component={HomeScreen} />
+            <Stack.Screen name="Footer" component={Footer} />
+
           </Stack.Navigator>
         )}
       </NavigationContainer>

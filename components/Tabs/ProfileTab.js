@@ -1,11 +1,27 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, Button } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
-const ProfileTab = () =>
-  <View style={styles.center}>
-    <Text style={styles.title}>Profile</Text>
-  </View>
+const ProfileTab = ({navigation}) =>
+  <ScrollView >
+    <View>
+    	<Text >Hi, Mehedi</Text>
+      <Image />
+    </View>
+    <TouchableOpacity onPress={() => navigation.navigate("EditProfile")}>
+      <Image />
+      <Text>Account Profile</Text>
+    </TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate("DeliveryInfo")}>
+      <Image />
+      <Text>Delivery Information</Text>
+    </TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate("FlavourProfile")}>
+      <Image />
+      <Text>Flavour Profile</Text>
+    </TouchableOpacity>
+  </ScrollView>
 
 export default ProfileTab;
 

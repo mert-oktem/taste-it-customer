@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
+import H1 from '../texts/H1';
 
 
 
@@ -10,9 +11,24 @@ const OrderTab = () => {
 
   console.log(isFocused);
 
-  return <View style={styles.center}>
-    <Text style={styles.title}>Order History</Text>
-  </View>
+  return <ScrollView>
+    <H1 h1Text="Order History" />
+    <Text>Date</Text>
+    <View>
+      <Image />
+      <View>
+        <Text>Japanese Tsukemen</Text>
+        <View>
+          <Image />
+          <Text>Restaurant Name</Text>
+        </View>
+        <View>
+          <Image />
+          <Text>$15</Text>
+        </View>
+      </View>
+    </View>
+  </ScrollView>
 
 }
 

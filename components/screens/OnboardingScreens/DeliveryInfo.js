@@ -72,7 +72,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function DeliveryInfo() {
+export default function DeliveryInfo({navigation}) {
   const classes = useStyles();
   const [country, setCountry] = React.useState("null");
   const [province, setProvince] = React.useState("null");
@@ -161,7 +161,7 @@ export default function DeliveryInfo() {
         textContentType={"none"}
       />
 
-      <Button title="Done" />
+      <Button title="Done" onPress={() => navigation.navigate("Footer")} />
     </ScrollView>
   );
 }

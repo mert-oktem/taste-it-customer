@@ -73,11 +73,12 @@ import MenuItem from "@material-ui/core/MenuItem";
 //   },
 // });
 
-export default function DeliveryInfo({ navigation }) {
-  // const classes = useStyles();
-  // const [country, setCountry] = React.useState("null");
-  // const [province, setProvince] = React.useState("null");
-  // const [city, setCity] = React.useState("null");
+export default function DeliveryInfo({navigation}) {
+  const classes = useStyles();
+  const [country, setCountry] = React.useState("null");
+  const [province, setProvince] = React.useState("null");
+  const [city, setCity] = React.useState("null");
+
 
   // const handleChange1 = (event) => {
   //   setCountry(event.target.value);
@@ -306,7 +307,24 @@ export default function DeliveryInfo({ navigation }) {
           </MenuItem>
         ))}
       </TextField> */}
+
       </View>
+
+
+      <TextInput
+        placeholder={"Address"}
+        textContentType={"fullStreetAddress"}
+      />
+
+      <TextInput placeholder={"Postcode"} textContentType={"postalCode"} />
+
+      <TextInput
+        placeholder={"Delivery Instruction"}
+        textContentType={"none"}
+      />
+
+      <Button title="Done" onPress={() => navigation.navigate("Footer")} />
+
     </ScrollView>
   );
 }

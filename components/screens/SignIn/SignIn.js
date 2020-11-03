@@ -113,6 +113,7 @@ export default function SignIn({ navigation }) {
         // this.redirect('home');
         signIn(accessToken);
         Alert.alert("Done", "user logged In", [{ text: "Okay" }]);
+        navigation.navigate("WelcomeScreen1")
       } else {
         Alert.alert("Invalid User!", "email or password is incorrect.", [
           { text: "Okay" },
@@ -128,7 +129,6 @@ export default function SignIn({ navigation }) {
     }
   };
 
-  
   return (
     <ScrollView>
       <Image style={styles.image} />

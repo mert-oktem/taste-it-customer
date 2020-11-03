@@ -84,7 +84,7 @@ export default function App() {
         } catch (e) {
           console.log(e);
         }
-        console.log("user token: ", userToken);
+        // console.log("user token: ", userToken);
         dispatch({ type: "LOGIN", token: userToken });
       },
       signOut: async () => {
@@ -98,9 +98,17 @@ export default function App() {
         }
         dispatch({ type: "LOGOUT" });
       },
-      signUp: () => {
-        setUserToken("fgkj");
-        setIsLoading(false);
+      signUp: async (foundUser) => {
+        const userToken = foundUser;
+
+
+        try {
+          await AsyncStorage.setItem("userToken", userToken);
+        } catch (e) {
+          console.log(e);
+        }
+        // console.log("user token: ", userToken);
+        dispatch({ type: "REGISTER", token: userToken });
       },
       // toggleTheme: () => {
       //   setIsDarkTheme((isDarkTheme) => !isDarkTheme);

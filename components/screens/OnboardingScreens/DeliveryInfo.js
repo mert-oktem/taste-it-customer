@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { NavigationContainer } from "@react-navigation/native";
 import {
   Text,
   StyleSheet,
@@ -14,6 +15,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
+
 
 // const countries = [
 //   {
@@ -64,14 +66,14 @@ import MenuItem from "@material-ui/core/MenuItem";
 //   },
 // ];
 
-// const useStyles = makeStyles({
-//   inputField: {
-//     borderRadius: 20,
-//     width: Dimensions.get("screen").width * 0.8,
-//     paddingLeft: 1,
-//     marginBottom: 20,
-//   },
-// });
+const useStyles = makeStyles({
+  inputField: {
+    borderRadius: 20,
+    width: Dimensions.get("screen").width * 0.8,
+    paddingLeft: 1,
+    marginBottom: 20,
+  },
+});
 
 export default function DeliveryInfo({navigation}) {
   const classes = useStyles();
@@ -254,6 +256,11 @@ export default function DeliveryInfo({navigation}) {
 
         <Button title="Done" type="submit" onPress={() => deliveryHandle()} />
 
+        <Button
+            title="Next"
+            onPress={() => navigation.navigate("Footer")}
+          />
+
         {/* <TextField
         id="select-country"
         select
@@ -309,21 +316,6 @@ export default function DeliveryInfo({navigation}) {
       </TextField> */}
 
       </View>
-
-
-      <TextInput
-        placeholder={"Address"}
-        textContentType={"fullStreetAddress"}
-      />
-
-      <TextInput placeholder={"Postcode"} textContentType={"postalCode"} />
-
-      <TextInput
-        placeholder={"Delivery Instruction"}
-        textContentType={"none"}
-      />
-
-      <Button title="Done" onPress={() => navigation.navigate("Footer")} />
 
     </ScrollView>
   );

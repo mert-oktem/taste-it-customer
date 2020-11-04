@@ -22,10 +22,9 @@ const WelcomeScreen = ({navigation}) => {
           picked out to suit your preferences.
         </Text>
         <Button
-          title="Sign out"
+          title="Get Started"
           
           onPress={() => {
-            AsyncStorage.clear()
             navigation.navigate('SignIn')
           }}
           

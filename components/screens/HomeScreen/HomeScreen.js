@@ -11,6 +11,7 @@ import {
 import H1 from "../../texts/H1";
 import RNPickerSelect from 'react-native-picker-select';
 import { NavigationContainer } from "@react-navigation/native";
+import AsyncStorage from "@react-native-community/async-storage";
 
 
 const HomeScreen = ({navigation}) => {
@@ -56,6 +57,14 @@ const HomeScreen = ({navigation}) => {
         />
           </View>
           <Button title="Order Now" onPress={() => navigation.navigate("OrderConfirmation")} />
+          <Button
+          title="Sign out"
+          
+          onPress={() => {
+            
+            AsyncStorage.clear()
+            // navigation.navigate("SignIn")
+          }} />
         </View>
       </View>
     </ScrollView>

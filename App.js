@@ -25,12 +25,10 @@ import Footer from "./components/footer/Footer";
 const Stack = createStackNavigator();
 
 export default function App() {
-  // const [isLoading, setIsLoading] = React.useState(true);
-  // const [userToken, setUserToken] = React.useState(null);
 
   const initialLoginState = {
     isLoading: true,
-    
+
     userToken: null,
   };
 
@@ -51,14 +49,14 @@ export default function App() {
       case "LOGOUT":
         return {
           ...prevState,
-          
+
           userToken: null,
           isLoading: false,
         };
       case "REGISTER":
         return {
           ...prevState,
-          
+
           userToken: action.token,
           isLoading: false,
         };
@@ -73,24 +71,18 @@ export default function App() {
   const authContext = React.useMemo(
     () => ({
       signIn: async (foundUser) => {
-        // setUserToken('fgkj');
-        // setIsLoading(false);
-
         const userToken = foundUser;
-        
-        console.log(userToken)
+
+        console.log(userToken);
         try {
           await AsyncStorage.setItem("userToken", userToken);
         } catch (e) {
           console.log(e);
         }
-        // console.log("user token: ", userToken);
+
         dispatch({ type: "LOGIN", token: userToken });
       },
       signOut: async () => {
-        // setUserToken(null);
-        // setIsLoading(false);
-
         try {
           await AsyncStorage.removeItem("userToken");
         } catch (e) {
@@ -101,25 +93,22 @@ export default function App() {
       signUp: async (foundUser) => {
         const userToken = foundUser;
 
-
         try {
           await AsyncStorage.setItem("userToken", userToken);
         } catch (e) {
           console.log(e);
         }
-        // console.log("user token: ", userToken);
+
         dispatch({ type: "REGISTER", token: userToken });
       },
-      // toggleTheme: () => {
-      //   setIsDarkTheme((isDarkTheme) => !isDarkTheme);
-      // },
+
     }),
     []
   );
 
   useEffect(() => {
     setTimeout(async () => {
-      // setIsLoading(false);
+ 
       let userToken;
       userToken = null;
       try {
@@ -127,10 +116,9 @@ export default function App() {
       } catch (e) {
         console.log(e);
       }
-      // console.log('user token: ', userToken);
       dispatch({ type: "RETRIEVE_TOKEN", token: userToken });
     }, 1000);
-    // setIsLoading(false);},1000);
+
   }, []);
 
   if (loginState.isLoading) {
@@ -140,28 +128,46 @@ export default function App() {
       </View>
     );
   }
+  const Root = () => {
+    return (
+      <Stack.Navigator style={styles.container}>
+        <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
+        <Stack.Screen name="Footer" component={Footer} />
+        <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
+        <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
+        <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        
+      </Stack.Navigator>
+    );
+  };
+  // const Root1 = () => {
+  //   return (
+  //     <Stack.Navigator style={styles.container}>
+  //       <Stack.Screen name="Footer" component={Footer} />
+  //       <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
+  //       <Stack.Screen name="WelcomeScreen1" component={WelcomeScreen} />   
+  //       <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
+  //       <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
+  //       <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        
+  //     </Stack.Navigator>
+  //   );
+  // };
 
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
         {loginState.userToken !== null ? (
-          <Stack.Navigator style={styles.container} independent={true}>
-            <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
-            <Stack.Screen name="WelcomeScreen1" component={WelcomeScreen} />
-            <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
-            <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
-            <Stack.Screen name="SignIn" component={SignIn} />
-          </Stack.Navigator>
+          Root()
+          
         ) : (
-          <Stack.Navigator initialRouteName="FlavourProfile" independent={true}>
+          <Stack.Navigator initialRouteName="WelcomeScreen1" independent={true}>
             <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="WelcomeScreen1" component={WelcomeScreen} />
             <Stack.Screen name="SignIn" component={SignIn} />
             <Stack.Screen name="SignUp" component={SignUp} />
-            <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
-            <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
-            <Stack.Screen name="HomeScreen" component={HomeScreen} />
-            <Stack.Screen name="Footer" component={Footer} />
-
+            <Stack.Screen name="Root" component={Root} />
+            {/* <Stack.Screen name="Root1" component={Root1} /> */}
           </Stack.Navigator>
         )}
       </NavigationContainer>

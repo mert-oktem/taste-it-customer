@@ -215,6 +215,7 @@ export default function SignUp({ navigation }) {
         // this.redirect('home');
         signUp(accessToken);
         Alert.alert("User Registered", "Thank you", [{ text: "Ok" }]);
+        navigation.navigate('Root', { screen: 'WelcomeScreen2' });
       } else {
         Alert.alert("Invalid Input!", "Something went wrong, Try again", [
           { text: "Okay" },

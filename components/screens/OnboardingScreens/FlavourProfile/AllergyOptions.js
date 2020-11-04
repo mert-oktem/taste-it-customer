@@ -8,7 +8,11 @@ export default class AllergyOptions extends Component {
 
     this.state = {
       checked: false,
+      data:[]
     };
+  }
+  componentDidMount(){
+    
   }
   render() {
     return (

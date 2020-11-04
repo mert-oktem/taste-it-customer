@@ -95,7 +95,7 @@ const WelcomeScreen2 = ({ navigation }) => {
           onPress={() => {
             
             AsyncStorage.clear()
-            navigation.navigate("SignIn")
+            // navigation.navigate("SignIn")
           }}
           
         />

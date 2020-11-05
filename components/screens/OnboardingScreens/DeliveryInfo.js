@@ -184,7 +184,7 @@ export default function DeliveryInfo({navigation}) {
         //Handle success
       
         Alert.alert("User delivery Info saved successfully", "Thank you", [{ text: "Ok" }]);
-        navigation.navigate("WelcomeScreen1")
+        navigation.navigate("Footer")
         
       } else {
         Alert.alert("Invalid Input!", "Something went wrong, Try again", [
@@ -255,11 +255,6 @@ export default function DeliveryInfo({navigation}) {
         />
 
         <Button title="Done" type="submit" onPress={() => deliveryHandle()} />
-
-        <Button
-            title="Next"
-            onPress={() => navigation.navigate("Footer")}
-          />
 
         {/* <TextField
         id="select-country"

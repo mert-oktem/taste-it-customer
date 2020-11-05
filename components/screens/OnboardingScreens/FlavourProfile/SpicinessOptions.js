@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { Text, StyleSheet, View, Dimensions} from "react-native";
+import { Text, StyleSheet, View, Dimensions,Alert} from "react-native";
 import { CheckBox } from "react-native-elements";
-import { getDietType } from "../../../../services/api";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { Button } from "react-native-paper";
+import { getSpiciness } from "../../../../services/api";
 
-export default class DietTypes extends Component{
+export default class SpicinessOptions extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,16 +14,17 @@ export default class DietTypes extends Component{
   }
   onchecked(id){
     // console.log(id)
-    const data = this.props.dietTypes
+    const data = this.props.spiciness
     const index = data.findIndex(x=>x.id === id)
     data[index].checked = !data[index].checked
     this.setState({
       newData:data
     })
-    this.props.updateDietTypes(data)
+    this.props.updateSpiciness(data)
   }
- renderDietTypes(){
-   return this.props.dietTypes.map((item, key)=> {
+ renderSpiciness(){
+  
+   return this.props.spiciness.map((item, key)=> {
      return (
          <CheckBox 
          key= {item.id}
@@ -33,16 +35,14 @@ export default class DietTypes extends Component{
      )
    })
  }
- 
   render() {
     return (
       <View style={styles.options}>
-        {this.renderDietTypes()}
+        {this.renderSpiciness()}
       </View>
     );
   }
 }
-
 const styles = StyleSheet.create({
   options: {
     marginTop: 50,

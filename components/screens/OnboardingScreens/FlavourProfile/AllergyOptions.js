@@ -8,89 +8,41 @@ import { getAllergy } from "../../../../services/api";
 export default class AllergyOptions extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      checked: false,
-      data:[],
-      isLoaded: true,
-      selectedData:[]
+      newData:[],
     };
   }
-  componentDidMount() {
-    getAllergy().then(
-      (res) => {
-        this.setState({
-          data: res,
-          isLoaded: false,
-        });
-        let needData =[]
-        for(let i=0;i<res.length;i++){
-          needData.push(
-            {
-              id:i,
-              key:res[i].choiceDescription,
-              checked:false
-            }
-          )
-        }
-        this.setState({
-          data:needData
-        })
-        console.log(this.state.data);
-      },
-      (error) => {
-        alert("Error", `Something went wrong! ${error}`);
-      }
-    );
-  }
   onchecked(id){
-    const data = this.state.data
+    // console.log(id)
+    const data = this.props.allergies
     const index = data.findIndex(x=>x.id === id)
     data[index].checked = !data[index].checked
-    this.setState(data)
+    this.setState({
+      newData:data
+    })
+    this.props.updateAllergies(data)
   }
  renderAllergies(){
-   return this.state.data.map((item, key)=> {
+   return this.props.allergies.map((item, key)=> {
      return (
-     
          <CheckBox 
          key= {item.id}
-         
          onPress={()=>{this.onchecked(item.id)}}
          checked={item.checked}
-        
          title={item.key}
          />
-   
      )
-
    })
  }
- getSelectedAllergies(){
-    const keys = this.state.data.map((k) => k.key)
-    var checks = this.state.data.map((k) => k.checked)
-    let Selected = []
-    for(let i=0;i<checks.length;i++){
-      if(checks[i] == true){
-        Selected.push(keys[i])
-      }
-    }
-    alert(Selected)
- }
+ 
   render() {
     return (
       <View style={styles.options}>
         {this.renderAllergies()}
-        
-        
-        <Button full onPress = {()=>{this.getSelectedAllergies()}}>
-          <Text>Check data </Text>
-        </Button>
       </View>
     );
   }
 }
-
 const styles = StyleSheet.create({
   options: {
     marginTop: 50,

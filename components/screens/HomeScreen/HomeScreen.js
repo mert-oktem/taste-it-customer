@@ -7,14 +7,46 @@ import {
   Dimensions,
   ScrollView,
   Button,
+  Alert
 } from "react-native";
 import H1 from "../../texts/H1";
-import RNPickerSelect from 'react-native-picker-select';
+import RNPickerSelect from "react-native-picker-select";
 import { NavigationContainer } from "@react-navigation/native";
 import AsyncStorage from "@react-native-community/async-storage";
+import {getSuitableMenu} from "../../../services/api"
 
+const HomeScreen = ({ navigation }) => {
+  const [data, setData] = React.useState({
+    numberOfPeople: "",
+    budget: "",
+  });
+  const noOfPeopleChange = (val) => {
+    setData({
+      ...data,
+      numberOfPeople: val,
+    });
+  };
 
-const HomeScreen = ({navigation}) => {
+  const budgetChange = (val) => {
+    setData({
+      ...data,
+      budget: val,
+    });
+  };
+
+  const orderHandle = () => {
+    // console.log(data.numberOfPeople);
+    // console.log(data.budget);
+    getSuitableMenu(data.numberOfPeople, data.budget).then(
+      (res) => {
+        console.log(res)
+      },
+      (err) => {
+        console.log(err);
+        Alert.alert("Error", `Something went wrong! ${err}`);
+      }
+    )
+  };
   return (
     <ScrollView>
       <View>
@@ -35,36 +67,40 @@ const HomeScreen = ({navigation}) => {
           <View>
             <Text>Quantity</Text>
             <RNPickerSelect
-            onValueChange={(value) => console.log(value)}
-            items={[
-                { label: '1 Meal', value: '1meal' },
-                { label: '2 Meals', value: '2meals' },
-                { label: '3 Meals', value: '3meals' },
-                { label: '4 Meals', value: '4meals' },
-                { label: '5 Meals', value: '5meals' },
-            ]}
-        />
-        </View>
+              onValueChange={(value) => noOfPeopleChange(value)}
+              items={[
+                { label: "1 Meal", value: "1" },
+                { label: "2 Meals", value: "2" },
+                { label: "3 Meals", value: "3" },
+                { label: "4 Meals", value: "4" },
+                { label: "5 Meals", value: "5" },
+              ]}
+            />
+          </View>
           <View>
             <Text>Budget</Text>
             <RNPickerSelect
-            onValueChange={(value) => console.log(value)}
-            items={[
-                { label: '$6 to $10', value: '6to10' },
-                { label: '$11 to $15', value: '11to15' },
-                { label: '$16 to $20', value: '16to20' },
-            ]}
-        />
+              onValueChange={(value) => budgetChange(value)}
+              items={[
+                { label: "$6 to $10", value: "10" },
+                { label: "$11 to $15", value: "15" },
+                { label: "$16 to $20", value: "20" },
+                { label: "+$20", value: "100" },
+              ]}
+            />
           </View>
-          <Button title="Order Now" onPress={() => navigation.navigate("OrderConfirmation")} />
           <Button
-          title="Sign out"
-          
-          onPress={() => {
-            
-            AsyncStorage.clear()
-            // navigation.navigate("SignIn")
-          }} />
+            title="Order Now"
+            type="submit"
+            onPress={() => orderHandle()}
+          />
+          <Button
+            title="Sign out"
+            onPress={() => {
+              AsyncStorage.clear();
+              // navigation.navigate("SignIn")
+            }}
+          />
         </View>
       </View>
     </ScrollView>

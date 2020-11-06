@@ -73,7 +73,7 @@ export default function App() {
       signIn: async (foundUser) => {
         const userToken = foundUser;
 
-        console.log(userToken);
+        // console.log(userToken);
         try {
           await AsyncStorage.setItem("userToken", userToken);
         } catch (e) {
@@ -131,8 +131,9 @@ export default function App() {
   const Root = () => {
     return (
       <Stack.Navigator style={styles.container}>
-        <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
         <Stack.Screen name="Footer" component={Footer} />
+        <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
+        
         <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
         <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />

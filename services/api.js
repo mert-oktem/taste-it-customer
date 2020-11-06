@@ -68,6 +68,32 @@ export const getSuitableMenu = async (noOfPeople, budget) => {
     throw err;
   }
 };
+export const getSubmitOrder = async (menuID) => {
+  let token = null;
+  token = await AsyncStorage.getItem("userToken");
+  console.log(token)
+  console.log(menuID)
+  const body = { menuID: `${menuID}`};
+  const url = `${BASE_URL}/orders`;
+  try {
+    let response = await fetch(url, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `${token}`,
+      },
+      body: JSON.stringify(body),
+    });
+
+    const res = await response;
+    console.log("res")
+    return res;
+  } catch (err) {
+    throw err;
+  }
+};
+
 
 export const postChoice = async (choice) => {
   let token = null;

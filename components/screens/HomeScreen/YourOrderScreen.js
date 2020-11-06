@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Button
 } from "react-native";
 import H1 from "../../texts/H1";
 
@@ -43,6 +44,12 @@ const YourOrderScreen = ({ navigation }) => {
           </View>
         </View>
       </TouchableOpacity>
+      <Button
+        title="Back to home"
+        
+        onPress={() => navigation.navigate("Footer")}
+        // onPress={() => navigation.navigate("YourOrderScreen")}
+      />
     </ScrollView>
   );
 };

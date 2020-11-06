@@ -243,6 +243,7 @@ export default function SignUp({ navigation }) {
           placeholder={"First Name"}
           textContentType={"name"}
           autoCapitalize="none"
+          // value="John"
           onChangeText={(val) => textInputFirstChange(val)}
           onEndEditing={(e) => handleValidFirst(e.nativeEvent.text)}
           style={styles.textInput}
@@ -258,6 +259,7 @@ export default function SignUp({ navigation }) {
           placeholder={"Last Name"}
           textContentType={"name"}
           autoCapitalize="none"
+          // value="Remison"
           onChangeText={(val) => textInputLastChange(val)}
           onEndEditing={(e) => handleValidLast(e.nativeEvent.text)}
           style={styles.textInput}
@@ -273,6 +275,7 @@ export default function SignUp({ navigation }) {
           placeholder={"Phone Number"}
           textContentType={"name"}
           autoCapitalize="none"
+          // value="234556778"
           onChangeText={(val) => textInputPhoneChange(val)}
           onEndEditing={(e) => handleValidPhone(e.nativeEvent.text)}
           style={styles.textInput}
@@ -288,6 +291,7 @@ export default function SignUp({ navigation }) {
           placeholder={"Email"}
           textContentType={"emailAddress"}
           autoCapitalize="none"
+          // value="johnRemi@hotmail.com"
           onChangeText={(val) => textInputChange(val)}
           onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
           style={styles.textInput}
@@ -304,6 +308,7 @@ export default function SignUp({ navigation }) {
           textContentType={"password"}
           secureTextEntry={true}
           autoCapitalize="none"
+          // value="testpassword"
           onChangeText={(val) => handlePasswordChange(val)}
           style={styles.textInput}
         />

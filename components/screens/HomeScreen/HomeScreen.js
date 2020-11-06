@@ -15,7 +15,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import AsyncStorage from "@react-native-community/async-storage";
 import {getSuitableMenu} from "../../../services/api"
 
-const HomeScreen = ({ navigation }) => {
+export default function HomeScreen(props){
+// const HomeScreen = (props) => {
   const [data, setData] = React.useState({
     numberOfPeople: "",
     budget: "",
@@ -35,11 +36,10 @@ const HomeScreen = ({ navigation }) => {
   };
 
   const orderHandle = () => {
-    // console.log(data.numberOfPeople);
-    // console.log(data.budget);
     getSuitableMenu(data.numberOfPeople, data.budget).then(
       (res) => {
-        console.log(res)
+        // console.log(res)
+        props.onHandleHomeChange(res,data.numberOfPeople);
       },
       (err) => {
         console.log(err);
@@ -107,7 +107,7 @@ const HomeScreen = ({ navigation }) => {
   );
 };
 
-export default HomeScreen;
+// export default HomeScreen;
 
 const styles = StyleSheet.create({
   center: {

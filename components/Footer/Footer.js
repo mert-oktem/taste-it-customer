@@ -11,13 +11,39 @@ import HomeScreen from "../screens/homeScreen/HomeScreen";
 const MaterialBottomTabs = createMaterialBottomTabNavigator();
 
 export default class Footer extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      menuID: "",
+      price: "",
+      meal: ""
+    }
+  }
+  handleHomeChange = (data, meal) => {
+    // console.log(data[0]);
+    // console.log(meal)
+    const details = data[0]
+    this.setState({
+      menuID: details.menuID,
+      price: details.price,
+      meal: meal
+    })
+    // console.log(this.state.menuID)
+    // console.log(this.state.price)
+    this.props.navigation.navigate("OrderConfirmation", { menuID: details.menuID, price: details.price, meal: meal})
+    
+  };
   BottomTabs = () => {
     return (
       <MaterialBottomTabs.Navigator>
         <MaterialBottomTabs.Screen
           name="Home"
           style={{ marginBottom: 25 }}
-          component={HomeScreen}
+          children={() => (
+            <HomeScreen
+              onHandleHomeChange={this.handleHomeChange}
+            />
+          )}
           // options={{
           //   tabBarLabel: 'Home',
           //   tabBarIcon: () => (

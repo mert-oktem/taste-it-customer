@@ -21,11 +21,13 @@ import AsyncStorage from "@react-native-community/async-storage";
 import RootStack from "./components/RootStack";
 import HomeScreen from "./components/screens/homeScreen/HomeScreen";
 import Footer from "./components/footer/Footer";
+import OrderConfirmation from "./components/screens/homeScreen/OrderConfirmation";
+import YourOrderScreen from "./components/screens/homeScreen/YourOrderScreen";
+import DishDetailScreen from "./components/screens/homeScreen/DishDetailScreen";
 
 const Stack = createStackNavigator();
 
 export default function App() {
-
   const initialLoginState = {
     isLoading: true,
 
@@ -73,7 +75,7 @@ export default function App() {
       signIn: async (foundUser) => {
         const userToken = foundUser;
 
-        // console.log(userToken);
+        console.log(userToken);
         try {
           await AsyncStorage.setItem("userToken", userToken);
         } catch (e) {
@@ -101,14 +103,12 @@ export default function App() {
 
         dispatch({ type: "REGISTER", token: userToken });
       },
-
     }),
     []
   );
 
   useEffect(() => {
     setTimeout(async () => {
- 
       let userToken;
       userToken = null;
       try {
@@ -118,7 +118,6 @@ export default function App() {
       }
       dispatch({ type: "RETRIEVE_TOKEN", token: userToken });
     }, 1000);
-
   }, []);
 
   if (loginState.isLoading) {
@@ -131,13 +130,14 @@ export default function App() {
   const Root = () => {
     return (
       <Stack.Navigator style={styles.container}>
-        <Stack.Screen name="Footer" component={Footer} />
+        <Stack.Screen name="OrderConfirmation" component={OrderConfirmation} />
+        <Stack.Screen name="YourOrderScreen" component={YourOrderScreen} />
+        <Stack.Screen name="DishDetailScreen" component={DishDetailScreen} />
         <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
-        
+        <Stack.Screen name="Footer" component={Footer} />
         <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
         <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
-        
       </Stack.Navigator>
     );
   };
@@ -146,11 +146,11 @@ export default function App() {
   //     <Stack.Navigator style={styles.container}>
   //       <Stack.Screen name="Footer" component={Footer} />
   //       <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
-  //       <Stack.Screen name="WelcomeScreen1" component={WelcomeScreen} />   
+  //       <Stack.Screen name="WelcomeScreen1" component={WelcomeScreen} />
   //       <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
   //       <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
   //       <Stack.Screen name="HomeScreen" component={HomeScreen} />
-        
+
   //     </Stack.Navigator>
   //   );
   // };
@@ -160,7 +160,6 @@ export default function App() {
       <NavigationContainer>
         {loginState.userToken !== null ? (
           Root()
-          
         ) : (
           <Stack.Navigator initialRouteName="WelcomeScreen1" independent={true}>
             <Stack.Screen name="Home" component={Home} />

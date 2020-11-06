@@ -1,0 +1,1 @@
+{"ast":null,"code":"export var BASE_URL = 'http://localhost:5000/api';","map":{"version":3,"sources":["/Users/arjun/Desktop/taste-it-customer/config/api-config.js"],"names":["BASE_URL"],"mappings":"AACA,OAAO,IAAMA,QAAQ,GAAG,2BAAjB","sourcesContent":["\nexport const BASE_URL = 'http://localhost:5000/api'"]},"metadata":{},"sourceType":"module"}

@@ -10,40 +10,45 @@ import {
   Alert,
   ActivityIndicator
 } from "react-native";
-import AllergyOptions from "./AllergyOptions";
-import CuisineOptions from "./CuisineOptions";
-import DietTypes from "./DietTypes";
-import H1 from "../../../texts/H1";
-import SpicinessOptions from "./SpicinessOptions";
+import AllergyOptions from "../onboardingScreens/flavourProfile/AllergyOptions";
+import CuisineOptions from "../onboardingScreens/flavourProfile/CuisineOptions";
+import DietTypes from "../onboardingScreens/flavourProfile/DietTypes";
+import H1 from "../../texts/H1";
+import SpicinessOptions from "../onboardingScreens/flavourProfile/SpicinessOptions";
 import {
   getSpiciness,
   getAllergy,
   getCuisine,
   getDietType,
-  postChoice,
-} from "../../../../services/api";
+  postChoice, getCustomerChoices, getDeactivateChoices
+} from "../../../services/api";
 
 const MaterialTopTabs = createMaterialTopTabNavigator();
 
-export default class FlavourProfile extends Component{
-  constructor(props) {
-    super(props);
-    this.state = {
-      spicinessData: [],
-      allergiesData: [],
-      dietTypesData: [],
-      cuisinesData: [],
-      isLoaded: true,
-      isSpiciness: true,
-      isCuisines: true,
-      isDietTypes: true,
-      isAllergies: true,
-    };
-    this.handleSpicinessChange = this.handleSpicinessChange.bind(this);
-    this.getSelectedSpiciness = this.getSelectedSpiciness.bind(this);
-  }
-  // ***************************************get data from server through api *********************************************/
-  componentDidMount() {
+
+export default class EditFlavourProfile extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+          spicinessData: [],
+          allergiesData: [],
+          dietTypesData: [],
+          cuisinesData: [],
+          isLoaded: true,
+          isSpiciness: true,
+          isCuisines: true,
+          isDietTypes: true,
+          isAllergies: true,
+          isChoicesLoaded: true
+        };
+        this.handleSpicinessChange = this.handleSpicinessChange.bind(this);
+        this.getSelectedSpiciness = this.getSelectedSpiciness.bind(this);
+      }
+
+
+
+ // ***************************************get data from server through api *********************************************/
+ componentDidMount() {
     getSpiciness().then(
       (res) => {
         this.setState({
@@ -60,28 +65,6 @@ export default class FlavourProfile extends Component{
         this.setState({
           spicinessData: needData,
         });
-      },
-      (error) => {
-        Alert.alert("Error", `Something went wrong! ${error}`);
-      }
-    );
-    getAllergy().then(
-      (res) => {
-        this.setState({
-          isLoaded: false,
-        });
-        let needData = [];
-        for (let i = 0; i < res.length; i++) {
-          needData.push({
-            id: i,
-            key: res[i].choiceDescription,
-            checked: false,
-          });
-        }
-        this.setState({
-          allergiesData: needData,
-        });
-        // console.log(needData);
       },
       (error) => {
         Alert.alert("Error", `Something went wrong! ${error}`);
@@ -129,6 +112,67 @@ export default class FlavourProfile extends Component{
         Alert.alert("Error", `Something went wrong! ${error}`);
       }
     );
+    getAllergy().then(
+        (res) => {
+          let needData = [];
+          for (let i = 0; i < res.length; i++) {
+            needData.push({
+              id: i,
+              key: res[i].choiceDescription,
+              checked: false,
+            });
+          }
+          this.setState({
+            allergiesData: needData,
+          });
+        //   console.log(this.state.allergiesData);
+        },
+        (error) => {
+          Alert.alert("Error", `Something went wrong! ${error}`);
+        }
+      );
+    getCustomerChoices().then(
+        (res) => {
+            for(let i=0; i<res.length; i++){
+                if(res[i].category === "Allergens"){
+                    for(let k=0;k<this.state.allergiesData.length;k++){
+                        if(this.state.allergiesData[k].key === res[i].choiceDescription){
+                            this.state.allergiesData[k].checked = true
+                        }
+                    }
+                }else if(res[i].category === "Spiciness"){
+                    for(let k=0;k<this.state.spicinessData.length;k++){
+                        if(this.state.spicinessData[k].key === res[i].choiceDescription){
+                            this.state.spicinessData[k].checked = true
+                        }
+                    }
+                }else if(res[i].category === "Cuisines"){
+                    for(let k=0;k<this.state.cuisinesData.length;k++){
+                        if(this.state.cuisinesData[k].key === res[i].choiceDescription){
+                            this.state.cuisinesData[k].checked = true
+                        }
+                    }
+                }else if(res[i].category === "Diet Types"){
+                    for(let k=0;k<this.state.dietTypesData.length;k++){
+                        if(this.state.dietTypesData[k].key === res[i].choiceDescription){
+                            this.state.dietTypesData[k].checked = true
+                        }
+                    }
+                }
+            }
+            this.setState({
+                isChoicesLoaded: false,
+                isSpiciness: false,
+          isCuisines: false,
+          isDietTypes: false,
+          isAllergies: false,
+              });
+            
+        },
+      (error) => {
+        Alert.alert("Error", `Something went wrong! ${error}`);
+      }
+    )
   }
 
   // *************************************** get desired arrays from all the choices*********************************************/
@@ -190,6 +234,15 @@ export default class FlavourProfile extends Component{
   }
 
   onNext = () => {
+      getDeactivateChoices().then(
+          (res) => {
+              console.log(res)
+            
+          },(error) => {
+            console.log(error);
+            Alert.alert("Error", `Something went wrong! ${error}`);
+          }
+      )
     const spicinessArray = this.getSelectedSpiciness();
       const cuisinesArray = this.getSelectedCuisines();
       const dietTypesArray = this.getSelectedDietTypes();
@@ -213,7 +266,7 @@ export default class FlavourProfile extends Component{
         );
       } 
       Alert.alert("successfull","choices saved")
-      this.props.navigation.navigate("DeliveryInfo1")
+      this.props.navigation.navigate("Footer")
     }
     else if(this.state.isSpiciness  === true && this.state.isAllergies === true && this.state.isCuisines === true && this.state.isDietTypes === true) {
       Alert.alert(
@@ -248,6 +301,7 @@ export default class FlavourProfile extends Component{
   };
 
   // ***************************************to render all tabs and pass props *********************************************/
+
   createTopTabs = () => {
     return (
       <MaterialTopTabs.Navigator>
@@ -293,7 +347,7 @@ export default class FlavourProfile extends Component{
 
   // *************************************** render all components *********************************************/
   render() {
-    if (this.state.isLoaded) {
+    if (this.state.isLoaded && this.state.isChoicesLoaded) {
       return (
         <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
@@ -327,7 +381,8 @@ export default class FlavourProfile extends Component{
 }
 
 const styles = StyleSheet.create({
-  page: {
-    marginTop: 50,
-  },
-});
+    page: {
+      marginTop: 50,
+    },
+  });
+  

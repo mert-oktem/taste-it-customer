@@ -1,5 +1,4 @@
 import React, { Component, useEffect } from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import {
   Text,
   StyleSheet,
@@ -12,12 +11,10 @@ import {
   ActivityIndicator,
 } from "react-native";
 import H1 from "../../texts/H1";
-import AsyncStorage from "@react-native-community/async-storage";
 import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-import MenuItem from "@material-ui/core/MenuItem";
 import RNPickerSelect from "react-native-picker-select";
-import { getCities, getCountries, getProvinces } from "../../../services/api";
+import { getCities, getCountries, getProvinces, putDeliveryInfo } from "../../../services/api";
+
 
 const useStyles = makeStyles({
   inputField: {
@@ -28,7 +25,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function DeliveryInfo({ navigation }) {
+export default function EditDelivery({navigation}) {
   const classes = useStyles();
   const [citydata, setCitydata] = React.useState("null");
   const [countrydata, setCountrydata] = React.useState("null");
@@ -54,12 +51,12 @@ export default function DeliveryInfo({ navigation }) {
             value: res[i].cityDescription,
           });
         }
-        setCitydata(needDataCity);
-      },
-      (err) => {
+        setCitydata(needDataCity)
+       
+      }, (err) => {
         console.log(err);
       }
-    );
+    )
     getProvinces().then(
       (res) => {
         let needDataProvince = [];
@@ -69,12 +66,12 @@ export default function DeliveryInfo({ navigation }) {
             value: res[i].provinceDescription,
           });
         }
-        setProvincedata(needDataProvince);
-      },
-      (err) => {
+       setProvincedata(needDataProvince)
+      
+      }, (err) => {
         console.log(err);
       }
-    );
+    )
     getCountries().then(
       (res) => {
         let needDataCountry = [];
@@ -84,19 +81,19 @@ export default function DeliveryInfo({ navigation }) {
             value: res[i].countryDescription,
           });
         }
-        setCountrydata(needDataCountry);
-      },
-      (err) => {
+       setCountrydata(needDataCountry)
+        
+      }, (err) => {
         console.log(err);
       }
-    );
+    )
     setData({
       ...data,
       isLoaded: false,
     });
-  }, []);
+    
+}, []);
 
-  const [userToken, setUserToken] = React.useState(null);
   const textInputCountryChange = (val) => {
     setData({
       ...data,
@@ -147,49 +144,20 @@ export default function DeliveryInfo({ navigation }) {
       ]);
       return;
     }
-    let token = null;
-    try {
-      token = await AsyncStorage.getItem("userToken");
 
-      setUserToken(token);
-      let response = await fetch(
-        "http://localhost:5000/api/customers/address",
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `${token}`,
-          },
-          body: JSON.stringify({
-            countryName: data.countryName,
-            provinceName: data.provinceName,
-            cityName: data.cityName,
-            address: data.address,
-            postcode: data.postcode,
-
-            instructions: data.instructions,
-          }),
-        }
-      );
-
-      const res = await response.json();
-
-      if (response.status >= 200 && response.status < 300) {
-        Alert.alert("User delivery Info saved successfully", "Thank you", [
-          { text: "Ok" },
-        ]);
-        navigation.navigate("Footer");
-      } else {
-        Alert.alert("Invalid Input!", "Something went wrong, Try again", [
-          { text: "Okay" },
-        ]);
-        let error = res;
-        throw error;
+    putDeliveryInfo(data.countryName, data.provinceName, data.cityName, data.address, data.postcode, data.instructions).then(
+      (res) => {
+        console.log(res)
+        Alert.alert("User delivery Info saved successfully", "Thank you", [{ text: "Ok" }]);
+        navigation.navigate("Footer")
+      },
+      (err) => {
+        console.log(err);
+        Alert.alert("Error", `Something went wrong! ${err}`);
       }
-    } catch (error) {
-      console.log(error);
-    }
+    )
+    
+    
   };
   if (data.isLoaded) {
     return (
@@ -198,14 +166,14 @@ export default function DeliveryInfo({ navigation }) {
       </View>
     );
   } else {
-    return (
-      <ScrollView>
-        <View style={styles.body}>
-          <View style={styles.text}>
-            <H1 h1Text="Delivery Information" />
-            <Text>You say when and where</Text>
-          </View>
-          <View>
+  return (
+    <ScrollView>
+      <View style={styles.body}>
+        <View style={styles.text}>
+          <H1 h1Text="Delivery Information" />
+          <Text>You say when and where</Text>
+        </View>
+        <View>
             <Text>Country</Text>
             <RNPickerSelect
               onValueChange={(value) => textInputCountryChange(value)}
@@ -219,43 +187,46 @@ export default function DeliveryInfo({ navigation }) {
               items={provincedata}
             />
           </View>
-
-          <View>
+      
+        <View>
             <Text>City</Text>
             <RNPickerSelect
               onValueChange={(value) => textInputCityChange(value)}
               items={citydata}
             />
           </View>
+     
+        <TextInput
+          placeholder={"Address"}
+          textContentType={"fullStreetAddress"}
+          autoCapitalize="none"
+          onChangeText={(val) => textInputAddressChange(val)}
+          style={styles.textInput}
+        />
 
-          <TextInput
-            placeholder={"Address"}
-            textContentType={"fullStreetAddress"}
-            autoCapitalize="none"
-            onChangeText={(val) => textInputAddressChange(val)}
-            style={styles.textInput}
-          />
+        <TextInput
+          placeholder={"Postcode"}
+          textContentType={"postalCode"}
+          autoCapitalize="none"
+          onChangeText={(val) => textInputPostChange(val)}
+          style={styles.textInput}
+        />
 
-          <TextInput
-            placeholder={"Postcode"}
-            textContentType={"postalCode"}
-            autoCapitalize="none"
-            onChangeText={(val) => textInputPostChange(val)}
-            style={styles.textInput}
-          />
+        <TextInput
+          placeholder={"Delivery Instruction"}
+          textContentType={"none"}
+          autoCapitalize="none"
+          onChangeText={(val) => textInputInfoChange(val)}
+          style={styles.textInput}
+        />
 
-          <TextInput
-            placeholder={"Delivery Instruction"}
-            textContentType={"none"}
-            autoCapitalize="none"
-            onChangeText={(val) => textInputInfoChange(val)}
-            style={styles.textInput}
-          />
+        <Button title="Done" type="submit" onPress={() => deliveryHandle()} />
 
-          <Button title="Done" type="submit" onPress={() => deliveryHandle()} />
-        </View>
-      </ScrollView>
-    );
+       
+      </View>
+
+    </ScrollView>
+  );
   }
 }
 

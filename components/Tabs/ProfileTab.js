@@ -1,27 +1,55 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, Button } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import {getCustomerInfo} from "../../services/api"
+import AsyncStorage from "@react-native-community/async-storage";
+
+const ProfileTab = (props) => {
+  const [firstName, setFirstName] = React.useState(null);
+
+  useEffect(() => {
+    getCustomerInfo().then(
+      (res) => {
+        setFirstName(res.firstName);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+    
+});
 
 
-const ProfileTab = ({navigation}) =>
-  <ScrollView >
+  return (
+    <ScrollView >
     <View>
-    	<Text >Hi, Mehedi</Text>
+  <Text >Hi, {firstName}</Text>
       <Image />
     </View>
-    <TouchableOpacity onPress={() => navigation.navigate("EditProfile")}>
+    <TouchableOpacity onPress={props.onHandleCustomerChange}>
       <Image />
       <Text>Account Profile</Text>
     </TouchableOpacity>
-    <TouchableOpacity onPress={() => navigation.navigate("DeliveryInfo")}>
+    <TouchableOpacity onPress={props.onHandleDeliveryChange}>
       <Image />
       <Text>Delivery Information</Text>
     </TouchableOpacity>
-    <TouchableOpacity onPress={() => navigation.navigate("FlavourProfile")}>
+    <TouchableOpacity onPress={props.onHandleFlavourChange}>
       <Image />
       <Text>Flavour Profile</Text>
     </TouchableOpacity>
+    <Button
+            title="Sign out"
+            onPress={() => {
+              AsyncStorage.clear();
+              // navigation.navigate("SignIn")
+            }}
+          />
   </ScrollView>
+
+  )
+}
+  
 
 export default ProfileTab;
 

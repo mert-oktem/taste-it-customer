@@ -24,6 +24,9 @@ import Footer from "./components/footer/Footer";
 import OrderConfirmation from "./components/screens/homeScreen/OrderConfirmation";
 import YourOrderScreen from "./components/screens/homeScreen/YourOrderScreen";
 import DishDetailScreen from "./components/screens/homeScreen/DishDetailScreen";
+import EditDelivery from "./components/screens/profileScreens/EditDelivery";
+import EditCustomer from "./components/screens/profileScreens/EditCustomer"
+import EditFlavourProfile from "./components/screens/profileScreens/EditFlavourProfile"
 
 const Stack = createStackNavigator();
 
@@ -130,15 +133,26 @@ export default function App() {
   const Root = () => {
     return (
       <Stack.Navigator style={styles.container}>
+         <Stack.Screen name="Footer" component={Footer} />
         <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
+       
+        <Stack.Screen name="EditFlavourProfile" component={EditFlavourProfile} />
+        <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
+        
+        <Stack.Screen name="EditDelivery" component={EditDelivery} />
+        <Stack.Screen name="EditCustomer" component={EditCustomer} />
+       
+        
+         <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
+        
 
-        <Stack.Screen name="Footer" component={Footer} />
+        
         <Stack.Screen name="OrderConfirmation" component={OrderConfirmation} />
         <Stack.Screen name="YourOrderScreen" component={YourOrderScreen} />
         <Stack.Screen name="DishDetailScreen" component={DishDetailScreen} />
         
-        <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
-        <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
+       
+        
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
       </Stack.Navigator>
     );

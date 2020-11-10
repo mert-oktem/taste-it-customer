@@ -1,21 +1,21 @@
-import React from "react";
-import { AuthContext } from "../../Context";
+import React, { Component, useEffect } from "react";
+import { NavigationContainer } from "@react-navigation/native";
 import {
-  StyleSheet,
   Text,
+  StyleSheet,
   View,
-  Dimensions,
   ScrollView,
-  Image,
-  TextInput,
+  Dimensions,
   Button,
-  Alert
+  TextInput,
+  Alert,
+  Image,
 } from "react-native";
 import H1 from "../../texts/H1";
+import { putCustomerInfo } from "../../../services/api";
+import { getCustomerInfo } from "../../../services/api";
 
-export default function SignUp({ navigation }) {
-  const { signUp } = React.useContext(AuthContext);
-
+export default function EditCustomer({ navigation }) {
   const [data, setData] = React.useState({
     email: "",
     password: "",
@@ -28,6 +28,24 @@ export default function SignUp({ navigation }) {
     isValidPhone: true,
     isValidPassword: true,
   });
+  const [firstName, setFirstName] = React.useState(null);
+  useEffect(() => {
+    getCustomerInfo().then(
+      (res) => {
+        setData({
+          ...data,
+          firstName: res.firstName,
+          lastName: res.lastName,
+          phoneNumber: res.phoneNumber,
+          email: res.email,
+          password: res.password,
+        });
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }, []);
 
   const textInputChange = (val) => {
     if (val.trim().length >= 4) {
@@ -159,8 +177,8 @@ export default function SignUp({ navigation }) {
       });
     }
   };
-  const registerHandle = async () => {
-   
+
+  const editCustomerHandle = async () => {
     if (
       data.email.length == 0 ||
       data.password.length == 0 ||
@@ -174,63 +192,39 @@ export default function SignUp({ navigation }) {
       return;
     }
 
-    try {
-      let response = await fetch("http://localhost:5000/api/customers/", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: data.email,
-          password: data.password,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          phoneNumber: data.phoneNumber,
-        }),
-      });
-
-      const res = await response.json();
-     
-
-      if (response.status >= 200 && response.status < 300) {
-        //Handle success
-        let accessToken = res.token;
-        
-        //On success we will store the access_token in the AsyncStorage
-        
-        // this.redirect('home');
-        signUp(accessToken);
-        Alert.alert("User Registered", "Thank you", [{ text: "Ok" }]);
-        navigation.navigate('Root', { screen: 'WelcomeScreen2' });
-      } else {
-        Alert.alert("Invalid Input!", "Something went wrong, Try again", [
-          { text: "Okay" },
+    putCustomerInfo(
+      data.email,
+      data.password,
+      data.firstName,
+      data.lastName,
+      data.phoneNumber
+    ).then(
+      (res) => {
+        console.log(res);
+        Alert.alert("User Customer Info saved successfully", "Thank you", [
+          { text: "Ok" },
         ]);
-        //Handle error
-        let error = res;
-        throw error;
+        navigation.navigate("Footer");
+      },
+      (err) => {
+        console.log(err);
+        Alert.alert("Error", `Something went wrong! ${err}`);
       }
-    } catch (error) {
-      // this.setState({error: error});
-      console.log(error);
-      // this.setState({showProgress: false});
-    }
+    );
   };
 
   return (
     <ScrollView>
-      <Image style={styles.image} />
       <View style={styles.body}>
         <View style={styles.text}>
-          <H1 h1Text="Let's Get Started." />
-          <Text>Sign up to set up your profile</Text>
+          <H1 h1Text="Hello" />
+          <Text>{firstName}</Text>
         </View>
         <TextInput
           placeholder={"First Name"}
           textContentType={"name"}
           autoCapitalize="none"
-          // value="John"
+          value={data.firstName}
           onChangeText={(val) => textInputFirstChange(val)}
           onEndEditing={(e) => handleValidFirst(e.nativeEvent.text)}
           style={styles.textInput}
@@ -246,7 +240,7 @@ export default function SignUp({ navigation }) {
           placeholder={"Last Name"}
           textContentType={"name"}
           autoCapitalize="none"
-          // value="Remison"
+          value={data.lastName}
           onChangeText={(val) => textInputLastChange(val)}
           onEndEditing={(e) => handleValidLast(e.nativeEvent.text)}
           style={styles.textInput}
@@ -262,7 +256,7 @@ export default function SignUp({ navigation }) {
           placeholder={"Phone Number"}
           textContentType={"name"}
           autoCapitalize="none"
-          // value="234556778"
+          value={data.phoneNumber}
           onChangeText={(val) => textInputPhoneChange(val)}
           onEndEditing={(e) => handleValidPhone(e.nativeEvent.text)}
           style={styles.textInput}
@@ -278,7 +272,7 @@ export default function SignUp({ navigation }) {
           placeholder={"Email"}
           textContentType={"emailAddress"}
           autoCapitalize="none"
-          // value="johnRemi@hotmail.com"
+          value={data.email}
           onChangeText={(val) => textInputChange(val)}
           onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
           style={styles.textInput}
@@ -295,7 +289,6 @@ export default function SignUp({ navigation }) {
           textContentType={"password"}
           secureTextEntry={true}
           autoCapitalize="none"
-          // value="testpassword"
           onChangeText={(val) => handlePasswordChange(val)}
           style={styles.textInput}
         />
@@ -308,12 +301,11 @@ export default function SignUp({ navigation }) {
         )}
 
         <Button
-          title="Sign Up"
+          title="Save"
           type="submit"
           onPress={() => {
-            registerHandle();
+            editCustomerHandle();
           }}
-          // onPress={() => navigation.navigate("WelcomeScreen2")}
         />
       </View>
     </ScrollView>

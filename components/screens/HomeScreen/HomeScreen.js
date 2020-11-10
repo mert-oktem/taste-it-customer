@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,20 +7,45 @@ import {
   Dimensions,
   ScrollView,
   Button,
-  Alert
+  Alert,
 } from "react-native";
 import H1 from "../../texts/H1";
 import RNPickerSelect from "react-native-picker-select";
 import { NavigationContainer } from "@react-navigation/native";
-import AsyncStorage from "@react-native-community/async-storage";
-import {getSuitableMenu} from "../../../services/api"
+import {
+  getSuitableMenu,
+  getCustomerInfo,
+  getCustomerAddress,
+} from "../../../services/api";
+import { set } from "react-native-reanimated";
 
-export default function HomeScreen(props){
-// const HomeScreen = (props) => {
+export default function HomeScreen(props) {
+  // const HomeScreen = (props) => {
   const [data, setData] = React.useState({
     numberOfPeople: "",
     budget: "",
   });
+  const [firstName, setFirstName] = React.useState(null);
+  const [address, setAddress] = React.useState(null);
+  useEffect(() => {
+    getCustomerInfo().then(
+      (res) => {
+        setFirstName(res.firstName);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+    getCustomerAddress().then(
+      (res) => {
+       setAddress(res.address)
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }, []);
+
   const noOfPeopleChange = (val) => {
     setData({
       ...data,
@@ -39,13 +64,13 @@ export default function HomeScreen(props){
     getSuitableMenu(data.numberOfPeople, data.budget).then(
       (res) => {
         // console.log(res)
-        props.onHandleHomeChange(res,data.numberOfPeople);
+        props.onHandleHomeChange(res, data.numberOfPeople);
       },
       (err) => {
         console.log(err);
         Alert.alert("Error", `Something went wrong! ${err}`);
       }
-    )
+    );
   };
   return (
     <ScrollView>
@@ -55,13 +80,14 @@ export default function HomeScreen(props){
             <Image />
             <Text style={styles.title}>Delivery now</Text>
           </View>
-          <Text style={styles.address}>5728 University Blvd #101</Text>
+          <Text style={styles.address}>{address}</Text>
         </View>
         <Image />
       </View>
       <View>
-        <H1 h1Text="Hi, Mehedi," />
-        <Text>Explore your surprise food today.</Text>
+        <H1 h1Text="Hello" />
+        <Text>{firstName}</Text>
+        <Text>Explore your surprised food today.</Text>
         <View>
           <Image />
           <View>
@@ -90,24 +116,15 @@ export default function HomeScreen(props){
             />
           </View>
           <Button
-            title="Order Now"
+            title="Submit Order"
             type="submit"
             onPress={() => orderHandle()}
-          />
-          <Button
-            title="Sign out"
-            onPress={() => {
-              AsyncStorage.clear();
-              // navigation.navigate("SignIn")
-            }}
           />
         </View>
       </View>
     </ScrollView>
   );
-};
-
-// export default HomeScreen;
+}
 
 const styles = StyleSheet.create({
   center: {

@@ -19,16 +19,21 @@ import FlavourProfile from "./components/screens/onboardingScreens/flavourProfil
 import { AuthContext } from "./components/Context";
 import AsyncStorage from "@react-native-community/async-storage";
 import RootStack from "./components/RootStack";
+import HomeScreen from "./components/screens/homeScreen/HomeScreen";
+import Footer from "./components/footer/Footer";
+import OrderConfirmation from "./components/screens/homeScreen/OrderConfirmation";
+import YourOrderScreen from "./components/screens/homeScreen/YourOrderScreen";
+import DishDetailScreen from "./components/screens/homeScreen/DishDetailScreen";
+import EditDelivery from "./components/screens/profileScreens/EditDelivery";
+import EditCustomer from "./components/screens/profileScreens/EditCustomer"
+import EditFlavourProfile from "./components/screens/profileScreens/EditFlavourProfile"
 
 const Stack = createStackNavigator();
 
 export default function App() {
-  // const [isLoading, setIsLoading] = React.useState(true);
-  // const [userToken, setUserToken] = React.useState(null);
-
   const initialLoginState = {
     isLoading: true,
-    
+
     userToken: null,
   };
 
@@ -49,14 +54,14 @@ export default function App() {
       case "LOGOUT":
         return {
           ...prevState,
-          
+
           userToken: null,
           isLoading: false,
         };
       case "REGISTER":
         return {
           ...prevState,
-          
+
           userToken: action.token,
           isLoading: false,
         };
@@ -71,24 +76,18 @@ export default function App() {
   const authContext = React.useMemo(
     () => ({
       signIn: async (foundUser) => {
-        // setUserToken('fgkj');
-        // setIsLoading(false);
-
         const userToken = foundUser;
-        
-       
+
+        // console.log(userToken);
         try {
           await AsyncStorage.setItem("userToken", userToken);
         } catch (e) {
           console.log(e);
         }
-        // console.log("user token: ", userToken);
+
         dispatch({ type: "LOGIN", token: userToken });
       },
       signOut: async () => {
-        // setUserToken(null);
-        // setIsLoading(false);
-
         try {
           await AsyncStorage.removeItem("userToken");
         } catch (e) {
@@ -98,26 +97,21 @@ export default function App() {
       },
       signUp: async (foundUser) => {
         const userToken = foundUser;
-        
-        
+
         try {
           await AsyncStorage.setItem("userToken", userToken);
         } catch (e) {
           console.log(e);
         }
-        // console.log("user token: ", userToken);
+
         dispatch({ type: "REGISTER", token: userToken });
       },
-      // toggleTheme: () => {
-      //   setIsDarkTheme((isDarkTheme) => !isDarkTheme);
-      // },
     }),
     []
   );
 
   useEffect(() => {
     setTimeout(async () => {
-      // setIsLoading(false);
       let userToken;
       userToken = null;
       try {
@@ -125,10 +119,8 @@ export default function App() {
       } catch (e) {
         console.log(e);
       }
-      // console.log('user token: ', userToken);
       dispatch({ type: "RETRIEVE_TOKEN", token: userToken });
     }, 1000);
-    // setIsLoading(false);},1000);
   }, []);
 
   if (loginState.isLoading) {
@@ -138,25 +130,60 @@ export default function App() {
       </View>
     );
   }
+  const Root = () => {
+    return (
+      <Stack.Navigator style={styles.container}>
+         <Stack.Screen name="Footer" component={Footer} />
+        <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
+       
+        <Stack.Screen name="EditFlavourProfile" component={EditFlavourProfile} />
+        <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
+        
+        <Stack.Screen name="EditDelivery" component={EditDelivery} />
+        <Stack.Screen name="EditCustomer" component={EditCustomer} />
+       
+        
+         <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
+        
+
+        
+        <Stack.Screen name="OrderConfirmation" component={OrderConfirmation} />
+        <Stack.Screen name="YourOrderScreen" component={YourOrderScreen} />
+        <Stack.Screen name="DishDetailScreen" component={DishDetailScreen} />
+        
+       
+        
+        <Stack.Screen name="HomeScreen" component={HomeScreen} />
+      </Stack.Navigator>
+    );
+  };
+  // const Root1 = () => {
+  //   return (
+  //     <Stack.Navigator style={styles.container}>
+  //       <Stack.Screen name="Footer" component={Footer} />
+  //       <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
+  //       <Stack.Screen name="WelcomeScreen1" component={WelcomeScreen} />
+  //       <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
+  //       <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
+  //       <Stack.Screen name="HomeScreen" component={HomeScreen} />
+
+  //     </Stack.Navigator>
+  //   );
+  // };
 
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
         {loginState.userToken !== null ? (
-          <Stack.Navigator style={styles.container}>
-            <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
-            <Stack.Screen name="WelcomeScreen1" component={WelcomeScreen} />
-            
-            <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
-            <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
-            
-          </Stack.Navigator>
+          Root()
         ) : (
-          <Stack.Navigator initialRouteName="Home">
+          <Stack.Navigator initialRouteName="WelcomeScreen1" independent={true}>
             <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="WelcomeScreen1" component={WelcomeScreen} />
             <Stack.Screen name="SignIn" component={SignIn} />
             <Stack.Screen name="SignUp" component={SignUp} />
-            
+            <Stack.Screen name="Root" component={Root} />
+            {/* <Stack.Screen name="Root1" component={Root1} /> */}
           </Stack.Navigator>
         )}
       </NavigationContainer>

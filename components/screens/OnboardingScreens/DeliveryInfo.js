@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
+import { NavigationContainer } from "@react-navigation/native";
 import {
   Text,
   StyleSheet,
@@ -7,89 +8,32 @@ import {
   Dimensions,
   Button,
   TextInput,
-  Alert
+  Alert,
+  ActivityIndicator,
 } from "react-native";
 import H1 from "../../texts/H1";
 import AsyncStorage from "@react-native-community/async-storage";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
+import RNPickerSelect from "react-native-picker-select";
+import { getCities, getCountries, getProvinces } from "../../../services/api";
 
-// const countries = [
-//   {
-//     value: "Canada",
-//     label: "Canada",
-//   },
-//   {
-//     value: "USA",
-//     label: "USA",
-//   },
-//   {
-//     value: "UK",
-//     label: "UK",
-//   },
-// ];
-
-// const provinces = [
-//   {
-//     value: "British Columbia",
-//     label: "BC",
-//   },
-//   {
-//     value: "Ontario",
-//     label: "ON",
-//   },
-//   {
-//     value: "Alberta",
-//     label: "AB",
-//   },
-// ];
-
-// const cities = [
-//   {
-//     value: "Vancouver",
-//     label: "Vancouver",
-//   },
-//   {
-//     value: "Burnaby",
-//     label: "Burnaby",
-//   },
-//   {
-//     value: "Surrey",
-//     label: "Surrey",
-//   },
-//   {
-//     value: "Richmond",
-//     label: "Richmond",
-//   },
-// ];
-
-// const useStyles = makeStyles({
-//   inputField: {
-//     borderRadius: 20,
-//     width: Dimensions.get("screen").width * 0.8,
-//     paddingLeft: 1,
-//     marginBottom: 20,
-//   },
-// });
+const useStyles = makeStyles({
+  inputField: {
+    borderRadius: 20,
+    width: Dimensions.get("screen").width * 0.8,
+    paddingLeft: 1,
+    marginBottom: 20,
+  },
+});
 
 export default function DeliveryInfo({ navigation }) {
-  // const classes = useStyles();
-  // const [country, setCountry] = React.useState("null");
-  // const [province, setProvince] = React.useState("null");
-  // const [city, setCity] = React.useState("null");
+  const classes = useStyles();
+  const [citydata, setCitydata] = React.useState("null");
+  const [countrydata, setCountrydata] = React.useState("null");
+  const [provincedata, setProvincedata] = React.useState("null");
 
-  // const handleChange1 = (event) => {
-  //   setCountry(event.target.value);
-  // };
-
-  // const handleChange2 = (event) => {
-  //   setProvince(event.target.value);
-  // };
-
-  // const handleChange3 = (event) => {
-  //   setCity(event.target.value);
-  // };
   const [data, setData] = React.useState({
     countryName: "",
     provinceName: "",
@@ -97,7 +41,61 @@ export default function DeliveryInfo({ navigation }) {
     address: "",
     postcode: "",
     instructions: "",
+    isLoaded: true,
   });
+
+  useEffect(() => {
+    getCities().then(
+      (res) => {
+        let needDataCity = [];
+        for (let i = 0; i < res.length; i++) {
+          needDataCity.push({
+            label: res[i].cityDescription,
+            value: res[i].cityDescription,
+          });
+        }
+        setCitydata(needDataCity);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+    getProvinces().then(
+      (res) => {
+        let needDataProvince = [];
+        for (let i = 0; i < res.length; i++) {
+          needDataProvince.push({
+            label: res[i].provinceDescription,
+            value: res[i].provinceDescription,
+          });
+        }
+        setProvincedata(needDataProvince);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+    getCountries().then(
+      (res) => {
+        let needDataCountry = [];
+        for (let i = 0; i < res.length; i++) {
+          needDataCountry.push({
+            label: res[i].countryDescription,
+            value: res[i].countryDescription,
+          });
+        }
+        setCountrydata(needDataCountry);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+    setData({
+      ...data,
+      isLoaded: false,
+    });
+  }, []);
+
   const [userToken, setUserToken] = React.useState(null);
   const textInputCountryChange = (val) => {
     setData({
@@ -169,7 +167,7 @@ export default function DeliveryInfo({ navigation }) {
             cityName: data.cityName,
             address: data.address,
             postcode: data.postcode,
-          
+
             instructions: data.instructions,
           }),
         }
@@ -178,137 +176,87 @@ export default function DeliveryInfo({ navigation }) {
       const res = await response.json();
 
       if (response.status >= 200 && response.status < 300) {
-        //Handle success
-      
-        Alert.alert("User delivery Info saved successfully", "Thank you", [{ text: "Ok" }]);
-        navigation.navigate("WelcomeScreen1")
-        
+        Alert.alert("User delivery Info saved successfully", "Thank you", [
+          { text: "Ok" },
+        ]);
+        navigation.navigate("Footer");
       } else {
         Alert.alert("Invalid Input!", "Something went wrong, Try again", [
           { text: "Okay" },
         ]);
-        //Handle error
         let error = res;
         throw error;
       }
     } catch (error) {
-      // this.setState({error: error});
       console.log(error);
-      // this.setState({showProgress: false});
     }
   };
-
-  return (
-    <ScrollView>
-      <View style={styles.body}>
-        <View style={styles.text}>
-          <H1 h1Text="Delivery Information" />
-          <Text>You say when and where</Text>
-        </View>
-        <TextInput
-          placeholder={"Country Name"}
-          textContentType={"name"}
-          autoCapitalize="none"
-          onChangeText={(val) => textInputCountryChange(val)}
-          style={styles.textInput}
-        />
-        <TextInput
-          placeholder={"Province Name"}
-          textContentType={"name"}
-          autoCapitalize="none"
-          onChangeText={(val) => textInputProvinceChange(val)}
-          style={styles.textInput}
-        />
-        <TextInput
-          placeholder={"City Name"}
-          textContentType={"name"}
-          autoCapitalize="none"
-          onChangeText={(val) => textInputCityChange(val)}
-          style={styles.textInput}
-        />
-
-        <TextInput
-          placeholder={"Address"}
-          textContentType={"fullStreetAddress"}
-          autoCapitalize="none"
-          onChangeText={(val) => textInputAddressChange(val)}
-          style={styles.textInput}
-        />
-
-        <TextInput
-          placeholder={"Postcode"}
-          textContentType={"postalCode"}
-          autoCapitalize="none"
-          onChangeText={(val) => textInputPostChange(val)}
-          style={styles.textInput}
-        />
-
-        <TextInput
-          placeholder={"Delivery Instruction"}
-          textContentType={"none"}
-          autoCapitalize="none"
-          onChangeText={(val) => textInputInfoChange(val)}
-          style={styles.textInput}
-        />
-
-        <Button title="Done" type="submit" onPress={() => deliveryHandle()} />
-
-        {/* <TextField
-        id="select-country"
-        select
-        label="Country"
-        value={country}
-        onChange={handleChange1}
-        variant="outlined"
-        InputProps={{
-          className: classes.inputField,
-        }}
-      >
-        {countries.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
-          </MenuItem>
-        ))}
-      </TextField>
-
-      <TextField
-        id="select-province"
-        select
-        label="Province"
-        value={province}
-        onChange={handleChange2}
-        variant="outlined"
-        InputProps={{
-          className: classes.inputField,
-        }}
-      >
-        {provinces.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
-          </MenuItem>
-        ))}
-      </TextField>
-
-      <TextField
-        id="select-city"
-        select
-        label="City"
-        value={city}
-        onChange={handleChange3}
-        variant="outlined"
-        InputProps={{
-          className: classes.inputField,
-        }}
-      >
-        {cities.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
-          </MenuItem>
-        ))}
-      </TextField> */}
+  if (data.isLoaded) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" />
       </View>
-    </ScrollView>
-  );
+    );
+  } else {
+    return (
+      <ScrollView>
+        <View style={styles.body}>
+          <View style={styles.text}>
+            <H1 h1Text="Delivery Information" />
+            <Text>You say when and where</Text>
+          </View>
+          <View>
+            <Text>Country</Text>
+            <RNPickerSelect
+              onValueChange={(value) => textInputCountryChange(value)}
+              items={countrydata}
+            />
+          </View>
+          <View>
+            <Text>Province</Text>
+            <RNPickerSelect
+              onValueChange={(value) => textInputProvinceChange(value)}
+              items={provincedata}
+            />
+          </View>
+
+          <View>
+            <Text>City</Text>
+            <RNPickerSelect
+              onValueChange={(value) => textInputCityChange(value)}
+              items={citydata}
+            />
+          </View>
+
+          <TextInput
+            placeholder={"Address"}
+            textContentType={"fullStreetAddress"}
+            autoCapitalize="none"
+            onChangeText={(val) => textInputAddressChange(val)}
+            style={styles.textInput}
+          />
+
+          <TextInput
+            placeholder={"Postcode"}
+            textContentType={"postalCode"}
+            autoCapitalize="none"
+            onChangeText={(val) => textInputPostChange(val)}
+            style={styles.textInput}
+          />
+
+          <TextInput
+            placeholder={"Delivery Instruction"}
+            textContentType={"none"}
+            autoCapitalize="none"
+            onChangeText={(val) => textInputInfoChange(val)}
+            style={styles.textInput}
+          />
+
+          <Button title="Done" type="submit" onPress={() => deliveryHandle()} />
+        </View>
+      </ScrollView>
+    );
+  }
 }
 
 const styles = StyleSheet.create({

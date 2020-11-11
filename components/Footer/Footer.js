@@ -11,13 +11,51 @@ import HomeScreen from "../screens/homeScreen/HomeScreen";
 const MaterialBottomTabs = createMaterialBottomTabNavigator();
 
 export default class Footer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      menuID: "",
+      price: "",
+      meal: "",
+      restaurantID: "",
+    };
+  }
+  handleHomeChange = (data, meal) => {
+    const details = data[0];
+    this.setState({
+      menuID: details.menuID,
+      price: details.price,
+      meal: meal,
+      restaurantID: details.restaurantID,
+    });
+    this.props.navigation.navigate("OrderConfirmation", {
+      menuID: details.menuID,
+      price: details.price,
+      meal: meal,
+      restaurantID: details.restaurantID,
+    });
+  };
+  handleCustomerChange = () => {
+    this.props.navigation.navigate("EditCustomer");
+  };
+  handleDeliveryChange = () => {
+    this.props.navigation.navigate("EditDelivery");
+  };
+  handleFlavourChange = () => {
+    this.props.navigation.navigate("EditFlavourProfile");
+  };
+  handleOrderNow = () => {
+    this.props.navigation.navigate("HomeScreen")
+  }
   BottomTabs = () => {
     return (
       <MaterialBottomTabs.Navigator>
         <MaterialBottomTabs.Screen
           name="Home"
           style={{ marginBottom: 25 }}
-          component={HomeScreen}
+          children={() => (
+            <HomeScreen onHandleHomeChange={this.handleHomeChange} />
+          )}
           // options={{
           //   tabBarLabel: 'Home',
           //   tabBarIcon: () => (
@@ -27,7 +65,9 @@ export default class Footer extends Component {
         />
         <MaterialBottomTabs.Screen
           name="Order History"
-          component={OrderTab}
+          children={() => (
+            <OrderTab onHandleOrderNow={this.handleOrderNow} />
+          )}
           // options={{
           //   tabBarLabel: 'Profile',
           //   tabBarIcon: () => (
@@ -47,7 +87,9 @@ export default class Footer extends Component {
         />
         <MaterialBottomTabs.Screen
           name="Profile"
-          component={ProfileTab}
+          children={() => (
+            <ProfileTab onHandleCustomerChange={this.handleCustomerChange} onHandleDeliveryChange={this.handleDeliveryChange} onHandleFlavourChange={this.handleFlavourChange}/>
+          )}
           // options={{
           //   tabBarLabel: 'Map',
           //   tabBarIcon: () => (

@@ -13,10 +13,9 @@ import {
 } from "react-native";
 import Users from "../../Users";
 import H1 from "../../texts/H1";
-import InputField from "../../inputFields/InputField";
-import ReusableBtn from "../../buttons/ReusableBtn";
+import AsyncStorage from "@react-native-community/async-storage";
+
 import { TextInput } from "react-native-paper";
-import axios from "axios";
 
 export default function SignIn({ navigation }) {
   const { signIn } = React.useContext(AuthContext);
@@ -79,8 +78,6 @@ export default function SignIn({ navigation }) {
   };
 
   const loginHandle = async () => {
-    // console.log(data.email);
-    // console.log(data.password);
     if (data.email.length == 0 || data.password.length == 0) {
       Alert.alert("Wrong Input!", "email or password field cannot be empty.", [
         { text: "Okay" },
@@ -102,33 +99,26 @@ export default function SignIn({ navigation }) {
       });
 
       const res = await response.json();
-      // console.log(res);
 
       if (response.status >= 200 && response.status < 300) {
-        //Handle success
         let accessToken = res.token;
-        // console.log(accessToken);
-        //On success we will store the access_token in the AsyncStorage
-        // this.storeToken(accessToken);
-        // this.redirect('home');
+
         signIn(accessToken);
         Alert.alert("Done", "user logged In", [{ text: "Okay" }]);
+        navigation.navigate("Root", { screen: "Footer" });
       } else {
         Alert.alert("Invalid User!", "email or password is incorrect.", [
           { text: "Okay" },
         ]);
-        //Handle error
+
         let error = res;
         throw error;
       }
     } catch (error) {
-      // this.setState({error: error});
       console.log(error);
-      // this.setState({showProgress: false});
     }
   };
 
-  
   return (
     <ScrollView>
       <Image style={styles.image} />
@@ -172,7 +162,12 @@ export default function SignIn({ navigation }) {
           onPress={() => {
             loginHandle();
           }}
-          // onPress={() => navigation.navigate("WelcomeScreen1")}
+        />
+        <Button
+          title="Sign out"
+          onPress={() => {
+            AsyncStorage.clear();
+          }}
         />
         <View style={styles.signUpText}>
           <Text style={styles.smallText}>Don't have an account?</Text>

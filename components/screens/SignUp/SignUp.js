@@ -12,9 +12,6 @@ import {
   Alert
 } from "react-native";
 import H1 from "../../texts/H1";
-import InputField from "../../inputFields/InputField";
-import ReusableBtn from "../../buttons/ReusableBtn";
-
 
 export default function SignUp({ navigation }) {
   const { signUp } = React.useContext(AuthContext);
@@ -25,8 +22,6 @@ export default function SignUp({ navigation }) {
     firstName: "",
     lastName: "",
     phoneNumber: "",
-    // check_textInputChange: false,
-    // secureTextEntry: true,
     isValidUser: true,
     isValidFirst: true,
     isValidLast: true,
@@ -39,14 +34,12 @@ export default function SignUp({ navigation }) {
       setData({
         ...data,
         email: val,
-        // check_textInputChange: true,
         isValidUser: true,
       });
     } else {
       setData({
         ...data,
         email: val,
-        // check_textInputChange: false,
         isValidUser: false,
       });
     }
@@ -56,14 +49,12 @@ export default function SignUp({ navigation }) {
       setData({
         ...data,
         firstName: val,
-        // check_textInputChange: true,
         isValidFirst: true,
       });
     } else {
       setData({
         ...data,
         firstName: val,
-        // check_textInputChange: false,
         isValidFirst: false,
       });
     }
@@ -73,14 +64,12 @@ export default function SignUp({ navigation }) {
       setData({
         ...data,
         lastName: val,
-        // check_textInputChange: true,
         isValidLast: true,
       });
     } else {
       setData({
         ...data,
         lastName: val,
-        // check_textInputChange: false,
         isValidLast: false,
       });
     }
@@ -90,14 +79,12 @@ export default function SignUp({ navigation }) {
       setData({
         ...data,
         phoneNumber: val,
-        // check_textInputChange: true,
         isValidPhone: true,
       });
     } else {
       setData({
         ...data,
         phoneNumber: val,
-        // check_textInputChange: false,
         isValidPhone: false,
       });
     }
@@ -215,6 +202,7 @@ export default function SignUp({ navigation }) {
         // this.redirect('home');
         signUp(accessToken);
         Alert.alert("User Registered", "Thank you", [{ text: "Ok" }]);
+        navigation.navigate('Root', { screen: 'WelcomeScreen2' });
       } else {
         Alert.alert("Invalid Input!", "Something went wrong, Try again", [
           { text: "Okay" },
@@ -242,6 +230,7 @@ export default function SignUp({ navigation }) {
           placeholder={"First Name"}
           textContentType={"name"}
           autoCapitalize="none"
+          // value="John"
           onChangeText={(val) => textInputFirstChange(val)}
           onEndEditing={(e) => handleValidFirst(e.nativeEvent.text)}
           style={styles.textInput}
@@ -257,6 +246,7 @@ export default function SignUp({ navigation }) {
           placeholder={"Last Name"}
           textContentType={"name"}
           autoCapitalize="none"
+          // value="Remison"
           onChangeText={(val) => textInputLastChange(val)}
           onEndEditing={(e) => handleValidLast(e.nativeEvent.text)}
           style={styles.textInput}
@@ -272,6 +262,7 @@ export default function SignUp({ navigation }) {
           placeholder={"Phone Number"}
           textContentType={"name"}
           autoCapitalize="none"
+          // value="234556778"
           onChangeText={(val) => textInputPhoneChange(val)}
           onEndEditing={(e) => handleValidPhone(e.nativeEvent.text)}
           style={styles.textInput}
@@ -287,6 +278,7 @@ export default function SignUp({ navigation }) {
           placeholder={"Email"}
           textContentType={"emailAddress"}
           autoCapitalize="none"
+          // value="johnRemi@hotmail.com"
           onChangeText={(val) => textInputChange(val)}
           onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
           style={styles.textInput}
@@ -303,6 +295,7 @@ export default function SignUp({ navigation }) {
           textContentType={"password"}
           secureTextEntry={true}
           autoCapitalize="none"
+          // value="testpassword"
           onChangeText={(val) => handlePasswordChange(val)}
           style={styles.textInput}
         />

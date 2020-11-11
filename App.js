@@ -29,6 +29,7 @@ import EditCustomer from "./components/screens/profileScreens/EditCustomer";
 import EditFlavourProfile from "./components/screens/profileScreens/EditFlavourProfile";
 import OrderStatus from "./components/tabs/OrderStatus";
 import RevealConfirm from "./components/tabs/RevealConfirm";
+import OrderTab from "./components/tabs/OrderTab";
 
 const Stack = createStackNavigator();
 
@@ -148,12 +149,13 @@ export default function App() {
         <Stack.Screen name="EditCustomer" component={EditCustomer} />
 
         <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
-
+        <Stack.Screen name="OrderTab" component={OrderTab} />
         <Stack.Screen name="OrderConfirmation" component={OrderConfirmation} />
         <Stack.Screen name="YourOrderScreen" component={YourOrderScreen} />
         <Stack.Screen name="DishDetailScreen" component={DishDetailScreen} />
-
+        <Stack.Screen name="OrderStatus" component={OrderStatus} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        <Stack.Screen name="RevealConfirm" component={RevealConfirm} />
       </Stack.Navigator>
     );
   };

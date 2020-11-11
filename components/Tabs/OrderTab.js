@@ -15,10 +15,13 @@ const MaterialTopTabs = createMaterialTopTabNavigator();
 const OrderTab = (props) => {
   const[isLoaded, setIsLoaded] = React.useState(true)
   const[activeOrders, setActiveOrders] = React.useState(null)
+  const[orderStatus, setOrderStatus] = React.useState(null)
   const isFocused = useIsFocused();
 
   // console.log(isFocused);
-
+  const handleOrderStausID = (orderID) => {
+    setOrderStatus(orderID)
+  }
   useEffect(() => {
     getCustomerActiveOrders().then(
       (res) => {
@@ -28,6 +31,7 @@ const OrderTab = (props) => {
           setIsLoaded(true)
         }else{
           setIsLoaded(false)
+
         }
       }
     ), (err) => {
@@ -61,7 +65,10 @@ const OrderTab = (props) => {
         <MaterialTopTabs.Screen
           name="Active Orders"
           children={() => (
-            <ActiveOrderMade customerActiveOrders = {activeOrders}/>
+            <ActiveOrderMade 
+            customerActiveOrders = {activeOrders} 
+            // changeOrderStatusID={handleOrderStausID()} 
+            onHandleActiveOrderStatus = {props.onHandleActiveOrderStatus} />
           )}
         />
         <MaterialTopTabs.Screen

@@ -47,6 +47,9 @@ export default class Footer extends Component {
   handleOrderNow = () => {
     this.props.navigation.navigate("Footer")
   }
+  handleActiveOrderStatus = (orderStatus) => {
+    this.props.navigation.navigate("OrderStatus", {orderStatusID: orderStatus});
+  }
   BottomTabs = () => {
     return (
       <MaterialBottomTabs.Navigator>
@@ -64,9 +67,9 @@ export default class Footer extends Component {
           // }}
         />
         <MaterialBottomTabs.Screen
-          name="Order History"
+          name="Orders"
           children={() => (
-            <OrderTab onHandleOrderNow={this.handleOrderNow} />
+            <OrderTab onHandleOrderNow={this.handleOrderNow} onHandleActiveOrderStatus = {this.handleActiveOrderStatus} />
           )}
           // options={{
           //   tabBarLabel: 'Profile',

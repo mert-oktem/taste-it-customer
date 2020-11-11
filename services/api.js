@@ -343,3 +343,20 @@ export const postCustomerInquiry = async (
     throw err;
   }
 };
+
+export const getCustomerActiveOrders = async () => {
+  const url = `${BASE_URL}/orders/customer`;
+  let token = null;
+  token = await AsyncStorage.getItem("userToken");
+  try {
+    const res = await axios.get(url, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    });
+    const response = res.data;
+    return response;
+  } catch (err) {
+    throw err;
+  }
+}

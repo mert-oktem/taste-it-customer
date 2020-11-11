@@ -45,7 +45,7 @@ export default class Footer extends Component {
     this.props.navigation.navigate("EditFlavourProfile");
   };
   handleOrderNow = () => {
-    this.props.navigation.navigate("HomeScreen")
+    this.props.navigation.navigate("Footer")
   }
   BottomTabs = () => {
     return (

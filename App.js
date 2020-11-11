@@ -25,8 +25,10 @@ import OrderConfirmation from "./components/screens/homeScreen/OrderConfirmation
 import YourOrderScreen from "./components/screens/homeScreen/YourOrderScreen";
 import DishDetailScreen from "./components/screens/homeScreen/DishDetailScreen";
 import EditDelivery from "./components/screens/profileScreens/EditDelivery";
-import EditCustomer from "./components/screens/profileScreens/EditCustomer"
-import EditFlavourProfile from "./components/screens/profileScreens/EditFlavourProfile"
+import EditCustomer from "./components/screens/profileScreens/EditCustomer";
+import EditFlavourProfile from "./components/screens/profileScreens/EditFlavourProfile";
+import OrderStatus from "./components/tabs/OrderStatus";
+import RevealConfirm from "./components/tabs/RevealConfirm";
 
 const Stack = createStackNavigator();
 
@@ -133,26 +135,24 @@ export default function App() {
   const Root = () => {
     return (
       <Stack.Navigator style={styles.container}>
-         <Stack.Screen name="Footer" component={Footer} />
+        <Stack.Screen name="Footer" component={Footer} />
         <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
-       
-        <Stack.Screen name="EditFlavourProfile" component={EditFlavourProfile} />
+
+        <Stack.Screen
+          name="EditFlavourProfile"
+          component={EditFlavourProfile}
+        />
         <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
-        
+
         <Stack.Screen name="EditDelivery" component={EditDelivery} />
         <Stack.Screen name="EditCustomer" component={EditCustomer} />
-       
-        
-         <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
-        
 
-        
+        <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
+
         <Stack.Screen name="OrderConfirmation" component={OrderConfirmation} />
         <Stack.Screen name="YourOrderScreen" component={YourOrderScreen} />
         <Stack.Screen name="DishDetailScreen" component={DishDetailScreen} />
-        
-       
-        
+
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
       </Stack.Navigator>
     );
@@ -177,7 +177,9 @@ export default function App() {
         {loginState.userToken !== null ? (
           Root()
         ) : (
-          <Stack.Navigator initialRouteName="WelcomeScreen1" independent={true}>
+          <Stack.Navigator initialRouteName="OrderStatus" independent={true}>
+            <Stack.Screen name="OrderStatus" component={OrderStatus} />
+            <Stack.Screen name="RevealConfirm" component={RevealConfirm} />
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="WelcomeScreen1" component={WelcomeScreen} />
             <Stack.Screen name="SignIn" component={SignIn} />

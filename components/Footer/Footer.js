@@ -45,11 +45,18 @@ export default class Footer extends Component {
     this.props.navigation.navigate("EditFlavourProfile");
   };
   handleOrderNow = () => {
-    this.props.navigation.navigate("Footer")
-  }
-  handleActiveOrderStatus = (orderStatus) => {
-    this.props.navigation.navigate("OrderStatus", {orderStatusID: orderStatus});
-  }
+    this.props.navigation.navigate("Footer");
+  };
+  handleActiveOrderStatus = (orderStatus, orderID) => {
+    this.props.navigation.navigate("OrderStatus", {
+      orderStatusID: orderStatus,
+      orderID: orderID,
+    });
+  };
+ 
+  handleOrderHistoryDetails = (orderID) => {
+    this.props.navigation.navigate("DishDetailScreen", { orderID: orderID });
+  };
   BottomTabs = () => {
     return (
       <MaterialBottomTabs.Navigator>
@@ -59,46 +66,32 @@ export default class Footer extends Component {
           children={() => (
             <HomeScreen onHandleHomeChange={this.handleHomeChange} />
           )}
-          // options={{
-          //   tabBarLabel: 'Home',
-          //   tabBarIcon: () => (
-          //     <Icon style={[{ color: 'white' }]} size={25} name={'home'} />
-          //   ),
-          // }}
         />
         <MaterialBottomTabs.Screen
           name="Orders"
           children={() => (
-            <OrderTab onHandleOrderNow={this.handleOrderNow} onHandleActiveOrderStatus = {this.handleActiveOrderStatus} />
+            <OrderTab
+              onHandleOrderNow={this.handleOrderNow}
+              onHandleActiveOrderStatus={this.handleActiveOrderStatus}
+              onHandleOrderHistoryDetails={this.handleOrderHistoryDetails}
+            />
           )}
-          // options={{
-          //   tabBarLabel: 'Profile',
-          //   tabBarIcon: () => (
-          //     <Icon style={[{ color: 'white' }]} size={25} name={'human'} />
-          //   )
-          // }}
+
         />
         <MaterialBottomTabs.Screen
           name="Contact"
           component={ContactTab}
-          // options={{
-          //   tabBarLabel: 'Map',
-          //   tabBarIcon: () => (
-          //     <Icon style={[{ color: 'white' }]} size={25} name={'map'} />
-          //   ),
-          // }}
+
         />
         <MaterialBottomTabs.Screen
           name="Profile"
           children={() => (
-            <ProfileTab onHandleCustomerChange={this.handleCustomerChange} onHandleDeliveryChange={this.handleDeliveryChange} onHandleFlavourChange={this.handleFlavourChange}/>
+            <ProfileTab
+              onHandleCustomerChange={this.handleCustomerChange}
+              onHandleDeliveryChange={this.handleDeliveryChange}
+              onHandleFlavourChange={this.handleFlavourChange}
+            />
           )}
-          // options={{
-          //   tabBarLabel: 'Map',
-          //   tabBarIcon: () => (
-          //     <Icon style={[{ color: 'white' }]} size={25} name={'map'} />
-          //   ),
-          // }}
         />
       </MaterialBottomTabs.Navigator>
     );

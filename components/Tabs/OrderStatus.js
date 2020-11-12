@@ -1,18 +1,53 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {
   Text,
   StyleSheet,
   View,
   ScrollView,
   Image,
-  Button,
+  Button, ActivityIndicator
 } from "react-native";
 import H1 from "../texts/H1";
+import {getCustomerActiveOrders} from "../../services/api"
 
 const OrderStatus = ({ route, navigation }) => {
-  const { orderStatusID } = route.params;
-  console.log(orderStatusID);
-  if (orderStatusID === 1) {
+  // const { orderStatusID } = route.params;
+  const [orderStatusID, setOrderStatusID] = React.useState(1)
+  const[orderSelected, setOrderSelected] = React.useState(null)
+  const[isLoaded, setIsLoaded] = React.useState(true)
+  const { orderID } = route.params;
+  // console.log(orderStatusID);
+  // console.log(orderID);
+
+useEffect(() => {
+  
+  getCustomerActiveOrders().then(
+    (res) => {
+      // console.log(res)
+      for(let i=0; i<res.length;i++){
+        if(res[i].orderID === orderID){
+          setOrderSelected(res[i])
+          setOrderStatusID(res[i].orderStatusID)
+          setIsLoaded(false)
+        }
+      }
+    }
+  ), (err) => {
+    console.log(err)
+  }
+}, [orderSelected, orderStatusID]);
+if (isLoaded) {
+  return (
+    <View
+      style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+    >
+      <ActivityIndicator size="large" />
+    </View>
+  );
+} 
+
+
+  else if (orderStatusID === 1) {
     return (
       <ScrollView>
         <H1 h1Text="Order Status" />
@@ -85,7 +120,7 @@ const OrderStatus = ({ route, navigation }) => {
             title="Order Received"
             color="purple"
             onPress={() => {
-              navigation.navigate("RevealConfirm");
+              navigation.navigate("RevealConfirm", {orderID: orderID});
             }}
           />
         </View>

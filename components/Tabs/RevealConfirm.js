@@ -1,7 +1,9 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, Button } from "react-native";
 
-const RevealConfirm = ({ navigation }) => {
+const RevealConfirm = ({ route, navigation }) => {
+
+  const { orderID } = route.params;
   return (
     <View>
       <Image />
@@ -10,7 +12,7 @@ const RevealConfirm = ({ navigation }) => {
         title="Yes, Reveal My Order"
         color="purple"
         onPress={() => {
-          navigation.navigate("DishDetailScreen");
+          navigation.navigate("DishDetailScreen", {orderID: orderID});
         }}
       />
       <Button

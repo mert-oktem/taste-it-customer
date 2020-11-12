@@ -1,62 +1,121 @@
-import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
-import { useIsFocused } from '@react-navigation/native';
-import H1 from '../texts/H1';
+import React, { useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  TouchableOpacity, Button
+} from "react-native";
+import { useIsFocused } from "@react-navigation/native";
+import H1 from "../texts/H1";
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import ActiveOrder from "./ActiveOrder"
-import OrderHistory from "./OrderHistory"
-import ActiveOrderMade from "./ActiveOrderMade"
-import OrderHistoryMade from "./OrderHistoryMade"
-import {getCustomerActiveOrders} from "../../services/api"
+import ActiveOrder from "./ActiveOrder";
+import OrderHistory from "./OrderHistory";
+import ActiveOrderMade from "./ActiveOrderMade";
+import OrderHistoryMade from "./OrderHistoryMade";
+import { getCustomerActiveOrders } from "../../services/api";
+import { set } from "react-native-reanimated";
+import moment from "moment";
 
 const MaterialTopTabs = createMaterialTopTabNavigator();
 
 const OrderTab = (props) => {
-  const[isLoaded, setIsLoaded] = React.useState(true)
-  const[activeOrders, setActiveOrders] = React.useState(null)
-  const[orderStatus, setOrderStatus] = React.useState(null)
+  const [isLoaded, setIsLoaded] = React.useState(true);
+  const [activeOrders, setActiveOrders] = React.useState(null);
+  const [orderStatus, setOrderStatus] = React.useState(1);
+  const [countOrderStatus, setCountOrderStatus] = React.useState(0);
   const isFocused = useIsFocused();
 
   // console.log(isFocused);
-  const handleOrderStausID = (orderID) => {
-    setOrderStatus(orderID)
-  }
+  // const handleOrderStausID = (orderID) => {
+  //   setOrderStatus(orderID)
+  // }
   useEffect(() => {
-    getCustomerActiveOrders().then(
-      (res) => {
-        // console.log(res)
-        setActiveOrders(res)
-        if(res.length === 0){
-          setIsLoaded(true)
-        }else{
-          setIsLoaded(false)
-
-        }
+    getCustomerActiveOrders().then((res) => {
+      // console.log(res)
+      setActiveOrders(res);
+      setOrderStatus(res[res.length - 1].orderStatusID);
+      if (res.length === 0) {
+        setIsLoaded(true);
+      } else {
+        // for(let i=0; i<res.length; i++){
+        //   if(res[i].orderStatusID !== 1){
+        //     setOrderStatus(res[i].orderStatusID)
+        //     setCountOrderStatus(countOrderStatus + 1)
+        //   }
+        // }
+        setIsLoaded(false);
       }
-    ), (err) => {
-      console.log(err)
-    }
-  },[activeOrders])
+    }),
+      (err) => {
+        console.log(err);
+      };
+  }, [activeOrders, orderStatus]);
 
- const createTopTabs = () => {
+  const createTopTabs = () => {
     return (
       <MaterialTopTabs.Navigator>
         <MaterialTopTabs.Screen
           name="Active Orders"
           children={() => (
-            <ActiveOrder onHandleOrder = {props.onHandleOrderNow}/>
+            <ActiveOrder onHandleOrder={props.onHandleOrderNow} />
           )}
         />
         <MaterialTopTabs.Screen
           name="Order History"
           children={() => (
-            <OrderHistory onHandleOrder = {props.onHandleOrderNow}/>
+            <OrderHistory onHandleOrder={props.onHandleOrderNow} />
           )}
         />
       </MaterialTopTabs.Navigator>
     );
   };
+
+  const renderOrders = () => {
+    //   console.log(props.customerActiveOrders)
+   
+    return activeOrders.map((item) => {
+      const handleOrderDetail = () => {
+        props.onHandleActiveOrderStatus(item.orderStatusID, item.orderID);
+      };
+      const date = moment(item.createdAt).format("h:mm a - YYYY.MM.DD ");
+      if (item.orderStatusID < 4) {
+        return (
+          <TouchableOpacity onPress={handleOrderDetail}>
+            <View>
+              <Text>{date}</Text>
+              <Text>{item.orderStatusDescription}</Text>
+              <Text>View Details</Text>
+            </View>
+          </TouchableOpacity>
+        );
+      }
+
+    });
+  };
+
+  const renderOrdersHistory = () => {
+    return activeOrders.map((item) => {
+      const handleOrderDetail = () => {
+        props.onHandleOrderHistoryDetails(item.orderID);
+      };
+      if (item.orderStatusID > 3) {
+        
+        return (
+          <TouchableOpacity onPress={handleOrderDetail}>
+            <View>
+              <Text>{item.menuName}</Text>
+              <Text>{item.restaurantID}</Text>
+              <Text>{item.price}</Text>
+            </View>
+          </TouchableOpacity>
+        );
+      }
+    });
+  };
+
   const createTopTabsOrderMade = () => {
     // console.log("i m here")
     // console.log(activeOrders)
@@ -65,56 +124,52 @@ const OrderTab = (props) => {
         <MaterialTopTabs.Screen
           name="Active Orders"
           children={() => (
-            <ActiveOrderMade 
-            customerActiveOrders = {activeOrders} 
-            // changeOrderStatusID={handleOrderStausID()} 
-            onHandleActiveOrderStatus = {props.onHandleActiveOrderStatus} />
+            <ActiveOrderMade
+              // customerActiveOrders = {activeOrders}
+              onRenderOrders={renderOrders}
+              // changeOrderStatusID={handleOrderStausID()}
+            />
           )}
         />
         <MaterialTopTabs.Screen
           name="Order History"
           children={() => (
-            <OrderHistoryMade onHandleOrder = {props.onHandleOrderNow}/>
+            <OrderHistoryMade onRenderOrders={renderOrdersHistory} />
           )}
         />
       </MaterialTopTabs.Navigator>
     );
   };
-if(isLoaded){
-  return (
-    <ScrollView>
-    <NavigationContainer independent={true}>
-              {createTopTabs()}
-            </NavigationContainer>
-  </ScrollView>
-  ) 
-}else{
-  return (
-    <ScrollView>
-    <NavigationContainer independent={true}>
-              {createTopTabsOrderMade()}
-            </NavigationContainer>
-  </ScrollView>
-  )
-}
-  
-
-}
-
-
+  if (isLoaded) {
+    return (
+      <ScrollView>
+        <NavigationContainer independent={true}>
+          {createTopTabs()}
+        </NavigationContainer>
+      </ScrollView>
+    );
+  } else {
+    return (
+      <ScrollView>
+        <NavigationContainer independent={true}>
+          {createTopTabsOrderMade()}
+        </NavigationContainer>
+      </ScrollView>
+    );
+  }
+};
 
 export default OrderTab;
-
 
 export const styles = StyleSheet.create({
   center: {
     flex: 1,
     margin: 24,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center",
   },
   title: {
     fontSize: 36,
-    marginBottom: 16
-  }
+    marginBottom: 16,
+  },
 });

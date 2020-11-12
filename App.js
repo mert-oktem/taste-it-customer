@@ -136,18 +136,17 @@ export default function App() {
   const Root = () => {
     return (
       <Stack.Navigator style={styles.container}>
-        <Stack.Screen name="Footer" component={Footer} />
         <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
-
+        <Stack.Screen name="Footer" component={Footer} />
+        
+        
         <Stack.Screen
           name="EditFlavourProfile"
           component={EditFlavourProfile}
         />
         <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
-
         <Stack.Screen name="EditDelivery" component={EditDelivery} />
         <Stack.Screen name="EditCustomer" component={EditCustomer} />
-
         <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
         <Stack.Screen name="OrderTab" component={OrderTab} />
         <Stack.Screen name="OrderConfirmation" component={OrderConfirmation} />
@@ -155,7 +154,7 @@ export default function App() {
         <Stack.Screen name="DishDetailScreen" component={DishDetailScreen} />
         <Stack.Screen name="OrderStatus" component={OrderStatus} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
-        <Stack.Screen name="RevealConfirm" component={RevealConfirm} />
+            <Stack.Screen name="RevealConfirm" component={RevealConfirm} />
       </Stack.Navigator>
     );
   };
@@ -179,10 +178,9 @@ export default function App() {
         {loginState.userToken !== null ? (
           Root()
         ) : (
-          <Stack.Navigator initialRouteName="OrderStatus" independent={true}>
-            <Stack.Screen name="OrderStatus" component={OrderStatus} />
-            <Stack.Screen name="RevealConfirm" component={RevealConfirm} />
-            <Stack.Screen name="Home" component={Home} />
+          <Stack.Navigator initialRouteName="WelcomeScreen1" independent={true}>
+            
+            {/* <Stack.Screen name="Home" component={Home} /> */}
             <Stack.Screen name="WelcomeScreen1" component={WelcomeScreen} />
             <Stack.Screen name="SignIn" component={SignIn} />
             <Stack.Screen name="SignUp" component={SignUp} />

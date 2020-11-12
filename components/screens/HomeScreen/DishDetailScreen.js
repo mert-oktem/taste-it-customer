@@ -50,22 +50,21 @@ const DishDetailScreen = ({ route, navigation }) => {
         </View>
         <View>
           <Text>Served by</Text>
-          <H1 h1Text="Kamitora" />
+          <H1 h1Text={orderSelected.restaurantName} />
           <Text>
-            Kamitora represents a seamless integration of the East and the West, a
-            fusion of Vancouver with the best of Japanese cuisine.
+            {orderSelected.restaurantDescription}
           </Text>
         </View>
         <View>
           <View>
             <Image />
             <Text style={styles.restaurantAddress}>
-              5728 University Blvd #101 V6TIK6
+              {orderSelected.address}
             </Text>
           </View>
           <View>
             <Image />
-            <Text style={styles.restaurantAddress}>(604) 718 - 1075</Text>
+    <Text style={styles.restaurantAddress}>{orderSelected.phoneNumber}</Text>
           </View>
         </View>
         <Button title="Review & Feedback" />

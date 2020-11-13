@@ -10,6 +10,7 @@ import {
   TextInput,
   Alert,
   ActivityIndicator,
+  TouchableOpacity,
 } from "react-native";
 import H1 from "../../texts/H1";
 import AsyncStorage from "@react-native-community/async-storage";
@@ -203,26 +204,32 @@ export default function DeliveryInfo({ navigation }) {
         <View style={styles.body}>
           <View style={styles.text}>
             <H1 h1Text="Delivery Information" />
-            <Text>You say when and where</Text>
+            <Text style={styles.textChild}>You say when and where</Text>
           </View>
           <View>
-            <Text>Country</Text>
             <RNPickerSelect
+              placeholder={{ label: "Country" }}
+              placeholderTextColor="#3E315A"
+              style={styles.pickerSelect}
               onValueChange={(value) => textInputCountryChange(value)}
               items={countrydata}
             />
           </View>
           <View>
-            <Text>Province</Text>
             <RNPickerSelect
+              placeholder={{ label: "Province" }}
+              placeholderTextColor="#3E315A"
+              style={styles.pickerSelect}
               onValueChange={(value) => textInputProvinceChange(value)}
               items={provincedata}
             />
           </View>
 
           <View>
-            <Text>City</Text>
             <RNPickerSelect
+              placeholder={{ label: "City" }}
+              placeholderTextColor="#3E315A"
+              style={styles.pickerSelect}
               onValueChange={(value) => textInputCityChange(value)}
               items={citydata}
             />
@@ -252,7 +259,13 @@ export default function DeliveryInfo({ navigation }) {
             style={styles.textInput}
           />
 
-          <Button title="Done" type="submit" onPress={() => deliveryHandle()} />
+          <TouchableOpacity
+            style={styles.button}
+            type="submit"
+            onPress={() => deliveryHandle()}
+          >
+            <Text style={styles.buttonText}>Done</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     );
@@ -269,16 +282,34 @@ const styles = StyleSheet.create({
   text: {
     marginBottom: 20,
   },
+  textChild: {
+    color: "#3E315A",
+    lineHeight: 20,
+  },
   textInput: {
-    height: Dimensions.get("screen").width * 0.1,
+    height: 50,
     width: Dimensions.get("screen").width * 0.8,
-    backgroundColor: "lightgray",
-    marginLeft: Dimensions.get("screen").width * 0.01,
+    backgroundColor: "#D4CDE3",
+    // marginLeft: Dimensions.get("screen").width * 0.01,
     marginRight: Dimensions.get("screen").width * 0.01,
     marginTop: Dimensions.get("screen").width * 0.02,
-    marginBottom: Dimensions.get("screen").width * 0.02,
-    fontSize: 23,
-    borderRadius: 20,
+    marginBottom: Dimensions.get("screen").width * 0.03,
+    fontSize: 18,
+    borderRadius: 15,
     paddingLeft: 15,
+    paddingTop: 15,
+    paddingBottom: 15,
+  },
+  button: {
+    backgroundColor: "#632DF1",
+    paddingTop: 15,
+    paddingBottom: 15,
+    borderRadius: 15,
+    marginBottom: 30,
+    marginTop: 50,
+  },
+  buttonText: {
+    color: "white",
+    textAlign: "center",
   },
 });

@@ -14,8 +14,10 @@ import {
 import Users from "../../Users";
 import H1 from "../../texts/H1";
 import AsyncStorage from "@react-native-community/async-storage";
-
+import { AuthSession, WebBrowser, Linking } from 'expo'
 import { TextInput } from "react-native-paper";
+import { getCustomerLoginGoogle } from "../../../services/api";
+import SignInGoogle from "./SignInGoogle";
 
 export default function SignIn({ navigation }) {
   const { signIn } = React.useContext(AuthContext);
@@ -23,8 +25,6 @@ export default function SignIn({ navigation }) {
   const [data, setData] = React.useState({
     email: "",
     password: "",
-    // check_textInputChange: false,
-    // secureTextEntry: true,
     isValidUser: true,
     isValidPassword: true,
   });
@@ -34,14 +34,12 @@ export default function SignIn({ navigation }) {
       setData({
         ...data,
         email: val,
-        // check_textInputChange: true,
         isValidUser: true,
       });
     } else {
       setData({
         ...data,
         email: val,
-        // check_textInputChange: false,
         isValidUser: false,
       });
     }
@@ -119,6 +117,28 @@ export default function SignIn({ navigation }) {
     }
   };
 
+
+
+
+
+
+const [authResult, setAuthResult] = React.useState(null)
+
+
+
+
+
+  const loginGoogleHandle = async () => {
+    // getCustomerLoginGoogle().then(
+    //   (res) => {
+    //       <View>{res}</View>
+    //   }, (err) => {
+    //     console.log(err)
+    //   }
+    // )
+    navigation.navigate("SignInGoogle")
+  }
+
   return (
     <ScrollView>
       <Image
@@ -167,6 +187,15 @@ export default function SignIn({ navigation }) {
           }}
         >
           <Text style={styles.buttonText}>Sign In</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          type="submit"
+          onPress={() => {
+            loginGoogleHandle();
+          }}
+        >
+          <Text style={styles.buttonText}>Sign In with google</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}

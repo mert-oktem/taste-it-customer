@@ -24,7 +24,7 @@ const OrderConfirmation = ({ route, navigation }) => {
     address: "",
     city: "",
     postcode: "",
-    time: "",
+    time: "20 mins",
     isLoaded: true
   });
 
@@ -41,20 +41,12 @@ const OrderConfirmation = ({ route, navigation }) => {
           addressTest = res.address
           cityTest = res.cityDescription
           postcodeTest = res.postcode
-          // setData({
-          //   ...data,
-          //   address: res.address,
-          //   city: res.cityDescription,
-          //   postcode: res.postcode,
-          //   isLoaded: false
-          // });
         },
         (err) => {
           console.log(err);
         }
       );
         
-    // }, 1000);
     getDeliveryTime(restaurantID).then(
       (res) => {
         setData({
@@ -80,7 +72,7 @@ const OrderConfirmation = ({ route, navigation }) => {
         console.log(res);
         alert("order sent");
         // props.onHandleHomeChange(res,data.numberOfPeople);
-        navigation.navigate("OrderTab");
+        navigation.navigate("OrderTab", {navigation: navigation});
       },
       (err) => {
         console.log(err);

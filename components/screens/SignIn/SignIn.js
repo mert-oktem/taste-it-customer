@@ -186,14 +186,16 @@ const [authResult, setAuthResult] = React.useState(null)
             loginHandle();
           }}
         >
-         <Button
-          title="Sign In with Google"
+          <Text style={styles.buttonText}>Sign In</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
           type="submit"
           onPress={() => {
             loginGoogleHandle();
           }}
-        /> 
-          <Text style={styles.buttonText}>Sign In</Text>
+        >
+          <Text style={styles.buttonText}>Sign In with google</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}

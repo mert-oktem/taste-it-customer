@@ -140,12 +140,8 @@ export default function App() {
       <Stack.Navigator style={styles.container}>
          <Stack.Screen name="Footer" component={Footer} />
         <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
-<<<<<<< HEAD
        
         
-=======
-
->>>>>>> 7790c2da552d49d85a99d65b71544ad42a6cc504
         <Stack.Screen
           name="EditFlavourProfile"
           component={EditFlavourProfile}

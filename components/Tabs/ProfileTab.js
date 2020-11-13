@@ -4,21 +4,26 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import {getCustomerInfo} from "../../services/api"
 import AsyncStorage from "@react-native-community/async-storage";
 
+
+
 const ProfileTab = (props) => {
   const [firstName, setFirstName] = React.useState(null);
-
-  useEffect(() => {
-    getCustomerInfo().then(
-      (res) => {
-        setFirstName(res.firstName);
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-    
-});
-
+  const [value,setValue] = React.useState();
+//   const refresh = ()=>{
+//     // it re-renders the component
+//    setValue({});
+// }
+useEffect(() => {
+  getCustomerInfo().then(
+    (res) => {
+      setFirstName(res.firstName);
+    },
+    (err) => {
+      console.log(err);
+    }
+  );
+  
+},[]);
 
   return (
     <ScrollView >

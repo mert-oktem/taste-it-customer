@@ -22,12 +22,25 @@ import moment from "moment";
 const MaterialTopTabs = createMaterialTopTabNavigator();
 
 const OrderTab = (props) => {
+  // console.log(props)
   const [isLoaded, setIsLoaded] = React.useState(true);
   const [activeOrders, setActiveOrders] = React.useState(null);
   const [orderStatus, setOrderStatus] = React.useState(1);
   const [countOrderStatus, setCountOrderStatus] = React.useState(0);
   const isFocused = useIsFocused();
-
+  const handleOrderNow = () => {
+    props.navigation.navigate("Footer");
+  };
+  const handleActiveOrderStatus = (orderStatus, orderID) => {
+    props.navigation.navigate("OrderStatus", {
+      orderStatusID: orderStatus,
+      orderID: orderID,
+    });
+  };
+ 
+  const handleOrderHistoryDetails = (orderID) => {
+    props.navigation.navigate("DishDetailScreen", { orderID: orderID });
+  };
   // console.log(isFocused);
   // const handleOrderStausID = (orderID) => {
   //   setOrderStatus(orderID)
@@ -78,7 +91,7 @@ const OrderTab = (props) => {
    
     return activeOrders.map((item) => {
       const handleOrderDetail = () => {
-        props.onHandleActiveOrderStatus(item.orderStatusID, item.orderID);
+        handleActiveOrderStatus(item.orderStatusID, item.orderID);
       };
       const date = moment(item.createdAt).format("h:mm a - YYYY.MM.DD ");
       if (item.orderStatusID < 4) {
@@ -99,7 +112,7 @@ const OrderTab = (props) => {
   const renderOrdersHistory = () => {
     return activeOrders.map((item) => {
       const handleOrderDetail = () => {
-        props.onHandleOrderHistoryDetails(item.orderID);
+        handleOrderHistoryDetails(item.orderID);
       };
       if (item.orderStatusID > 3) {
         

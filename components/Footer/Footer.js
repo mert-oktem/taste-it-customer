@@ -19,7 +19,9 @@ export default class Footer extends Component {
       meal: "",
       restaurantID: "",
     };
+    // console.log(props)
   }
+
   handleHomeChange = (data, meal) => {
     const details = data[0];
     this.setState({
@@ -74,6 +76,8 @@ export default class Footer extends Component {
               onHandleOrderNow={this.handleOrderNow}
               onHandleActiveOrderStatus={this.handleActiveOrderStatus}
               onHandleOrderHistoryDetails={this.handleOrderHistoryDetails}
+              navigation = {this.props.navigation}
+
             />
           )}
 

@@ -360,3 +360,15 @@ export const getCustomerActiveOrders = async () => {
     throw err;
   }
 }
+
+export const getCustomerLoginGoogle = async () => {
+  const url = `${BASE_URL}/customers/login/google`;
+  try {
+    const res = await axios.get(url);
+    console.log(res)
+    const response = res.data;
+    return response;
+  } catch (err) {
+    throw err;
+  }
+}

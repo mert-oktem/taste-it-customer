@@ -9,7 +9,8 @@ import {
   Image,
   TextInput,
   Button,
-  Alert
+  Alert,
+  TouchableOpacity,
 } from "react-native";
 import H1 from "../../texts/H1";
 
@@ -160,7 +161,6 @@ export default function SignUp({ navigation }) {
     }
   };
   const registerHandle = async () => {
-   
     if (
       data.email.length == 0 ||
       data.password.length == 0 ||
@@ -191,18 +191,17 @@ export default function SignUp({ navigation }) {
       });
 
       const res = await response.json();
-     
 
       if (response.status >= 200 && response.status < 300) {
         //Handle success
         let accessToken = res.token;
-        
+
         //On success we will store the access_token in the AsyncStorage
-        
+
         // this.redirect('home');
         signUp(accessToken);
         Alert.alert("User Registered", "Thank you", [{ text: "Ok" }]);
-        navigation.navigate('Root', { screen: 'WelcomeScreen2' });
+        navigation.navigate("Root", { screen: "WelcomeScreen2" });
       } else {
         Alert.alert("Invalid Input!", "Something went wrong, Try again", [
           { text: "Okay" },
@@ -220,11 +219,14 @@ export default function SignUp({ navigation }) {
 
   return (
     <ScrollView>
-      <Image style={styles.image} />
+      <Image
+        style={styles.image}
+        source={require("../../../assets/foodIllustration/customerSide/SignUp2.jpg")}
+      />
       <View style={styles.body}>
         <View style={styles.text}>
-          <H1 h1Text="Let's Get Started." />
-          <Text>Sign up to set up your profile</Text>
+          <H1 h1Text="Set Up Your Profile." />
+          <Text style={styles.textChild}>Sign up to set up your profile</Text>
         </View>
         <TextInput
           placeholder={"First Name"}
@@ -307,14 +309,16 @@ export default function SignUp({ navigation }) {
           </View>
         )}
 
-        <Button
-          title="Sign Up"
+        <TouchableOpacity
+          style={styles.button}
           type="submit"
           onPress={() => {
             registerHandle();
           }}
           // onPress={() => navigation.navigate("WelcomeScreen2")}
-        />
+        >
+          <Text style={styles.buttonText}>Sign Up</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -322,7 +326,7 @@ export default function SignUp({ navigation }) {
 
 const styles = StyleSheet.create({
   image: {
-    height: Dimensions.get("screen").width * 0.56,
+    height: Dimensions.get("screen").width * 0.7,
     width: Dimensions.get("screen").width,
     backgroundColor: "lightgray",
   },
@@ -335,16 +339,34 @@ const styles = StyleSheet.create({
   text: {
     marginBottom: 20,
   },
+  textChild: {
+    color: "#3E315A",
+    lineHeight: 20,
+  },
   textInput: {
-    height: Dimensions.get("screen").width * 0.1,
+    height: 50,
     width: Dimensions.get("screen").width * 0.8,
-    backgroundColor: "lightgray",
-    marginLeft: Dimensions.get("screen").width * 0.01,
+    backgroundColor: "#D4CDE3",
+    // marginLeft: Dimensions.get("screen").width * 0.01,
     marginRight: Dimensions.get("screen").width * 0.01,
     marginTop: Dimensions.get("screen").width * 0.02,
-    marginBottom: Dimensions.get("screen").width * 0.02,
-    fontSize: 23,
-    borderRadius: 20,
+    marginBottom: Dimensions.get("screen").width * 0.03,
+    fontSize: 18,
+    borderRadius: 15,
     paddingLeft: 15,
+    paddingTop: 15,
+    paddingBottom: 15,
+  },
+  button: {
+    backgroundColor: "#632DF1",
+    paddingTop: 15,
+    paddingBottom: 15,
+    borderRadius: 15,
+    marginBottom: 30,
+    marginTop: 50,
+  },
+  buttonText: {
+    color: "white",
+    textAlign: "center",
   },
 });

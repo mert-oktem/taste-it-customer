@@ -141,7 +141,10 @@ const [authResult, setAuthResult] = React.useState(null)
 
   return (
     <ScrollView>
-      <Image style={styles.image} />
+      <Image
+        style={styles.image}
+        source={require("../../../assets/foodIllustration/customerSide/SignIn.jpg")}
+      />
       <ScrollView style={styles.body}>
         <H1 h1Text="Welcome Aboard," />
         <Text style={styles.para1}>Sign in to continue</Text>
@@ -173,34 +176,38 @@ const [authResult, setAuthResult] = React.useState(null)
             </Text>
           </View>
         )}
-        <TouchableOpacity>
+        <TouchableOpacity style={styles.forgotPassword}>
           <Text style={styles.forgot}>Forgot password?</Text>
         </TouchableOpacity>
-        <Button
-          title="Sign In"
+        <TouchableOpacity
+          style={styles.button}
           type="submit"
           onPress={() => {
             loginHandle();
           }}
-        />
+        >
          <Button
           title="Sign In with Google"
           type="submit"
           onPress={() => {
             loginGoogleHandle();
           }}
-        />
-        <Button
-          title="Sign out"
+        /> 
+          <Text style={styles.buttonText}>Sign In</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
           onPress={() => {
             AsyncStorage.clear();
           }}
-        />
+        >
+          <Text style={styles.buttonText}>Sign Out</Text>
+        </TouchableOpacity>
         <View style={styles.signUpText}>
           <Text style={styles.smallText}>Don't have an account?</Text>
 
           <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
-            <Text style={styles.forgot}>Sign up now</Text>
+            <Text style={styles.signUp}>Sign up now</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -221,6 +228,7 @@ const styles = StyleSheet.create({
   },
   para1: {
     marginBottom: Dimensions.get("screen").width * 0.08,
+    color: "#3E315A",
   },
   signUpText: {
     display: "flex",
@@ -230,10 +238,33 @@ const styles = StyleSheet.create({
   },
   smallText: {
     fontSize: 10,
+    color: "#3E315A",
+  },
+  forgotPassword: {
+    marginTop: 10,
   },
   forgot: {
     fontSize: 10,
     textDecorationLine: "underline",
     marginBottom: Dimensions.get("screen").width * 0.08,
+    color: "#3E315A",
+  },
+  signUp: {
+    fontSize: 10,
+    textDecorationLine: "underline",
+    marginBottom: Dimensions.get("screen").width * 0.08,
+    color: "#632DF1",
+  },
+  button: {
+    backgroundColor: "#632DF1",
+    paddingTop: 15,
+    paddingBottom: 15,
+    borderRadius: 15,
+    marginBottom: 25,
+    marginTop: 10,
+  },
+  buttonText: {
+    color: "white",
+    textAlign: "center",
   },
 });

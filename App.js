@@ -140,8 +140,12 @@ export default function App() {
       <Stack.Navigator style={styles.container}>
          <Stack.Screen name="Footer" component={Footer} />
         <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
+<<<<<<< HEAD
        
         
+=======
+
+>>>>>>> 7790c2da552d49d85a99d65b71544ad42a6cc504
         <Stack.Screen
           name="EditFlavourProfile"
           component={EditFlavourProfile}
@@ -156,7 +160,7 @@ export default function App() {
         <Stack.Screen name="DishDetailScreen" component={DishDetailScreen} />
         <Stack.Screen name="OrderStatus" component={OrderStatus} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
-            <Stack.Screen name="RevealConfirm" component={RevealConfirm} />
+        <Stack.Screen name="RevealConfirm" component={RevealConfirm} />
       </Stack.Navigator>
     );
   };
@@ -181,8 +185,8 @@ export default function App() {
           Root()
         ) : (
           <Stack.Navigator initialRouteName="WelcomeScreen1" independent={true}>
-            
             {/* <Stack.Screen name="Home" component={Home} /> */}
+            {/* <Stack.Screen name="HomeScreen" component={HomeScreen} /> */}
             <Stack.Screen name="WelcomeScreen1" component={WelcomeScreen} />
             <Stack.Screen name="SignIn" component={SignIn} />
             <Stack.Screen name="SignUp" component={SignUp} />
@@ -200,7 +204,7 @@ const styles = StyleSheet.create({
   container: {
     maxWidth: Dimensions.get("window").width,
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "white",
     alignItems: "center",
     justifyContent: "center",
   },

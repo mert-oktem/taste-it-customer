@@ -6,29 +6,33 @@ import {
   ScrollView,
   Image,
   Dimensions,
-  Button
+  Button,
 } from "react-native";
 import ReusableBtn from "../../buttons/ReusableBtn";
 import AsyncStorage from "@react-native-community/async-storage";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-const WelcomeScreen = ({navigation}) => {
+const WelcomeScreen = ({ navigation }) => {
   return (
-    <ScrollView style={styles.page}>
-      <Image style={styles.image} />
-      <View>
+    <ScrollView backgroundColor="white">
+      <Image
+        style={styles.image}
+        source={require("../../../assets/foodIllustration/customerSide/Banner.jpg")}
+      />
+      <View style={styles.page}>
         <Text style={styles.heading}>Tailored Food Just For You.</Text>
         <Text style={styles.text}>
           Get a unique culinary experience by having a delivered surprise meal
           picked out to suit your preferences.
         </Text>
-        <Button
-          title="Get Started"
-          
+        <TouchableOpacity
+          style={styles.button}
           onPress={() => {
-            navigation.navigate('SignIn')
+            navigation.navigate("SignIn");
           }}
-          
-        />
+        >
+          <Text style={styles.buttonText}>Get Started</Text>
+        </TouchableOpacity>
       </View>
       {/* <ReusableBtn btnText="Get Started" /> */}
     </ScrollView>
@@ -40,14 +44,18 @@ export default WelcomeScreen;
 const styles = StyleSheet.create({
   image: {
     height: Dimensions.get("screen").width,
-    backgroundColor: "lightgray",
-    marginTop: Dimensions.get("screen").width * 0.15,
+    width: "auto",
+    // backgroundColor: "lightgray",
+    // marginTop: Dimensions.get("screen").width * 0.15,
   },
   page: {
     width: Dimensions.get("screen").width * 0.8,
+    marginLeft: Dimensions.get("screen").width * 0.1,
   },
   text: {
     marginBottom: 15,
+    lineHeight: 20,
+    color: "#3E315A",
   },
   heading: {
     fontSize: 30,
@@ -55,5 +63,16 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginBottom: 15,
     lineHeight: 40,
+    color: "#632DF1",
+  },
+  button: {
+    backgroundColor: "#632DF1",
+    paddingTop: 15,
+    paddingBottom: 15,
+    borderRadius: 15,
+  },
+  buttonText: {
+    color: "white",
+    textAlign: "center",
   },
 });

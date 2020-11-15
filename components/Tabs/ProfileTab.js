@@ -3,10 +3,13 @@ import { View, Text, StyleSheet, ScrollView, Image, Button } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {getCustomerInfo} from "../../services/api"
 import AsyncStorage from "@react-native-community/async-storage";
+import { AuthContext } from "../Context";
 
 
 
 const ProfileTab = (props) => {
+
+  const { signOut } = React.useContext(AuthContext);
   const [firstName, setFirstName] = React.useState(null);
   const [value,setValue] = React.useState();
 //   const refresh = ()=>{
@@ -46,7 +49,8 @@ useEffect(() => {
     <Button
             title="Sign out"
             onPress={() => {
-              AsyncStorage.clear();
+              // AsyncStorage.clear();
+              signOut()
               // navigation.navigate("SignIn")
             }}
           />

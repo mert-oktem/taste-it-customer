@@ -197,14 +197,6 @@ const [authResult, setAuthResult] = React.useState(null)
         >
           <Text style={styles.buttonText}>Sign In with google</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            AsyncStorage.clear();
-          }}
-        >
-          <Text style={styles.buttonText}>Sign Out</Text>
-        </TouchableOpacity>
         <View style={styles.signUpText}>
           <Text style={styles.smallText}>Don't have an account?</Text>
 

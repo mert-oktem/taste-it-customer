@@ -55,19 +55,27 @@ export default class Footer extends Component {
       orderID: orderID,
     });
   };
- 
+
   handleOrderHistoryDetails = (orderID) => {
     this.props.navigation.navigate("DishDetailScreen", { orderID: orderID });
   };
   BottomTabs = () => {
     return (
-      <MaterialBottomTabs.Navigator>
+      <MaterialBottomTabs.Navigator
+        style={styles.footer}
+        activeColor="black"
+        inactiveColor="#3e2465"
+        barStyle={{ backgroundColor: "white" }}
+      >
         <MaterialBottomTabs.Screen
           name="Home"
           style={{ marginBottom: 25 }}
           children={() => (
             <HomeScreen onHandleHomeChange={this.handleHomeChange} />
           )}
+          options={{
+            tabBarLabel: "Home",
+          }}
         />
         <MaterialBottomTabs.Screen
           name="Orders"
@@ -76,17 +84,11 @@ export default class Footer extends Component {
               onHandleOrderNow={this.handleOrderNow}
               onHandleActiveOrderStatus={this.handleActiveOrderStatus}
               onHandleOrderHistoryDetails={this.handleOrderHistoryDetails}
-              navigation = {this.props.navigation}
-
+              navigation={this.props.navigation}
             />
           )}
-
         />
-        <MaterialBottomTabs.Screen
-          name="Contact"
-          component={ContactTab}
-
-        />
+        <MaterialBottomTabs.Screen name="Contact" component={ContactTab} />
         <MaterialBottomTabs.Screen
           name="Profile"
           children={() => (
@@ -109,4 +111,9 @@ export default class Footer extends Component {
   }
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  footer: {
+    backgroundColor: "black",
+    color: "black",
+  },
+});

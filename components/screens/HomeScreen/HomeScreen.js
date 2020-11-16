@@ -77,18 +77,20 @@ export default function HomeScreen(props) {
     <ScrollView>
       <View>
         <View style={styles.center}>
-          <View>
-            <Image />
-            <Text style={styles.title}>Delivery now</Text>
+          <View style={styles.deliverNow}>
+            <Image
+              style={{ width: 30, height: "auto" }}
+              source={require("../../../assets/Icons/accountProfile.png")}
+            />
+            <Text style={styles.title}>Deliver now</Text>
           </View>
           <Text style={styles.address}>{address}</Text>
         </View>
         <Image />
       </View>
       <View>
-        <H1 h1Text="Hello" />
-        <Text>{firstName}</Text>
-        <Text>Explore your surprised food today.</Text>
+        <Text style={styles.heading}>Hello {firstName}</Text>
+        <Text style={styles.box}>Explore your surprised food today.</Text>
         <View style={styles.box}>
           <Image
             style={styles.image}
@@ -136,14 +138,30 @@ export default function HomeScreen(props) {
 
 const styles = StyleSheet.create({
   center: {
-    flex: 1,
-    margin: 24,
-    justifyContent: "center",
-    alignItems: "center",
+    //   flex: 1,
+    //   margin: 24,
+    //   justifyContent: "center",
+    //   alignItems: "center",
+    width: Dimensions.get("screen").width * 0.8,
+    marginLeft: Dimensions.get("screen").width * 0.1,
+  },
+  deliverNow: {
+    display: "flex",
+    flexDirection: "row",
+    // marginLeft: 0,
+  },
+  heading: {
+    fontSize: 30,
+    fontWeight: "bold",
+    width: Dimensions.get("screen").width * 0.8,
+    marginLeft: Dimensions.get("screen").width * 0.1,
+    color: "#3e315a",
   },
   title: {
-    fontSize: 36,
-    marginBottom: 16,
+    fontSize: 12,
+    marginTop: 16,
+    marginBottom: 4,
+    marginLeft: 10,
   },
   image: {
     height: Dimensions.get("screen").width * 0.6,
@@ -156,6 +174,7 @@ const styles = StyleSheet.create({
   box: {
     width: Dimensions.get("screen").width * 0.8,
     marginLeft: Dimensions.get("screen").width * 0.1,
+    color: "#3e315a",
   },
   boxChild: {
     borderColor: "#D4CDE3",

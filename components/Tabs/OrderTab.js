@@ -55,16 +55,16 @@ const OrderTab = (props) => {
       }
       
       else { 
-        setIsLoaded(false);
-        if(res[res.length-1].orderStatusID >= 4){
-          setIsOrderLoaded(false);
+        
+        if(res[res.length-1].orderStatusID < 4){
+          setIsOrderLoaded(true);
           
         } 
         else{
         
-          setIsOrderLoaded(true);
+          setIsOrderLoaded(false);
         }
-        
+        setIsLoaded(false);
       }
  
     }),

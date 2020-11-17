@@ -200,26 +200,27 @@ export default class FlavourProfile extends Component{
         ...dietTypesArray,
         ...allergiesArray,
       ];
-    if (this.state.isSpiciness !== true || this.state.isAllergies !== true || this.state.isCuisines !== true || this.state.isDietTypes !== true) {
-      for (let i = 0; i < finalArray.length; i++) {
-        postChoice(finalArray[i]).then(
-          (res) => {
-            console.log(res)
-          },
-          (error) => {
-            console.log(error);
-            Alert.alert("Error", `Something went wrong! ${error}`);
-          }
+      if(!this.state.isAllergies && !this.state.isCuisines && !this.state.isDietTypes && !this.state.isSpiciness){
+        for (let i = 0; i < finalArray.length; i++) {
+          postChoice(finalArray[i]).then(
+            (res) => {
+              console.log(res)
+            },
+            (error) => {
+              console.log(error);
+              Alert.alert("Error", `Something went wrong! ${error}`);
+            }
+          );
+        } 
+        Alert.alert("successfull","choices saved")
+        this.props.navigation.navigate("DeliveryInfo1")
+      }
+      else{
+        Alert.alert(
+          "Choices Missing", "Please Select Choices by switching tabs"
         );
-      } 
-      Alert.alert("successfull","choices saved")
-      this.props.navigation.navigate("DeliveryInfo1")
-    }
-    else if(this.state.isSpiciness  === true && this.state.isAllergies === true && this.state.isCuisines === true && this.state.isDietTypes === true) {
-      Alert.alert(
-        "Choices Missing", "Please Select Choices by switching tabs"
-      );
-    }
+      }
+  
   };
   // ***************************************change state dynimacally when user clicks any checkbox return an updated array *********************************************/
   handleSpicinessChange = (update) => {

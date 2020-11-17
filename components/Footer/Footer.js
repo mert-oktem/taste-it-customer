@@ -19,7 +19,7 @@ export default class Footer extends Component {
       meal: "",
       restaurantID: "",
     };
-    // console.log(props)
+    // console.log(props.navigation)
   }
 
   handleHomeChange = (data, meal) => {

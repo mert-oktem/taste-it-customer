@@ -6,7 +6,7 @@ import {
   ScrollView,
   Image,
   Button,
-  Dimensions,
+  Dimensions, ActivityIndicator
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { getCustomerInfo } from "../../services/api";
@@ -16,6 +16,8 @@ import { AuthContext } from "../Context";
 const ProfileTab = (props) => {
   const { signOut } = React.useContext(AuthContext);
   const [firstName, setFirstName] = React.useState(null);
+  const [isLoaded, setIsLoaded] = React.useState(true)
+  const [info, setInfo] = React.useState(null)
   const [value, setValue] = React.useState();
   //   const refresh = ()=>{
   //     // it re-renders the component
@@ -24,14 +26,25 @@ const ProfileTab = (props) => {
   useEffect(() => {
     getCustomerInfo().then(
       (res) => {
+        setInfo(res)
         setFirstName(res.firstName);
+        setIsLoaded(false);
       },
       (err) => {
         console.log(err);
       }
     );
-  }, []);
-
+  }, [info]);
+if(isLoaded){
+  return (
+    <View
+      style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+    >
+      <ActivityIndicator size="large" />
+    </View>
+  );
+}
+else {
   return (
     <ScrollView style={{ backgroundColor: "white" }}>
       <View style={styles.page}>
@@ -100,6 +113,8 @@ const ProfileTab = (props) => {
       </View>
     </ScrollView>
   );
+}
+  
 };
 
 export default ProfileTab;

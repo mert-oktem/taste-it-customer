@@ -17,7 +17,6 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { AuthSession, WebBrowser, Linking } from 'expo'
 import { TextInput } from "react-native-paper";
 import { getCustomerLoginGoogle } from "../../../services/api";
-import SignInGoogle from "./SignInGoogle";
 
 export default function SignIn({ navigation }) {
   const { signIn } = React.useContext(AuthContext);
@@ -129,14 +128,8 @@ const [authResult, setAuthResult] = React.useState(null)
 
 
   const loginGoogleHandle = async () => {
-    // getCustomerLoginGoogle().then(
-    //   (res) => {
-    //       <View>{res}</View>
-    //   }, (err) => {
-    //     console.log(err)
-    //   }
-    // )
-    navigation.navigate("SignInGoogle")
+
+    navigation.navigate("LogInGoogle")
   }
 
   return (

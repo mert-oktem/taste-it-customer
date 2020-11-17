@@ -9,11 +9,15 @@ import {
 } from "react-native";
 import H1 from "../../texts/H1";
 import {getCustomerActiveOrders} from "../../../services/api"
+import Footer from "../../footer/Footer";
 
 const DishDetailScreen = ({ route, navigation }) => {
   const[orderSelected, setOrderSelected] = React.useState(null)
   const[isLoaded, setIsLoaded] = React.useState(true)
   const { orderID } = route.params;
+  
+  // console.log(navigation)
+
   useEffect(() => {
     getCustomerActiveOrders().then(
       (res) => {
@@ -67,7 +71,10 @@ const DishDetailScreen = ({ route, navigation }) => {
     <Text style={styles.restaurantAddress}>{orderSelected.phoneNumber}</Text>
           </View>
         </View>
-        <Button title="Review & Feedback" />
+        <Button title="Review & Feedback"
+        //  type="submit"
+         onPress={() => navigation.navigate("ReviewRating", {orderID: orderID})} />
+        {/* <Footer /> */}
       </ScrollView>
     );
   }

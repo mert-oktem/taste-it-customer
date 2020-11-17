@@ -10,7 +10,7 @@ import {
   TextInput,
   Alert,
   ActivityIndicator,
-  TouchableOpacity,
+  TouchableOpacity
 } from "react-native";
 import H1 from "../../texts/H1";
 import AsyncStorage from "@react-native-community/async-storage";
@@ -19,7 +19,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { getCities, getCountries, getProvinces } from "../../../services/api";
 
 export default function DeliveryInfo({ navigation }) {
-  const classes = useStyles();
+  // const classes = useStyles();
   const [citydata, setCitydata] = React.useState("null");
   const [countrydata, setCountrydata] = React.useState("null");
   const [provincedata, setProvincedata] = React.useState("null");
@@ -201,7 +201,7 @@ export default function DeliveryInfo({ navigation }) {
               // placeholderTextColor="#3E315A"
               style={pickerSelect}
               onValueChange={(value) => textInputCountryChange(value)}
-              items={[{ countrydata }]}
+              items={ countrydata }
             />
           </View>
           <View>
@@ -210,7 +210,7 @@ export default function DeliveryInfo({ navigation }) {
               placeholderTextColor="#3E315A"
               style={styles.pickerSelect}
               onValueChange={(value) => textInputProvinceChange(value)}
-              items={[{ provincedata }]}
+              items={ provincedata }
             />
           </View>
 
@@ -220,7 +220,7 @@ export default function DeliveryInfo({ navigation }) {
               placeholderTextColor="#3E315A"
               style={styles.pickerSelect}
               onValueChange={(value) => textInputCityChange(value)}
-              items={[{ citydata }]}
+              items={ citydata }
             />
           </View>
 

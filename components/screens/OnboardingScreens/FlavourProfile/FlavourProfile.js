@@ -8,7 +8,8 @@ import {
   View,
   Button,
   Alert,
-  ActivityIndicator
+  ActivityIndicator,
+  Dimensions,
 } from "react-native";
 import AllergyOptions from "./AllergyOptions";
 import CuisineOptions from "./CuisineOptions";
@@ -25,7 +26,7 @@ import {
 
 const MaterialTopTabs = createMaterialTopTabNavigator();
 
-export default class FlavourProfile extends Component{
+export default class FlavourProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -191,34 +192,41 @@ export default class FlavourProfile extends Component{
 
   onNext = () => {
     const spicinessArray = this.getSelectedSpiciness();
-      const cuisinesArray = this.getSelectedCuisines();
-      const dietTypesArray = this.getSelectedDietTypes();
-      const allergiesArray = this.getSelectedAllergies();
-      const finalArray = [
-        ...spicinessArray,
-        ...cuisinesArray,
-        ...dietTypesArray,
-        ...allergiesArray,
-      ];
-    if (this.state.isSpiciness !== true || this.state.isAllergies !== true || this.state.isCuisines !== true || this.state.isDietTypes !== true) {
+    const cuisinesArray = this.getSelectedCuisines();
+    const dietTypesArray = this.getSelectedDietTypes();
+    const allergiesArray = this.getSelectedAllergies();
+    const finalArray = [
+      ...spicinessArray,
+      ...cuisinesArray,
+      ...dietTypesArray,
+      ...allergiesArray,
+    ];
+    if (
+      this.state.isSpiciness !== true ||
+      this.state.isAllergies !== true ||
+      this.state.isCuisines !== true ||
+      this.state.isDietTypes !== true
+    ) {
       for (let i = 0; i < finalArray.length; i++) {
         postChoice(finalArray[i]).then(
           (res) => {
-            console.log(res)
+            console.log(res);
           },
           (error) => {
             console.log(error);
             Alert.alert("Error", `Something went wrong! ${error}`);
           }
         );
-      } 
-      Alert.alert("successfull","choices saved")
-      this.props.navigation.navigate("DeliveryInfo1")
-    }
-    else if(this.state.isSpiciness  === true && this.state.isAllergies === true && this.state.isCuisines === true && this.state.isDietTypes === true) {
-      Alert.alert(
-        "Choices Missing", "Please Select Choices by switching tabs"
-      );
+      }
+      Alert.alert("successfull", "choices saved");
+      this.props.navigation.navigate("DeliveryInfo1");
+    } else if (
+      this.state.isSpiciness === true &&
+      this.state.isAllergies === true &&
+      this.state.isCuisines === true &&
+      this.state.isDietTypes === true
+    ) {
+      Alert.alert("Choices Missing", "Please Select Choices by switching tabs");
     }
   };
   // ***************************************change state dynimacally when user clicks any checkbox return an updated array *********************************************/
@@ -250,7 +258,19 @@ export default class FlavourProfile extends Component{
   // ***************************************to render all tabs and pass props *********************************************/
   createTopTabs = () => {
     return (
-      <MaterialTopTabs.Navigator>
+      <MaterialTopTabs.Navigator
+        style={styles.navContainer}
+        sceneContainerStyle={[
+          {
+            borderWidth: 2,
+            borderRadius: 20,
+            borderColor: "#d4cde3",
+            marginTop: 20,
+            marginLeft: Dimensions.get("screen").width * 0.1,
+            marginRight: Dimensions.get("screen").width * 0.1,
+          },
+        ]}
+      >
         <MaterialTopTabs.Screen
           name="Allergies"
           children={() => (
@@ -262,6 +282,7 @@ export default class FlavourProfile extends Component{
         />
         <MaterialTopTabs.Screen
           name="Cuisines"
+          backgroundColor="white"
           children={() => (
             <CuisineOptions
               cuisines={this.state.cuisinesData}
@@ -301,33 +322,43 @@ export default class FlavourProfile extends Component{
           <ActivityIndicator size="large" />
         </View>
       );
-    }else{
+    } else {
       return (
-        <ScrollView>
+        <ScrollView style={{ backgroundColor: "white" }}>
           <View style={styles.page}>
-            <H1 h1Text="Flavour Profile" />
-            <Text>Tell us what you love</Text>
+            <View
+              style={[
+                {
+                  width: Dimensions.get("screen").width * 0.8,
+                  marginLeft: Dimensions.get("screen").width * 0.1,
+                  marginBottom: 20,
+                },
+              ]}
+            >
+              <H1 h1Text="Flavour Profile" />
+              <Text>Tell us what you love</Text>
+            </View>
             <NavigationContainer independent={true}>
               {this.createTopTabs()}
             </NavigationContainer>
             <Button
               title="Next"
-              onPress={
-                () => {
-                  this.onNext();
-                }
-              }
+              onPress={() => {
+                this.onNext();
+              }}
             />
           </View>
         </ScrollView>
       );
     }
-    
   }
 }
 
 const styles = StyleSheet.create({
   page: {
     marginTop: 50,
+  },
+  navContainer: {
+    backgroundColor: "white",
   },
 });

@@ -208,7 +208,7 @@ export default function DeliveryInfo({ navigation }) {
             <RNPickerSelect
               placeholder={{ label: "Province" }}
               placeholderTextColor="#3E315A"
-              style={styles.pickerSelect}
+              style={pickerSelect}
               onValueChange={(value) => textInputProvinceChange(value)}
               items={ provincedata }
             />
@@ -218,7 +218,7 @@ export default function DeliveryInfo({ navigation }) {
             <RNPickerSelect
               placeholder={{ label: "City" }}
               placeholderTextColor="#3E315A"
-              style={styles.pickerSelect}
+              style={pickerSelect}
               onValueChange={(value) => textInputCityChange(value)}
               items={ citydata }
             />

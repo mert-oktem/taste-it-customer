@@ -31,7 +31,7 @@ import OrderStatus from "./components/tabs/OrderStatus";
 import RevealConfirm from "./components/tabs/RevealConfirm";
 import OrderTab from "./components/tabs/OrderTab";
 import SignInGoogle from "./components/screens/signIn/SignInGoogle";
-import LogInGoogle from "./components/screens/signIn/LogInGoogle"
+import LogInGoogle from "./components/screens/signIn/LogInGoogle";
 
 const Stack = createStackNavigator();
 
@@ -140,8 +140,6 @@ export default function App() {
       <Stack.Navigator style={styles.container}>
         <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
          <Stack.Screen name="Footer" component={Footer} />
-        
-       
         <Stack.Screen name="EditFlavourProfile" component={EditFlavourProfile} />
         <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
         <Stack.Screen name="EditDelivery" component={EditDelivery} />
@@ -181,10 +179,14 @@ export default function App() {
             {/* <Stack.Screen name="Home" component={Home} /> */}
             {/* <Stack.Screen name="HomeScreen" component={HomeScreen} /> */}
             <Stack.Screen name="WelcomeScreen1" component={WelcomeScreen} />
+            <Stack.Screen
+              name="OrderConfirmation"
+              component={OrderConfirmation}
+            />
             <Stack.Screen name="SignIn" component={SignIn} />
             <Stack.Screen name="SignUp" component={SignUp} />
             <Stack.Screen name="Root" component={Root} />
-            <Stack.Screen name = "SignInGoogle" component = {SignInGoogle} />
+            <Stack.Screen name="SignInGoogle" component={SignInGoogle} />
             {/* <Stack.Screen name="Root1" component={Root1} /> */}
           </Stack.Navigator>
         )}

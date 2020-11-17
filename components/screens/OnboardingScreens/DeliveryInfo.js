@@ -14,20 +14,9 @@ import {
 } from "react-native";
 import H1 from "../../texts/H1";
 import AsyncStorage from "@react-native-community/async-storage";
-import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-import MenuItem from "@material-ui/core/MenuItem";
 import RNPickerSelect from "react-native-picker-select";
+import DropDownPicker from "react-native-dropdown-picker";
 import { getCities, getCountries, getProvinces } from "../../../services/api";
-
-const useStyles = makeStyles({
-  inputField: {
-    borderRadius: 20,
-    width: Dimensions.get("screen").width * 0.8,
-    paddingLeft: 1,
-    marginBottom: 20,
-  },
-});
 
 export default function DeliveryInfo({ navigation }) {
   const classes = useStyles();
@@ -206,13 +195,13 @@ export default function DeliveryInfo({ navigation }) {
             <H1 h1Text="Delivery Information" />
             <Text style={styles.textChild}>You say when and where</Text>
           </View>
-          <View>
+          <View style={styles.picker}>
             <RNPickerSelect
               placeholder={{ label: "Country" }}
-              placeholderTextColor="#3E315A"
-              style={styles.pickerSelect}
+              // placeholderTextColor="#3E315A"
+              style={pickerSelect}
               onValueChange={(value) => textInputCountryChange(value)}
-              items={countrydata}
+              items={[{ countrydata }]}
             />
           </View>
           <View>
@@ -221,7 +210,7 @@ export default function DeliveryInfo({ navigation }) {
               placeholderTextColor="#3E315A"
               style={styles.pickerSelect}
               onValueChange={(value) => textInputProvinceChange(value)}
-              items={provincedata}
+              items={[{ provincedata }]}
             />
           </View>
 
@@ -231,7 +220,7 @@ export default function DeliveryInfo({ navigation }) {
               placeholderTextColor="#3E315A"
               style={styles.pickerSelect}
               onValueChange={(value) => textInputCityChange(value)}
-              items={citydata}
+              items={[{ citydata }]}
             />
           </View>
 
@@ -272,6 +261,14 @@ export default function DeliveryInfo({ navigation }) {
   }
 }
 
+const pickerSelect = {
+  inputiOS: {
+    color: "red",
+    backgroundColor: "red",
+  },
+  placeholderColor: "white",
+};
+
 const styles = StyleSheet.create({
   body: {
     width: Dimensions.get("screen").width * 0.8,
@@ -311,5 +308,9 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     textAlign: "center",
+  },
+  picker: {
+    borderColor: "black",
+    borderWidth: 5,
   },
 });

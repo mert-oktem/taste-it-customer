@@ -31,7 +31,7 @@ const OrderTab = (props) => {
   const [countOrderStatus, setCountOrderStatus] = React.useState(0);
   // const isFocused = useIsFocused();
   const handleOrderNow = () => {
-    props.navigation.navigate("Footer");
+    props.navigation.navigate("HomeScreen");
   };
   const handleActiveOrderStatus = (orderStatus, orderID) => {
     props.navigation.navigate("OrderStatus", {
@@ -49,13 +49,13 @@ const OrderTab = (props) => {
     getCustomerActiveOrders().then((res) => {
       // console.log(res)
       setActiveOrders(res);
-      setOrderStatus(res[res.length - 1].orderStatusID);  
+      
       if (res.length === 0) {
         setIsLoaded(true);
       }
       
       else { 
-        
+        setOrderStatus(res[res.length - 1].orderStatusID);  
         if(res[res.length-1].orderStatusID < 4){
           setIsOrderLoaded(true);
           
@@ -71,27 +71,9 @@ const OrderTab = (props) => {
       (err) => {
         console.log(err);
       };
-  }, [activeOrders, orderStatus]);
+  }, [activeOrders, orderStatus, isLoaded, isOrderLoaded]);
 
-  const createTopTabs = () => {
-    return (
-      <MaterialTopTabs.Navigator>
-        <MaterialTopTabs.Screen
-          name="Active Orders"
-          children={() => (
-            <ActiveOrder onHandleOrder={props.onHandleOrderNow} />
-          )}
-        />
-        <MaterialTopTabs.Screen
-          name="Order History"
-          children={() => (
-            <OrderHistory onHandleOrder={props.onHandleOrderNow} />
-          )}
-        />
-      </MaterialTopTabs.Navigator>
-    );
-  };
-  
+ 
 
   const renderOrders = () => {
         return activeOrders.map((item) => {
@@ -134,6 +116,26 @@ const OrderTab = (props) => {
     });
   };
 
+  const createTopTabs = () => {
+    return (
+      <MaterialTopTabs.Navigator>
+        <MaterialTopTabs.Screen
+          name="Active Orders"
+          children={() => (
+            <ActiveOrder onHandleOrder={handleOrderNow} />
+          )}
+        />
+        <MaterialTopTabs.Screen
+          name="Order History"
+          children={() => (
+            <OrderHistory onHandleOrder={handleOrderNow} />
+          )}
+        />
+      </MaterialTopTabs.Navigator>
+    );
+  };
+  
+
   const createTopTabsOrderMade = () => {
     // console.log("i m here")
     // console.log(activeOrders)
@@ -142,7 +144,7 @@ const OrderTab = (props) => {
         <MaterialTopTabs.Screen
           name="Active Orders"
           children={() => (
-            <ActiveOrderMade
+            <ActiveOrderMade key= {activeOrders[0].orderID}
               // customerActiveOrders = {activeOrders}
               onRenderOrders={renderOrders}
               // changeOrderStatusID={handleOrderStausID()}
@@ -164,7 +166,7 @@ const OrderTab = (props) => {
         <MaterialTopTabs.Screen
           name="Active Orders"
           children={() => (
-            <ActiveOrder onHandleOrder={props.onHandleOrderNow} />
+            <ActiveOrder onHandleOrder={handleOrderNow} />
           )}
         />
         <MaterialTopTabs.Screen

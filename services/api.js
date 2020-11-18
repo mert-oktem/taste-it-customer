@@ -286,6 +286,36 @@ export const putCustomerInfo = async (
     throw err;
   }
 };
+
+export const putReviewOrder = async (
+  orderID,
+  rate,
+  review,
+  isOrderAgain
+) => {
+  let token = null;
+  token = await AsyncStorage.getItem("userToken");
+  const body = {
+    orderID: `${orderID}`,
+    rate : `${rate}`,
+    review: `${review}`,
+    isOrderAgain: `${isOrderAgain}`
+  };
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `${token}`,
+  };
+  const url = `${BASE_URL}/orders`;
+  try {
+    const res = await axios.put(url, body, {
+      headers: headers,
+    });
+    const response = res.data;
+    return response;
+  } catch (err) {
+    throw err;
+  }
+};
 export const getDeactivateChoices = async () => {
   const url = `${BASE_URL}/customers/deactivechoices`;
   let token = null;

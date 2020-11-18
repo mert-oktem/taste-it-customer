@@ -30,8 +30,9 @@ import EditFlavourProfile from "./components/screens/profileScreens/EditFlavourP
 import OrderStatus from "./components/tabs/OrderStatus";
 import RevealConfirm from "./components/tabs/RevealConfirm";
 import OrderTab from "./components/tabs/OrderTab";
-import SignInGoogle from "./components/screens/signIn/SignInGoogle";
 import LogInGoogle from "./components/screens/signIn/LogInGoogle";
+import ReviewRating from "./components/screens/review/ReviewRating";
+import ThanksFeedback from "./components/screens/review/ThanksFeedback";
 
 const Stack = createStackNavigator();
 
@@ -138,10 +139,18 @@ export default function App() {
   const Root = () => {
     return (
       <Stack.Navigator style={styles.container}>
-        <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
+         <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
+       
+        
          <Stack.Screen name="Footer" component={Footer} />
+       
+         <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
+        
+       
+        <Stack.Screen name="ReviewRating" component={ReviewRating} />
+        <Stack.Screen name="ThanksFeedback" component={ThanksFeedback} />
         <Stack.Screen name="EditFlavourProfile" component={EditFlavourProfile} />
-        <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
+        
         <Stack.Screen name="EditDelivery" component={EditDelivery} />
         <Stack.Screen name="EditCustomer" component={EditCustomer} />
         <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
@@ -186,7 +195,8 @@ export default function App() {
             <Stack.Screen name="SignIn" component={SignIn} />
             <Stack.Screen name="SignUp" component={SignUp} />
             <Stack.Screen name="Root" component={Root} />
-            <Stack.Screen name="SignInGoogle" component={SignInGoogle} />
+            
+            <Stack.Screen name="LogInGoogle" component={LogInGoogle} />
             {/* <Stack.Screen name="Root1" component={Root1} /> */}
           </Stack.Navigator>
         )}

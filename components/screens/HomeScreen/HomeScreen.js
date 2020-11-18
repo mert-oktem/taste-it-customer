@@ -8,7 +8,7 @@ import {
   ScrollView,
   Button,
   Alert,
-  TouchableOpacity,
+  TouchableOpacity, ActivityIndicator
 } from "react-native";
 import H1 from "../../texts/H1";
 import RNPickerSelect from "react-native-picker-select";
@@ -26,12 +26,19 @@ export default function HomeScreen(props) {
     numberOfPeople: "",
     budget: "",
   });
+  // const [count, setCount] = React.useState(1);
+  const [info, setInfo] = React.useState(null)
   const [firstName, setFirstName] = React.useState(null);
   const [address, setAddress] = React.useState(null);
+  const [isLoaded, setIsLoaded] = React.useState(true)
   useEffect(() => {
     getCustomerInfo().then(
       (res) => {
+        setInfo(res)
         setFirstName(res.firstName);
+        // let test = 1
+        // setCount(count + 1)
+        setIsLoaded(false)
       },
       (err) => {
         console.log(err);
@@ -45,7 +52,7 @@ export default function HomeScreen(props) {
         console.log(err);
       }
     );
-  }, []);
+  }, [info,firstName, address]);
 
   const noOfPeopleChange = (val) => {
     setData({
@@ -73,67 +80,79 @@ export default function HomeScreen(props) {
       }
     );
   };
-  return (
-    <ScrollView>
-      <View>
-        <View style={styles.center}>
-          <View style={styles.deliverNow}>
+  if(isLoaded){
+    return (
+      <View
+        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+      >
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+  else{
+    return (
+      <ScrollView>
+        <View>
+          <View style={styles.center}>
+            <View style={styles.deliverNow}>
+              <Image
+                style={{ width: 30, height: "auto" }}
+                source={require("../../../assets/Icons/accountProfile.png")}
+              />
+              <Text style={styles.title}>Deliver now</Text>
+            </View>
+            <Text style={styles.address}>{address}</Text>
+          </View>
+          <Image />
+        </View>
+        <View>
+          <Text style={styles.heading}>Hello {firstName}</Text>
+          <Text style={styles.box}>Explore your surprised food today.</Text>
+          <View style={styles.box}>
             <Image
-              style={{ width: 30, height: "auto" }}
-              source={require("../../../assets/Icons/accountProfile.png")}
+              style={styles.image}
+              source={require("../../../assets/foodIllustration/customerSide/Nacho.png")}
             />
-            <Text style={styles.title}>Deliver now</Text>
-          </View>
-          <Text style={styles.address}>{address}</Text>
-        </View>
-        <Image />
-      </View>
-      <View>
-        <Text style={styles.heading}>Hello {firstName}</Text>
-        <Text style={styles.box}>Explore your surprised food today.</Text>
-        <View style={styles.box}>
-          <Image
-            style={styles.image}
-            source={require("../../../assets/foodIllustration/customerSide/Nacho.png")}
-          />
-          <View style={styles.boxChild}>
-            <View style={styles.pickerField}>
-              <Text style={styles.pickerText}>Quantity</Text>
-              <RNPickerSelect
-                onValueChange={(value) => noOfPeopleChange(value)}
-                items={[
-                  { label: "1 Meal", value: "1" },
-                  { label: "2 Meals", value: "2" },
-                  { label: "3 Meals", value: "3" },
-                  { label: "4 Meals", value: "4" },
-                  { label: "5 Meals", value: "5" },
-                ]}
-              />
+            <View style={styles.boxChild}>
+              <View style={styles.pickerField}>
+                <Text style={styles.pickerText}>Quantity</Text>
+                <RNPickerSelect
+                  onValueChange={(value) => noOfPeopleChange(value)}
+                  items={[
+                    { label: "1 Meal", value: "1" },
+                    { label: "2 Meals", value: "2" },
+                    { label: "3 Meals", value: "3" },
+                    { label: "4 Meals", value: "4" },
+                    { label: "5 Meals", value: "5" },
+                  ]}
+                />
+              </View>
+              <View style={styles.pickerField}>
+                <Text style={styles.pickerText}>Budget</Text>
+                <RNPickerSelect
+                  onValueChange={(value) => budgetChange(value)}
+                  items={[
+                    { label: "$6 to $10", value: "10" },
+                    { label: "$11 to $15", value: "15" },
+                    { label: "$16 to $20", value: "20" },
+                    { label: "+$20", value: "100" },
+                  ]}
+                />
+              </View>
+              <TouchableOpacity
+                style={styles.button}
+                type="submit"
+                onPress={() => orderHandle()}
+              >
+                <Text style={styles.buttonText}>Submit Order</Text>
+              </TouchableOpacity>
             </View>
-            <View style={styles.pickerField}>
-              <Text style={styles.pickerText}>Budget</Text>
-              <RNPickerSelect
-                onValueChange={(value) => budgetChange(value)}
-                items={[
-                  { label: "$6 to $10", value: "10" },
-                  { label: "$11 to $15", value: "15" },
-                  { label: "$16 to $20", value: "20" },
-                  { label: "+$20", value: "100" },
-                ]}
-              />
-            </View>
-            <TouchableOpacity
-              style={styles.button}
-              type="submit"
-              onPress={() => orderHandle()}
-            >
-              <Text style={styles.buttonText}>Submit Order</Text>
-            </TouchableOpacity>
           </View>
         </View>
-      </View>
-    </ScrollView>
-  );
+      </ScrollView>
+    );
+  }
+  
 }
 
 const styles = StyleSheet.create({

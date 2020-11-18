@@ -1,109 +1,68 @@
-import * as React from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
-import * as Linking from "expo-linking";
-import * as WebBrowser from "expo-web-browser";
-import Constants from "expo-constants";
+import React from "react"
+import { StyleSheet, Text, View, Image, Button } from "react-native"
+import * as Google from 'expo-google-app-auth';
 
 export default class App extends React.Component {
-  state = {
-    redirectData: null,
-  };
+  constructor(props) {
+    super(props)
+    this.state = {
+      signedIn: false,
+      name: "",
+      photoUrl: ""
+    }
+  }
+  signIn = async () => {
+    // console.log("I m here")
+    try {
+      const result = await Google.logInAsync({
+        androidClientId:
+          "173267690533-kf2qspl8h5o9dvcnt6k9gim7eamh5gr3.apps.googleusercontent.com",
+        iosClientId: "173267690533-tvsggv64k8i3075hrmg03526ul1r13fb.apps.googleusercontent.com",
+        scopes: ["profile", "email"]
+      })
 
+      if (result.type === "success") {
+        this.setState({
+          signedIn: true,
+          name: result.user.name,
+          photoUrl: result.user.photoUrl
+        })
+      } else {
+        console.log("cancelled")
+      }
+    } catch (e) {
+      console.log("error", e)
+    }
+  }
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>Redirect Example</Text>
-
-        <Button
-          onPress={this._openBrowserAsync}
-          title="Tap here to try it out with openBrowserAsync"
-        />
-
-        <Button
-          onPress={this._openAuthSessionAsync}
-          title="Tap here to try it out with openAuthSessionAsync"
-        />
-
-        {this._maybeRenderRedirectData()}
+        {this.state.signedIn ? (
+          <LoggedInPage name={this.state.name} photoUrl={this.state.photoUrl} />
+        ) : (
+          <LoginPage signIn={this.signIn} />
+        )}
       </View>
-    );
+    )
   }
+}
 
-  _handleRedirect = (event) => {
-    if (Constants.platform.ios) {
-      WebBrowser.dismissBrowser();
-    } else {
-      this._removeLinkingListener();
-    }
+const LoginPage = props => {
+  return (
+    <View>
+      <Text style={styles.header}>Sign In With Google</Text>
+      <Button title="Sign in with Google" onPress={() => props.signIn()} />
+    </View>
+  )
+}
 
-    let data = Linking.parse(event.url);
-
-    this.setState({ redirectData: data });
-  };
-
-  // openAuthSessionAsync doesn't require that you add Linking listeners, it
-  // returns the redirect URL in the resulting Promise
-  _openAuthSessionAsync = async () => {
-    try {
-      let result = await WebBrowser.openAuthSessionAsync(
-        // We add `?` at the end of the URL since the test backend that is used
-        // just appends `authToken=<token>` to the URL provided.
-        `http://localhost:5000/api/customers/login/google/?linkingUri=${Linking.makeUrl("/?")}`
-      );
-      let redirectData;
-      if (result.url) {
-        redirectData = Linking.parse(result.url);
-      }
-      this.setState({ result, redirectData });
-    } catch (error) {
-      alert(error);
-      console.log(error);
-    }
-  };
-
-  // openBrowserAsync requires that you subscribe to Linking events and the
-  // resulting Promise only contains information about whether it was canceled
-  // or dismissed
-  _openBrowserAsync = async () => {
-    try {
-      this._addLinkingListener();
-      let result = await WebBrowser.openBrowserAsync(
-        // We add `?` at the end of the URL since the test backend that is used
-        // just appends `authToken=<token>` to the URL provided.
-        `https://backend-xxswjknyfi.now.sh/?linkingUri=${Linking.makeUrl("/?")}`
-      );
-
-      // https://github.com/expo/expo/issues/5555
-      if (Constants.platform.ios) {
-        this._removeLinkingListener();
-      }
-
-      this.setState({ result });
-    } catch (error) {
-      alert(error);
-      console.log(error);
-    }
-  };
-
-  _addLinkingListener = () => {
-    Linking.addEventListener("url", this._handleRedirect);
-  };
-
-  _removeLinkingListener = () => {
-    Linking.removeEventListener("url", this._handleRedirect);
-  };
-
-  _maybeRenderRedirectData = () => {
-    if (!this.state.redirectData) {
-      return;
-    }
-
-    return (
-      <Text style={{ marginTop: 30 }}>
-        {JSON.stringify(this.state.redirectData)}
-      </Text>
-    );
-  };
+const LoggedInPage = props => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Welcome:{props.name}</Text>
+      <Image style={styles.image} source={{ uri: props.photoUrl }} />
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -111,11 +70,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
-    paddingBottom: 40,
+    justifyContent: "center"
   },
   header: {
-    fontSize: 25,
-    marginBottom: 25,
+    fontSize: 25
   },
-});
+  image: {
+    marginTop: 15,
+    width: 150,
+    height: 150,
+    borderColor: "rgba(0,0,0,0.2)",
+    borderWidth: 3,
+    borderRadius: 150
+  }
+})

@@ -76,11 +76,14 @@ export default class FlavourProfile extends Component{
         });
         let needData = [];
         for (let i = 0; i < res.length; i++) {
-          needData.push({
-            id: i,
-            key: res[i].choiceDescription,
-            checked: false,
-          });
+          if(res[i].choiceID !== 13){
+            needData.push({
+              id: i,
+              key: res[i].choiceDescription,
+              checked: false,
+            });
+          }
+         
         }
         this.setState({
           allergiesData: needData,

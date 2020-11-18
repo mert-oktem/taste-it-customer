@@ -139,18 +139,19 @@ export default function App() {
   const Root = () => {
     return (
       <Stack.Navigator style={styles.container}>
-         <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
-       
-        
-         <Stack.Screen name="Footer" component={Footer} />
-       
-         <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
-        
-       
+        <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
+
+        <Stack.Screen name="Footer" component={Footer} />
+
+        <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
+
         <Stack.Screen name="ReviewRating" component={ReviewRating} />
         <Stack.Screen name="ThanksFeedback" component={ThanksFeedback} />
-        <Stack.Screen name="EditFlavourProfile" component={EditFlavourProfile} />
-        
+        <Stack.Screen
+          name="EditFlavourProfile"
+          component={EditFlavourProfile}
+        />
+
         <Stack.Screen name="EditDelivery" component={EditDelivery} />
         <Stack.Screen name="EditCustomer" component={EditCustomer} />
         <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
@@ -195,7 +196,7 @@ export default function App() {
             <Stack.Screen name="SignIn" component={SignIn} />
             <Stack.Screen name="SignUp" component={SignUp} />
             <Stack.Screen name="Root" component={Root} />
-            
+
             <Stack.Screen name="LogInGoogle" component={LogInGoogle} />
             {/* <Stack.Screen name="Root1" component={Root1} /> */}
           </Stack.Navigator>

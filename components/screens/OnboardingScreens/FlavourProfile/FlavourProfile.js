@@ -38,9 +38,13 @@ export default class FlavourProfile extends Component{
       isCuisines: true,
       isDietTypes: true,
       isAllergies: true,
+      isTest: true
     };
     this.handleSpicinessChange = this.handleSpicinessChange.bind(this);
-    this.getSelectedSpiciness = this.getSelectedSpiciness.bind(this);
+    // this.getSelectedSpiciness = this.getSelectedSpiciness.bind(this);
+    // this.getSelectedAllergies = this.getSelectedAllergies.bind(this);
+    // this.getSelectedCuisines = this.getSelectedCuisines.bind(this);
+    // this.getSelectedDietTypes = this.getSelectedDietTypes.bind(this);
   }
   // ***************************************get data from server through api *********************************************/
   componentDidMount() {
@@ -141,9 +145,6 @@ export default class FlavourProfile extends Component{
         Selected.push(keys[i]);
       }
     }
-    this.setState({
-      isSpiciness: false,
-    });
     return Selected;
   }
   getSelectedCuisines() {
@@ -155,9 +156,6 @@ export default class FlavourProfile extends Component{
         Selected.push(keys[i]);
       }
     }
-    this.setState({
-      isCuisines: false,
-    });
     return Selected;
   }
   getSelectedDietTypes() {
@@ -169,9 +167,6 @@ export default class FlavourProfile extends Component{
         Selected.push(keys[i]);
       }
     }
-    this.setState({
-      isDietTypes: false,
-    });
     return Selected;
   }
   getSelectedAllergies() {
@@ -183,24 +178,25 @@ export default class FlavourProfile extends Component{
         Selected.push(keys[i]);
       }
     }
-    this.setState({
-      isAllergies: false,
-    });
     return Selected;
   }
 
   onNext = () => {
+
     const spicinessArray = this.getSelectedSpiciness();
       const cuisinesArray = this.getSelectedCuisines();
       const dietTypesArray = this.getSelectedDietTypes();
       const allergiesArray = this.getSelectedAllergies();
+
       const finalArray = [
         ...spicinessArray,
         ...cuisinesArray,
         ...dietTypesArray,
         ...allergiesArray,
       ];
-      if(!this.state.isAllergies && !this.state.isCuisines && !this.state.isDietTypes && !this.state.isSpiciness){
+      if(allergiesArray.length > 0 || spicinessArray.length >0 || cuisinesArray.length >0 || dietTypesArray.length > 0)
+      {
+        console.log("here at 229")
         for (let i = 0; i < finalArray.length; i++) {
           postChoice(finalArray[i]).then(
             (res) => {

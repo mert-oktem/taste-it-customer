@@ -52,7 +52,7 @@ export default function HomeScreen(props) {
         console.log(err);
       }
     );
-  }, [info]);
+  }, [info,firstName, address]);
 
   const noOfPeopleChange = (val) => {
     setData({

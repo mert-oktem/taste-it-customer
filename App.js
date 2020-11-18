@@ -139,10 +139,14 @@ export default function App() {
   const Root = () => {
     return (
       <Stack.Navigator style={styles.container}>
-        <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
-        <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
-        <Stack.Screen name="Footer" component={Footer} />
+         <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
+       
         
+         <Stack.Screen name="Footer" component={Footer} />
+       
+         <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
+        
+       
         <Stack.Screen name="ReviewRating" component={ReviewRating} />
         <Stack.Screen name="ThanksFeedback" component={ThanksFeedback} />
         <Stack.Screen name="EditFlavourProfile" component={EditFlavourProfile} />

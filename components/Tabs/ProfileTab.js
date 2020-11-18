@@ -34,7 +34,7 @@ const ProfileTab = (props) => {
         console.log(err);
       }
     );
-  }, [info]);
+  }, [info,firstName]);
 if(isLoaded){
   return (
     <View

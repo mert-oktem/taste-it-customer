@@ -6,7 +6,8 @@ import {
   ScrollView,
   Image,
   Button,
-  Dimensions, ActivityIndicator
+  Dimensions,
+  ActivityIndicator,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { getCustomerInfo } from "../../services/api";
@@ -16,17 +17,14 @@ import { AuthContext } from "../Context";
 const ProfileTab = (props) => {
   const { signOut } = React.useContext(AuthContext);
   const [firstName, setFirstName] = React.useState(null);
-  const [isLoaded, setIsLoaded] = React.useState(true)
-  const [info, setInfo] = React.useState(null)
+  const [isLoaded, setIsLoaded] = React.useState(true);
+  const [info, setInfo] = React.useState(null);
   const [value, setValue] = React.useState();
-  //   const refresh = ()=>{
-  //     // it re-renders the component
-  //    setValue({});
-  // }
+
   useEffect(() => {
     getCustomerInfo().then(
       (res) => {
-        setInfo(res)
+        setInfo(res);
         setFirstName(res.firstName);
         setIsLoaded(false);
       },
@@ -34,87 +32,95 @@ const ProfileTab = (props) => {
         console.log(err);
       }
     );
-  }, [info,firstName]);
-if(isLoaded){
-  return (
-    <View
-      style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-    >
-      <ActivityIndicator size="large" />
-    </View>
-  );
-}
-else {
-  return (
-    <ScrollView style={{ backgroundColor: "white" }}>
-      <View style={styles.page}>
-        <View>
-          <Text style={styles.title}>Hi, {firstName}</Text>
-          <Image />
-        </View>
-        <TouchableOpacity
-          style={styles.card}
-          onPress={props.onHandleCustomerChange}
-        >
-          <View style={styles.cardInner}>
-            <Image
-              style={styles.icons}
-              source={require("../../assets/Icons/accountProfile.png")}
-            />
-            <Text style={styles.cardText}>Account Profile</Text>
-          </View>
-          <Image
-            style={styles.arrow}
-            source={require("../../assets/Icons/forwardArrow.png")}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.card}
-          onPress={props.onHandleDeliveryChange}
-        >
-          <View style={styles.cardInner}>
-            <Image
-              style={styles.icons}
-              source={require("../../assets/Icons/deliveryInformation.png")}
-            />
-            <Text style={styles.cardText}>Delivery Information</Text>
-          </View>
-          <Image
-            style={styles.arrow}
-            source={require("../../assets/Icons/forwardArrow.png")}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.card}
-          onPress={props.onHandleFlavourChange}
-        >
-          <View style={styles.cardInner}>
-            <Image
-              style={styles.icons}
-              source={require("../../assets/Icons/flavourProfile.png")}
-            />
-            <Text style={styles.cardText}>Flavour Profile</Text>
-          </View>
-          <Image
-            style={styles.arrow}
-            source={require("../../assets/Icons/forwardArrow.png")}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            // AsyncStorage.clear();
-            signOut();
-            // navigation.navigate("SignIn")
-          }}
-        >
-          <Text style={styles.buttonText}>Log Out</Text>
-        </TouchableOpacity>
+  }, [info, firstName]);
+
+  // const signOutHandler = async () => {
+  //   try {
+  //     await AsyncStorage.removeItem("userToken");
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  //   props.navigation.navigate("Root1", {screen : "WelcomeScreen1"});
+    
+  // };
+
+  if (isLoaded) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" />
       </View>
-    </ScrollView>
-  );
-}
-  
+    );
+  } else {
+    return (
+      <ScrollView style={{ backgroundColor: "white" }}>
+        <View style={styles.page}>
+          <View>
+            <Text style={styles.title}>Hi, {firstName}</Text>
+            <Image />
+          </View>
+          <TouchableOpacity
+            style={styles.card}
+            onPress={props.onHandleCustomerChange}
+          >
+            <View style={styles.cardInner}>
+              <Image
+                style={styles.icons}
+                source={require("../../assets/Icons/accountProfile.png")}
+              />
+              <Text style={styles.cardText}>Account Profile</Text>
+            </View>
+            <Image
+              style={styles.arrow}
+              source={require("../../assets/Icons/forwardArrow.png")}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.card}
+            onPress={props.onHandleDeliveryChange}
+          >
+            <View style={styles.cardInner}>
+              <Image
+                style={styles.icons}
+                source={require("../../assets/Icons/deliveryInformation.png")}
+              />
+              <Text style={styles.cardText}>Delivery Information</Text>
+            </View>
+            <Image
+              style={styles.arrow}
+              source={require("../../assets/Icons/forwardArrow.png")}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.card}
+            onPress={props.onHandleFlavourChange}
+          >
+            <View style={styles.cardInner}>
+              <Image
+                style={styles.icons}
+                source={require("../../assets/Icons/flavourProfile.png")}
+              />
+              <Text style={styles.cardText}>Flavour Profile</Text>
+            </View>
+            <Image
+              style={styles.arrow}
+              source={require("../../assets/Icons/forwardArrow.png")}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              
+              // signOutHandler();
+              signOut();
+              
+            }}
+          >
+            <Text style={styles.buttonText}>Log Out</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    );
+  }
 };
 
 export default ProfileTab;

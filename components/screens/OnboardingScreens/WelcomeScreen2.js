@@ -13,48 +13,23 @@ import {
 } from "react-native";
 import ReusableBtn from "../../buttons/ReusableBtn";
 import AsyncStorage from "@react-native-community/async-storage";
+import {getCustomerInfo} from "../../../services/api"
 
 const WelcomeScreen2 = ({ navigation }) => {
   const [isLoading, setIsLoading] = React.useState(true);
-  const [userToken, setUserToken] = React.useState(null);
   const [items, setItems] = React.useState(null);
 
   useEffect(() => {
     setTimeout(async () => {
-      // setIsLoading(false);
-      let userToken;
-      userToken = null;
-      try {
-        userToken = await AsyncStorage.getItem("userToken");
-        setIsLoading(false);
-        setUserToken(userToken);
-        let response = await fetch("http://localhost:5000/api/customers/", {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `${userToken}`,
-          },
-        });
-
-        const res = await response.json();
-        // console.log(res.firstName);
-
-        if (response.status >= 200 && response.status < 300) {
+      getCustomerInfo().then(
+        (res) => {
           setItems(res.firstName);
-          // Alert.alert("User Info displayed", "Thank you", [{ text: "Ok" }]);
-        } else {
-          Alert.alert("Invalid Input!", "Something went wrong, Try again", [
-            { text: "Okay" },
-          ]);
-          //Handle error
-          let error = res;
-          throw error;
+          setIsLoading(false)
+        },
+        (err) => {
+          console.log(err);
         }
-      } catch (e) {
-        console.log(e);
-      }
-      // console.log('user token: ', userToken);
+      );
     }, 1000);
   }, []);
 

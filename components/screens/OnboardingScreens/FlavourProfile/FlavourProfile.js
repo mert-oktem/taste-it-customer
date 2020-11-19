@@ -39,13 +39,9 @@ export default class FlavourProfile extends Component {
       isCuisines: true,
       isDietTypes: true,
       isAllergies: true,
-      isTest: true
+      isTest: true,
     };
     this.handleSpicinessChange = this.handleSpicinessChange.bind(this);
-    // this.getSelectedSpiciness = this.getSelectedSpiciness.bind(this);
-    // this.getSelectedAllergies = this.getSelectedAllergies.bind(this);
-    // this.getSelectedCuisines = this.getSelectedCuisines.bind(this);
-    // this.getSelectedDietTypes = this.getSelectedDietTypes.bind(this);
   }
   // ***************************************get data from server through api *********************************************/
   componentDidMount() {
@@ -60,6 +56,7 @@ export default class FlavourProfile extends Component {
             id: i,
             key: res[i].choiceDescription,
             checked: false,
+            icon: res[i].pictureURI
           });
         }
         this.setState({
@@ -77,19 +74,18 @@ export default class FlavourProfile extends Component {
         });
         let needData = [];
         for (let i = 0; i < res.length; i++) {
-          if(res[i].choiceID !== 13){
+          if (res[i].choiceDescription !== "No Allergens") {
             needData.push({
               id: i,
               key: res[i].choiceDescription,
               checked: false,
+              icon: res[i].pictureURI
             });
           }
-         
         }
         this.setState({
           allergiesData: needData,
         });
-        // console.log(needData);
       },
       (error) => {
         Alert.alert("Error", `Something went wrong! ${error}`);
@@ -106,6 +102,7 @@ export default class FlavourProfile extends Component {
             id: i,
             key: res[i].choiceDescription,
             checked: false,
+            icon: res[i].pictureURI
           });
         }
         this.setState({
@@ -127,6 +124,7 @@ export default class FlavourProfile extends Component {
             id: i,
             key: res[i].choiceDescription,
             checked: false,
+            icon: res[i].pictureURI
           });
         }
         this.setState({
@@ -186,41 +184,39 @@ export default class FlavourProfile extends Component {
   }
 
   onNext = () => {
-
     const spicinessArray = this.getSelectedSpiciness();
-      const cuisinesArray = this.getSelectedCuisines();
-      const dietTypesArray = this.getSelectedDietTypes();
-      const allergiesArray = this.getSelectedAllergies();
+    const cuisinesArray = this.getSelectedCuisines();
+    const dietTypesArray = this.getSelectedDietTypes();
+    const allergiesArray = this.getSelectedAllergies();
 
-      const finalArray = [
-        ...spicinessArray,
-        ...cuisinesArray,
-        ...dietTypesArray,
-        ...allergiesArray,
-      ];
-      if(allergiesArray.length > 0 || spicinessArray.length >0 || cuisinesArray.length >0 || dietTypesArray.length > 0)
-      {
-        console.log("here at 229")
-        for (let i = 0; i < finalArray.length; i++) {
-          postChoice(finalArray[i]).then(
-            (res) => {
-              console.log(res)
-            },
-            (error) => {
-              console.log(error);
-              Alert.alert("Error", `Something went wrong! ${error}`);
-            }
-          );
-        } 
-        Alert.alert("successfull","choices saved")
-        this.props.navigation.navigate("DeliveryInfo1")
-      }
-      else{
-        Alert.alert(
-          "Choices Missing", "Please Select Choices by switching tabs"
+    const finalArray = [
+      ...spicinessArray,
+      ...cuisinesArray,
+      ...dietTypesArray,
+      ...allergiesArray,
+    ];
+    if (
+      allergiesArray.length > 0 ||
+      spicinessArray.length > 0 ||
+      cuisinesArray.length > 0 ||
+      dietTypesArray.length > 0
+    ) {
+      for (let i = 0; i < finalArray.length; i++) {
+        postChoice(finalArray[i]).then(
+          (res) => {
+            console.log(res);
+          },
+          (error) => {
+            console.log(error);
+            Alert.alert("Error", `Something went wrong! ${error}`);
+          }
         );
       }
-  
+      Alert.alert("successfull", "choices saved");
+      this.props.navigation.navigate("DeliveryInfo1");
+    } else {
+      Alert.alert("Choices Missing", "Please Select Choices by switching tabs");
+    }
   };
   // ***************************************change state dynimacally when user clicks any checkbox return an updated array *********************************************/
   handleSpicinessChange = (update) => {
@@ -265,28 +261,31 @@ export default class FlavourProfile extends Component {
         ]}
       >
         <MaterialTopTabs.Screen
-          name="Allergies"
+          name="Allergy"
           children={() => (
             <AllergyOptions
+              key= "1"
               allergies={this.state.allergiesData}
               updateAllergies={this.handleAllergiesChange}
             />
           )}
         />
         <MaterialTopTabs.Screen
-          name="Cuisines"
+          name="Cuisine"
           backgroundColor="white"
           children={() => (
             <CuisineOptions
+              key="2"
               cuisines={this.state.cuisinesData}
               updateCuisines={this.handleCuisinesChange}
             />
           )}
         />
         <MaterialTopTabs.Screen
-          name="Diet Choices"
+          name="Diet Type"
           children={() => (
             <DietTypes
+              key="3"
               dietTypes={this.state.dietTypesData}
               updateDietTypes={this.handleDietTypesChange}
             />
@@ -296,6 +295,7 @@ export default class FlavourProfile extends Component {
           name="Spiciness"
           children={() => (
             <SpicinessOptions
+              key="4"
               spiciness={this.state.spicinessData}
               updateSpiciness={this.handleSpicinessChange}
             />

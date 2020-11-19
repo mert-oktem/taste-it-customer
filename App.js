@@ -30,16 +30,15 @@ import EditFlavourProfile from "./components/screens/profileScreens/EditFlavourP
 import OrderStatus from "./components/tabs/OrderStatus";
 import RevealConfirm from "./components/tabs/RevealConfirm";
 import OrderTab from "./components/tabs/OrderTab";
-import LogInGoogle from "./components/screens/signIn/LogInGoogle";
 import ReviewRating from "./components/screens/review/ReviewRating";
 import ThanksFeedback from "./components/screens/review/ThanksFeedback";
+import LoggedInGoogle from "./components/screens/signIn/LoggedInGoogle";
 
 const Stack = createStackNavigator();
 
 export default function App() {
   const initialLoginState = {
     isLoading: true,
-
     userToken: null,
   };
 
@@ -139,18 +138,15 @@ export default function App() {
   const Root = () => {
     return (
       <Stack.Navigator style={styles.container}>
+        <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
+           <Stack.Screen name="Footer" component={Footer} />
+        
          <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
-       
-        
-         <Stack.Screen name="Footer" component={Footer} />
-       
-         <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
-        
-       
+     
+         <Stack.Screen name="LoggedInGoogle" component={LoggedInGoogle} />
         <Stack.Screen name="ReviewRating" component={ReviewRating} />
         <Stack.Screen name="ThanksFeedback" component={ThanksFeedback} />
         <Stack.Screen name="EditFlavourProfile" component={EditFlavourProfile} />
-        
         <Stack.Screen name="EditDelivery" component={EditDelivery} />
         <Stack.Screen name="EditCustomer" component={EditCustomer} />
         <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
@@ -161,32 +157,14 @@ export default function App() {
         <Stack.Screen name="OrderStatus" component={OrderStatus} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="RevealConfirm" component={RevealConfirm} />
+        {/* <Stack.Screen name="Root1" component={Root1} /> */}
       </Stack.Navigator>
     );
   };
-  // const Root1 = () => {
-  //   return (
-  //     <Stack.Navigator style={styles.container}>
-  //       <Stack.Screen name="Footer" component={Footer} />
-  //       <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
-  //       <Stack.Screen name="WelcomeScreen1" component={WelcomeScreen} />
-  //       <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
-  //       <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
-  //       <Stack.Screen name="HomeScreen" component={HomeScreen} />
 
-  //     </Stack.Navigator>
-  //   );
-  // };
-
-  return (
-    <AuthContext.Provider value={authContext}>
-      <NavigationContainer>
-        {loginState.userToken !== null ? (
-          Root()
-        ) : (
-          <Stack.Navigator initialRouteName="WelcomeScreen1" independent={true}>
-            {/* <Stack.Screen name="Home" component={Home} /> */}
-            {/* <Stack.Screen name="HomeScreen" component={HomeScreen} /> */}
+  const Root1 = () => {
+    return (
+      <Stack.Navigator initialRouteName="WelcomeScreen1" independent={true}>
             <Stack.Screen name="WelcomeScreen1" component={WelcomeScreen} />
             <Stack.Screen
               name="OrderConfirmation"
@@ -195,10 +173,17 @@ export default function App() {
             <Stack.Screen name="SignIn" component={SignIn} />
             <Stack.Screen name="SignUp" component={SignUp} />
             <Stack.Screen name="Root" component={Root} />
-            
-            <Stack.Screen name="LogInGoogle" component={LogInGoogle} />
-            {/* <Stack.Screen name="Root1" component={Root1} /> */}
           </Stack.Navigator>
+    )
+  }
+
+  return (
+    <AuthContext.Provider value={authContext}>
+      <NavigationContainer>
+        {loginState.userToken !== null ? (
+          Root()
+        ) : (
+            Root1()   
         )}
       </NavigationContainer>
     </AuthContext.Provider>

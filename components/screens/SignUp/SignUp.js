@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import H1 from "../../texts/H1";
+import {postCustomerInfo} from "../../../services/api"
 
 export default function SignUp({ navigation }) {
   const { signUp } = React.useContext(AuthContext);
@@ -174,47 +175,17 @@ export default function SignUp({ navigation }) {
       return;
     }
 
-    try {
-      let response = await fetch("http://localhost:5000/api/customers/", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: data.email,
-          password: data.password,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          phoneNumber: data.phoneNumber,
-        }),
-      });
-
-      const res = await response.json();
-
-      if (response.status >= 200 && response.status < 300) {
-        //Handle success
+    postCustomerInfo(data.email, data.password, data.firstName, data.lastName, data.phoneNumber).then(
+      (res) => {
         let accessToken = res.token;
-
-        //On success we will store the access_token in the AsyncStorage
-
-        // this.redirect('home');
         signUp(accessToken);
-        Alert.alert("User Registered", "Thank you", [{ text: "Ok" }]);
+        Alert.alert("Done", "user logged In", [{ text: "Okay" }]);
         navigation.navigate("Root", { screen: "WelcomeScreen2" });
-      } else {
-        Alert.alert("Invalid Input!", "Something went wrong, Try again", [
-          { text: "Okay" },
-        ]);
-        //Handle error
-        let error = res;
-        throw error;
+      },
+      (err) => {
+        console.log(err);
       }
-    } catch (error) {
-      // this.setState({error: error});
-      console.log(error);
-      // this.setState({showProgress: false});
-    }
+    );
   };
 
   return (
@@ -232,7 +203,6 @@ export default function SignUp({ navigation }) {
           placeholder={"First Name"}
           textContentType={"name"}
           autoCapitalize="none"
-          // value="John"
           onChangeText={(val) => textInputFirstChange(val)}
           onEndEditing={(e) => handleValidFirst(e.nativeEvent.text)}
           style={styles.textInput}
@@ -248,7 +218,6 @@ export default function SignUp({ navigation }) {
           placeholder={"Last Name"}
           textContentType={"name"}
           autoCapitalize="none"
-          // value="Remison"
           onChangeText={(val) => textInputLastChange(val)}
           onEndEditing={(e) => handleValidLast(e.nativeEvent.text)}
           style={styles.textInput}
@@ -264,11 +233,11 @@ export default function SignUp({ navigation }) {
           placeholder={"Phone Number"}
           textContentType={"name"}
           autoCapitalize="none"
-          // value="234556778"
           onChangeText={(val) => textInputPhoneChange(val)}
           onEndEditing={(e) => handleValidPhone(e.nativeEvent.text)}
           style={styles.textInput}
         />
+        
         {data.isValidPhone ? null : (
           <View duration={500}>
             <Text style={styles.errorMsg}>
@@ -276,6 +245,9 @@ export default function SignUp({ navigation }) {
             </Text>
           </View>
         )}
+        <Text style={styles.text}>
+                  *Contact for your delivery
+                </Text>
         <TextInput
           placeholder={"Email"}
           textContentType={"emailAddress"}

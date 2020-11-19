@@ -96,6 +96,7 @@ export default class Footer extends Component {
               onHandleCustomerChange={this.handleCustomerChange}
               onHandleDeliveryChange={this.handleDeliveryChange}
               onHandleFlavourChange={this.handleFlavourChange}
+              navigation={this.props.navigation}
             />
           )}
         />

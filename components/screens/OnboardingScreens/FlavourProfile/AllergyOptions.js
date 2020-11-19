@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import { Text, StyleSheet, View, Dimensions, Alert } from "react-native";
+import { Text, StyleSheet, View, Dimensions, Image} from "react-native";
 import { CheckBox } from "react-native-elements";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { Button } from "react-native-paper";
-import { getAllergy } from "../../../../services/api";
 
 export default class AllergyOptions extends Component {
   constructor(props) {
@@ -13,7 +10,6 @@ export default class AllergyOptions extends Component {
     };
   }
   onchecked(id) {
-    // console.log(id)
     const data = this.props.allergies;
     const index = data.findIndex((x) => x.id === id);
     data[index].checked = !data[index].checked;
@@ -25,8 +21,12 @@ export default class AllergyOptions extends Component {
   renderAllergies() {
     return this.props.allergies.map((item, key) => {
       return (
-        <View style={styles.optionsList}>
-          <Text>{item.key}</Text>
+        <View key={item.id} style={styles.optionsList}>
+          <Image
+                style={styles.icons}
+                source={{uri: `${item.icon}`}}
+              />
+          <Text style = {styles.optionsListText}>{item.key}</Text>
           <CheckBox
             key={item.id}
             onPress={() => {
@@ -60,9 +60,9 @@ const styles = StyleSheet.create({
   options: {
     // marginTop: 50,
     // width: Dimensions.get("screen").width * 0.8,
-    paddingLeft: Dimensions.get("screen").width * 0.1,
-    paddingRight: Dimensions.get("screen").width * 0.1,
-    paddingTop: Dimensions.get("screen").width * 0.1,
+    paddingLeft: Dimensions.get("screen").width * 0.05,
+    paddingRight: Dimensions.get("screen").width * 0.03,
+    paddingTop: Dimensions.get("screen").width * 0.05,
     backgroundColor: "white",
   },
   optionsList: {
@@ -71,4 +71,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
+  icons: {
+    width: 15,
+    height: 15,
+  },
+  optionsListText: {
+    marginLeft: 30
+  }
 });

@@ -36,8 +36,6 @@ export default function HomeScreen(props) {
       (res) => {
         setInfo(res)
         setFirstName(res.firstName);
-        // let test = 1
-        // setCount(count + 1)
         setIsLoaded(false)
       },
       (err) => {

@@ -14,18 +14,27 @@ import {
 import Users from "../../Users";
 import H1 from "../../texts/H1";
 import AsyncStorage from "@react-native-community/async-storage";
-import { AuthSession, WebBrowser, Linking } from 'expo'
+import { AuthSession, WebBrowser, Linking } from "expo";
 import { TextInput } from "react-native-paper";
-import { getCustomerLoginGoogle } from "../../../services/api";
+import {
+  getCustomerInfo,
+  postCustomerLoginInfo,
+  postGoogleEmail,
+} from "../../../services/api";
+import * as Google from "expo-google-app-auth";
 
 export default function SignIn({ navigation }) {
-  const { signIn } = React.useContext(AuthContext);
+  const { signIn, signUp } = React.useContext(AuthContext);
 
   const [data, setData] = React.useState({
     email: "",
     password: "",
     isValidUser: true,
     isValidPassword: true,
+    signedIn: false,
+    googleFname: "",
+    googleLname: "",
+    googleEmail: "",
   });
 
   const textInputChange = (val) => {
@@ -81,56 +90,81 @@ export default function SignIn({ navigation }) {
       ]);
       return;
     }
-
-    try {
-      let response = await fetch("http://localhost:5000/api/customers/login", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: data.email,
-          password: data.password,
-        }),
-      });
-
-      const res = await response.json();
-
-      if (response.status >= 200 && response.status < 300) {
+    postCustomerLoginInfo(data.email, data.password).then(
+      (res) => {
         let accessToken = res.token;
-
         signIn(accessToken);
         Alert.alert("Done", "user logged In", [{ text: "Okay" }]);
         navigation.navigate("Root", { screen: "Footer" });
-      } else {
-        Alert.alert("Invalid User!", "email or password is incorrect.", [
-          { text: "Okay" },
-        ]);
-
-        let error = res;
-        throw error;
+      },
+      (err) => {
+        console.log(err);
       }
-    } catch (error) {
-      console.log(error);
+    );
+  };
+  const setToken = async (accessToken) => {
+    try {
+      await AsyncStorage.setItem("userToken", accessToken);
+    } catch (e) {
+      console.log(e);
     }
   };
-
-
-
-
-
-
-const [authResult, setAuthResult] = React.useState(null)
-
-
-
-
-
   const loginGoogleHandle = async () => {
+    try {
+      const result = await Google.logInAsync({
+        androidClientId:
+          "173267690533-kf2qspl8h5o9dvcnt6k9gim7eamh5gr3.apps.googleusercontent.com",
+        iosClientId:
+          "173267690533-tvsggv64k8i3075hrmg03526ul1r13fb.apps.googleusercontent.com",
+        scopes: ["profile", "email"],
+      });
 
-    navigation.navigate("LogInGoogle")
-  }
+      if (result.type === "success") {
+        setData({
+          ...data,
+          signedIn: true,
+          googleFname: result.user.givenName,
+          googleLname: result.user.familyName,
+          googleEmail: result.user.email,
+        });
+        postGoogleEmail(result.user.email).then(
+          (res) => {
+            let accessToken = res.token;
+            signIn(accessToken);
+            // setToken(accessToken);
+            getCustomerInfo().then((res) => {
+              if (res.phoneNumber !== null) {
+                navigation.navigate("Root", { screen: "Footer" });
+              } else {
+                navigation.navigate("Root", {
+                  screen: "LoggedInGoogle",
+                  params: {
+                    firstName: result.user.givenName,
+                    lastName: result.user.familyName,
+                    email: result.user.email,
+                  },
+                });
+              }
+            }),
+              (err) => {
+                console.log(err);
+              };
+
+            Alert.alert("Done", "user logged In with google", [
+              { text: "Okay" },
+            ]);
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+      } else {
+        console.log("cancelled");
+      }
+    } catch (e) {
+      console.log("error", e);
+    }
+  };
 
   return (
     <ScrollView>

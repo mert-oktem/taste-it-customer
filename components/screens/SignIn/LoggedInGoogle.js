@@ -1,67 +1,33 @@
-import React, { Component, useEffect } from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import React from "react";
 import {
-  Text,
-  StyleSheet,
-  View,
-  ScrollView,
-  Dimensions,
-  Button,
-  TextInput,
-  Alert,
-  Image,
-} from "react-native";
-import H1 from "../../texts/H1";
-import { putCustomerInfo } from "../../../services/api";
-import { getCustomerInfo } from "../../../services/api";
+    StyleSheet,
+    Text,
+    View,
+    Dimensions,
+    ScrollView,
+    Image,
+    TextInput,
+    Button,
+    Alert,
+    TouchableOpacity,
+  } from "react-native";
+import { putGoogleCustomerInfo} from "../../../services/api";
+  import H1 from "../../texts/H1";
 
-export default function EditCustomer({ navigation }) {
+const LoggedInGoogle = ({ route, navigation }) => {
+  const { firstName } = route.params;
+  const { lastName } = route.params;
   const [data, setData] = React.useState({
-    email: "",
-    password: "",
-    firstName: "",
-    lastName: "",
+   
+    firstName: `${firstName}`,
+    lastName: `${lastName}`,
     phoneNumber: "",
-    isValidUser: true,
+ 
     isValidFirst: true,
     isValidLast: true,
     isValidPhone: true,
-    isValidPassword: true,
   });
-  const [firstName, setFirstName] = React.useState(null);
-  useEffect(() => {
-    getCustomerInfo().then(
-      (res) => {
-        setData({
-          ...data,
-          firstName: res.firstName,
-          lastName: res.lastName,
-          phoneNumber: res.phoneNumber,
-          email: res.email,
-          password: res.password,
-        });
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-  }, []);
 
-  const textInputChange = (val) => {
-    if (val.trim().length >= 4) {
-      setData({
-        ...data,
-        email: val,
-        isValidUser: true,
-      });
-    } else {
-      setData({
-        ...data,
-        email: val,
-        isValidUser: false,
-      });
-    }
-  };
   const textInputFirstChange = (val) => {
     if (val.trim().length >= 4) {
       setData({
@@ -107,36 +73,6 @@ export default function EditCustomer({ navigation }) {
       });
     }
   };
-
-  const handlePasswordChange = (val) => {
-    if (val.trim().length >= 8) {
-      setData({
-        ...data,
-        password: val,
-        isValidPassword: true,
-      });
-    } else {
-      setData({
-        ...data,
-        password: val,
-        isValidPassword: false,
-      });
-    }
-  };
-
-  const handleValidUser = (val) => {
-    if (val.trim().length >= 4) {
-      setData({
-        ...data,
-        isValidUser: true,
-      });
-    } else {
-      setData({
-        ...data,
-        isValidUser: false,
-      });
-    }
-  };
   const handleValidFirst = (val) => {
     if (val.trim().length >= 4) {
       setData({
@@ -177,11 +113,8 @@ export default function EditCustomer({ navigation }) {
       });
     }
   };
-
-  const editCustomerHandle = async () => {
+  const registerGoogleHandle = async () => {
     if (
-      data.email.length == 0 ||
-      data.password.length == 0 ||
       data.firstName.length == 0 ||
       data.lastName.length == 0 ||
       data.phoneNumber.length == 0
@@ -192,29 +125,28 @@ export default function EditCustomer({ navigation }) {
       return;
     }
 
-    putCustomerInfo(
-      data.email,
-      data.password,
-      data.firstName,
-      data.lastName,
-      data.phoneNumber
-    ).then(
-      (res) => {
-        navigation.navigate("Footer");
-      },
-      (err) => {
-        console.log(err);
-        Alert.alert("Error", `Something went wrong! ${err}`);
-      }
+    putGoogleCustomerInfo(data.firstName, data.lastName, data.phoneNumber).then(
+        (res) => {
+            navigation.navigate("Root", { screen: "WelcomeScreen2" });
+          },
+          (err) => {
+            console.log(err);
+            Alert.alert("Error", `Something went wrong! ${err}`);
+          }
     );
   };
 
+  
   return (
     <ScrollView>
+      <Image
+        style={styles.image}
+        source={require("../../../assets/foodIllustration/customerSide/SignUp2.jpg")}
+      />
       <View style={styles.body}>
         <View style={styles.text}>
-          <H1 h1Text="Hello" />
-          <Text>{firstName}</Text>
+          <H1 h1Text="Set Up Your Profile." />
+          <Text style={styles.textChild}>Let's get to know each other.</Text>
         </View>
         <TextInput
           placeholder={"First Name"}
@@ -257,6 +189,7 @@ export default function EditCustomer({ navigation }) {
           onEndEditing={(e) => handleValidPhone(e.nativeEvent.text)}
           style={styles.textInput}
         />
+       
         {data.isValidPhone ? null : (
           <View duration={500}>
             <Text style={styles.errorMsg}>
@@ -264,54 +197,27 @@ export default function EditCustomer({ navigation }) {
             </Text>
           </View>
         )}
-         <Text style={styles.text}>*Contact for your delivery</Text>
-        <TextInput
-          placeholder={"Email"}
-          textContentType={"emailAddress"}
-          autoCapitalize="none"
-          value={data.email}
-          onChangeText={(val) => textInputChange(val)}
-          onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-          style={styles.textInput}
-        />
-        {data.isValidUser ? null : (
-          <View duration={500}>
-            <Text style={styles.errorMsg}>
-              email must be 4 characters long.
-            </Text>
-          </View>
-        )}
-        <TextInput
-          placeholder={"Password"}
-          textContentType={"password"}
-          secureTextEntry={true}
-          autoCapitalize="none"
-          onChangeText={(val) => handlePasswordChange(val)}
-          style={styles.textInput}
-        />
-        {data.isValidPassword ? null : (
-          <View duration={500}>
-            <Text style={styles.errorMsg}>
-              Password must be 8 characters long.
-            </Text>
-          </View>
-        )}
-
-        <Button
-          title="Save"
+ <Text style={styles.text}>*Contact for your delivery</Text>
+        <TouchableOpacity
+          style={styles.button}
           type="submit"
           onPress={() => {
-            editCustomerHandle();
+            registerGoogleHandle();
           }}
-        />
+          // onPress={() => navigation.navigate("WelcomeScreen2")}
+        >
+          <Text style={styles.buttonText}>Sign Up</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
-}
+};
+
+export default LoggedInGoogle;
 
 const styles = StyleSheet.create({
   image: {
-    height: Dimensions.get("screen").width * 0.56,
+    height: Dimensions.get("screen").width * 0.7,
     width: Dimensions.get("screen").width,
     backgroundColor: "lightgray",
   },
@@ -324,16 +230,34 @@ const styles = StyleSheet.create({
   text: {
     marginBottom: 20,
   },
+  textChild: {
+    color: "#3E315A",
+    lineHeight: 20,
+  },
   textInput: {
-    height: Dimensions.get("screen").width * 0.1,
+    height: 50,
     width: Dimensions.get("screen").width * 0.8,
-    backgroundColor: "lightgray",
-    marginLeft: Dimensions.get("screen").width * 0.01,
+    backgroundColor: "#D4CDE3",
+    // marginLeft: Dimensions.get("screen").width * 0.01,
     marginRight: Dimensions.get("screen").width * 0.01,
     marginTop: Dimensions.get("screen").width * 0.02,
-    marginBottom: Dimensions.get("screen").width * 0.02,
-    fontSize: 23,
-    borderRadius: 20,
+    marginBottom: Dimensions.get("screen").width * 0.03,
+    fontSize: 18,
+    borderRadius: 15,
     paddingLeft: 15,
+    paddingTop: 15,
+    paddingBottom: 15,
+  },
+  button: {
+    backgroundColor: "#632DF1",
+    paddingTop: 15,
+    paddingBottom: 15,
+    borderRadius: 15,
+    marginBottom: 30,
+    marginTop: 50,
+  },
+  buttonText: {
+    color: "white",
+    textAlign: "center",
   },
 });

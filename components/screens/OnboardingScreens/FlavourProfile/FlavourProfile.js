@@ -42,10 +42,6 @@ export default class FlavourProfile extends Component {
       isTest: true,
     };
     this.handleSpicinessChange = this.handleSpicinessChange.bind(this);
-    // this.getSelectedSpiciness = this.getSelectedSpiciness.bind(this);
-    // this.getSelectedAllergies = this.getSelectedAllergies.bind(this);
-    // this.getSelectedCuisines = this.getSelectedCuisines.bind(this);
-    // this.getSelectedDietTypes = this.getSelectedDietTypes.bind(this);
   }
   // ***************************************get data from server through api *********************************************/
   componentDidMount() {
@@ -60,6 +56,7 @@ export default class FlavourProfile extends Component {
             id: i,
             key: res[i].choiceDescription,
             checked: false,
+            icon: res[i].pictureURI
           });
         }
         this.setState({
@@ -77,16 +74,18 @@ export default class FlavourProfile extends Component {
         });
         let needData = [];
         for (let i = 0; i < res.length; i++) {
-          needData.push({
-            id: i,
-            key: res[i].choiceDescription,
-            checked: false,
-          });
+          if (res[i].choiceDescription !== "No Allergens") {
+            needData.push({
+              id: i,
+              key: res[i].choiceDescription,
+              checked: false,
+              icon: res[i].pictureURI
+            });
+          }
         }
         this.setState({
           allergiesData: needData,
         });
-        // console.log(needData);
       },
       (error) => {
         Alert.alert("Error", `Something went wrong! ${error}`);
@@ -103,6 +102,7 @@ export default class FlavourProfile extends Component {
             id: i,
             key: res[i].choiceDescription,
             checked: false,
+            icon: res[i].pictureURI
           });
         }
         this.setState({
@@ -124,6 +124,7 @@ export default class FlavourProfile extends Component {
             id: i,
             key: res[i].choiceDescription,
             checked: false,
+            icon: res[i].pictureURI
           });
         }
         this.setState({
@@ -261,28 +262,31 @@ export default class FlavourProfile extends Component {
         ]}
       >
         <MaterialTopTabs.Screen
-          name="Allergies"
+          name="Allergy"
           children={() => (
             <AllergyOptions
+              key= "1"
               allergies={this.state.allergiesData}
               updateAllergies={this.handleAllergiesChange}
             />
           )}
         />
         <MaterialTopTabs.Screen
-          name="Cuisines"
+          name="Cuisine"
           backgroundColor="white"
           children={() => (
             <CuisineOptions
+              key="2"
               cuisines={this.state.cuisinesData}
               updateCuisines={this.handleCuisinesChange}
             />
           )}
         />
         <MaterialTopTabs.Screen
-          name="Diet Choices"
+          name="Diet Type"
           children={() => (
             <DietTypes
+              key="3"
               dietTypes={this.state.dietTypesData}
               updateDietTypes={this.handleDietTypesChange}
             />
@@ -292,6 +296,7 @@ export default class FlavourProfile extends Component {
           name="Spiciness"
           children={() => (
             <SpicinessOptions
+              key="4"
               spiciness={this.state.spicinessData}
               updateSpiciness={this.handleSpicinessChange}
             />

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, StyleSheet, View, Dimensions } from "react-native";
+import { Text, StyleSheet, View, Dimensions, Image } from "react-native";
 import { CheckBox } from "react-native-elements";
 import { getCuisine } from "../../../../services/api";
 import { Button } from "react-native-paper";
@@ -13,7 +13,6 @@ export default class CuisineOptions extends Component {
   }
 
   onchecked(id) {
-    // console.log(id)
     const data = this.props.cuisines;
     const index = data.findIndex((x) => x.id === id);
     data[index].checked = !data[index].checked;
@@ -25,13 +24,19 @@ export default class CuisineOptions extends Component {
   renderCuisines() {
     return this.props.cuisines.map((item, key) => {
       return (
+        <View key={item.id} style={styles.optionsList}>
+            <Image
+                style={styles.icons}
+                source={{uri: `${item.icon}`}}
+              />
+          <Text>{item.key}</Text>
         <CheckBox
           key={item.id}
           onPress={() => {
             this.onchecked(item.id);
           }}
           checked={item.checked}
-          title={item.key}
+          // title={item.key}
           center={true}
           iconRight={true}
           checkedColor="#3e315a"
@@ -45,6 +50,8 @@ export default class CuisineOptions extends Component {
             },
           ]}
         />
+        </View>
+        
       );
     });
   }
@@ -55,9 +62,21 @@ export default class CuisineOptions extends Component {
 
 const styles = StyleSheet.create({
   options: {
+    // marginTop: 50,
+    // width: Dimensions.get("screen").width * 0.8,
     paddingLeft: Dimensions.get("screen").width * 0.1,
     paddingRight: Dimensions.get("screen").width * 0.1,
     paddingTop: Dimensions.get("screen").width * 0.1,
     backgroundColor: "white",
+  },
+  optionsList: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  icons: {
+    width: 15,
+    height: 15
   },
 });

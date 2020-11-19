@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import React, { Component } from "react";
-import { Text, StyleSheet, View } from "react-native";
+import { Text, StyleSheet, View, Image } from "react-native";
 
 import OrderTab from "../tabs/OrderTab";
 import ContactTab from "../tabs/ContactTab";
@@ -69,12 +69,18 @@ export default class Footer extends Component {
       >
         <MaterialBottomTabs.Screen
           name="Home"
-          style={{ marginBottom: 25 }}
+          style={{ marginBottom: 20 }}
           children={() => (
             <HomeScreen onHandleHomeChange={this.handleHomeChange} />
           )}
           options={{
             tabBarLabel: "Home",
+            tabBarIcon: ({ tintColor }) => (
+              <Image
+                source={require("../../assets/Icons/home.png")}
+                style={{ width: 26, height: 26, tintColor: tintColor }}
+              />
+            ),
           }}
         />
         <MaterialBottomTabs.Screen
@@ -87,8 +93,29 @@ export default class Footer extends Component {
               navigation={this.props.navigation}
             />
           )}
+          options={{
+            tabBarLabel: "Orders",
+            tabBarIcon: ({ tintColor }) => (
+              <Image
+                source={require("../../assets/Icons/order_history_mobile.png")}
+                style={{ width: 26, height: 26, tintColor: tintColor }}
+              />
+            ),
+          }}
         />
-        <MaterialBottomTabs.Screen name="Contact" component={ContactTab} />
+        <MaterialBottomTabs.Screen
+          name="Contact"
+          component={ContactTab}
+          options={{
+            tabBarLabel: "Contact",
+            tabBarIcon: ({ tintColor }) => (
+              <Image
+                source={require("../../assets/Icons/contact.png")}
+                style={{ width: 26, height: 26, tintColor: tintColor }}
+              />
+            ),
+          }}
+        />
         <MaterialBottomTabs.Screen
           name="Profile"
           children={() => (
@@ -99,6 +126,15 @@ export default class Footer extends Component {
               navigation={this.props.navigation}
             />
           )}
+          options={{
+            tabBarLabel: "Profile",
+            tabBarIcon: ({ tintColor }) => (
+              <Image
+                source={require("../../assets/Icons/account_web.png")}
+                style={{ width: 26, height: 26, tintColor: tintColor }}
+              />
+            ),
+          }}
         />
       </MaterialBottomTabs.Navigator>
     );

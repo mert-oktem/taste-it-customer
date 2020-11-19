@@ -22,10 +22,16 @@ import {
   postGoogleEmail,
 } from "../../../services/api";
 import * as Google from "expo-google-app-auth";
+import { useFonts } from 'expo-font';
+import { AppLoading } from 'expo';
 
 export default function SignIn({ navigation }) {
   const { signIn, signUp } = React.useContext(AuthContext);
+  const [fontsLoaded] = useFonts({
+    'NexaRegular': require('../../../assets/NexaFont/NexaRegular.otf'),
+    'NexaBold': require('../../../assets/NexaFont/NexaBold.otf'),
 
+  });
   const [data, setData] = React.useState({
     email: "",
     password: "",
@@ -165,7 +171,9 @@ export default function SignIn({ navigation }) {
       console.log("error", e);
     }
   };
-
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  } else{
   return (
     <ScrollView>
       <Image
@@ -235,7 +243,7 @@ export default function SignIn({ navigation }) {
     </ScrollView>
   );
 }
-
+}
 const styles = StyleSheet.create({
   image: {
     height: Dimensions.get("screen").width,
@@ -246,20 +254,24 @@ const styles = StyleSheet.create({
     width: Dimensions.get("screen").width * 0.8,
     marginLeft: Dimensions.get("screen").width * 0.1,
     marginTop: Dimensions.get("screen").width * 0.1,
+    
   },
   para1: {
     marginBottom: Dimensions.get("screen").width * 0.08,
     color: "#3E315A",
+    fontFamily: 'NexaRegular'
   },
   signUpText: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
     marginTop: Dimensions.get("screen").width * 0.04,
+    fontFamily: 'NexaRegular'
   },
   smallText: {
     fontSize: 10,
     color: "#3E315A",
+    fontFamily: 'NexaRegular'
   },
   forgotPassword: {
     marginTop: 10,
@@ -269,12 +281,14 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     marginBottom: Dimensions.get("screen").width * 0.08,
     color: "#3E315A",
+    fontFamily: 'NexaRegular'
   },
   signUp: {
     fontSize: 10,
     textDecorationLine: "underline",
     marginBottom: Dimensions.get("screen").width * 0.08,
     color: "#632DF1",
+    fontFamily: 'NexaRegular'
   },
   button: {
     backgroundColor: "#632DF1",
@@ -287,5 +301,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     textAlign: "center",
+    fontFamily: 'NexaRegular'
   },
 });

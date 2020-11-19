@@ -138,8 +138,9 @@ export default function App() {
   const Root = () => {
     return (
       <Stack.Navigator style={styles.container}>
+        <Stack.Screen name="Footer" component={Footer} />
         <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
-           <Stack.Screen name="Footer" component={Footer} />
+           
         
          <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
      

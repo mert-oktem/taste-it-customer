@@ -26,7 +26,7 @@ import * as Google from "expo-google-app-auth";
 import { useFonts } from "expo-font";
 
 export default function SignIn({ navigation }) {
-  const { signIn, signUp } = React.useContext(AuthContext);
+  const { signIn, signInGoogle } = React.useContext(AuthContext);
   const [fontsLoaded] = useFonts({
     NexaRegular: require("../../../assets/NexaFont/NexaRegular.otf"),
     NexaBold: require("../../../assets/NexaFont/NexaBold.otf"),
@@ -107,13 +107,13 @@ export default function SignIn({ navigation }) {
       }
     );
   };
-  const setToken = async (accessToken) => {
-    try {
-      await AsyncStorage.setItem("userToken", accessToken);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // const setToken = async (accessToken) => {
+  //   try {
+  //     await AsyncStorage.setItem("userToken", accessToken);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
   const loginGoogleHandle = async () => {
     try {
       const result = await Google.logInAsync({
@@ -135,25 +135,25 @@ export default function SignIn({ navigation }) {
         postGoogleEmail(result.user.email).then(
           (res) => {
             let accessToken = res.token;
-            signIn(accessToken);
+            signInGoogle(accessToken, result.user.givenName, result.user.familyName);
             // setToken(accessToken);
-            getCustomerInfo().then((res) => {
-              if (res.phoneNumber !== null) {
-                navigation.navigate("Root", { screen: "Footer" });
-              } else {
-                navigation.navigate("Root", {
-                  screen: "LoggedInGoogle",
-                  params: {
-                    firstName: result.user.givenName,
-                    lastName: result.user.familyName,
-                    email: result.user.email,
-                  },
-                });
-              }
-            }),
-              (err) => {
-                console.log(err);
-              };
+            // getCustomerInfo().then((res) => {
+            //   if (res.phoneNumber !== null) {
+            //     navigation.navigate("Root", { screen: "Footer" });
+            //   } else {
+            //     navigation.navigate("Root", {
+            //       screen: "LoggedInGoogle",
+            //       params: {
+            //         firstName: result.user.givenName,
+            //         lastName: result.user.familyName,
+            //         email: result.user.email,
+            //       },
+            //     });
+            //   }
+            // }),
+            //   (err) => {
+            //     console.log(err);
+            //   };
 
             Alert.alert("Done", "user logged In with google", [
               { text: "Okay" },

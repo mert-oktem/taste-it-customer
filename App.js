@@ -33,15 +33,20 @@ import OrderTab from "./components/tabs/OrderTab";
 import ReviewRating from "./components/screens/review/ReviewRating";
 import ThanksFeedback from "./components/screens/review/ThanksFeedback";
 import LoggedInGoogle from "./components/screens/signIn/LoggedInGoogle";
+import { getCustomerAddress } from "./services/api";
 
 const Stack = createStackNavigator();
 
-export default function App() {
+const App = () => {
   const initialLoginState = {
     isLoading: true,
     userToken: null,
   };
-
+  const [isExistingUser, setIsExistingUser] = React.useState(false)
+  const [isGoogleLogin, setIsGoogleLogin] = React.useState(false)
+  const [isUserLoading, setIsUserLoading] = React.useState(true)
+  const [firstName, setFirstName] = React.useState(null)
+  const [lastName, setLastName] = React.useState(null)
   const loginReducer = (prevState, action) => {
     switch (action.type) {
       case "RETRIEVE_TOKEN":
@@ -78,24 +83,54 @@ export default function App() {
     initialLoginState
   );
 
+  const existedUserHandler = () => {
+    getCustomerAddress().then(
+      (res) => {
+        if(res.address !== undefined){
+          setIsExistingUser(true)
+        } 
+      }
+    ), (err) => {
+      console.log(err)
+      setIsExistingUser(false)
+    }
+    setIsUserLoading(false)
+    // console.log("95", isUserLoading)
+    // console.log("96", isExistingUser)
+  }
   const authContext = React.useMemo(
     () => ({
       signIn: async (foundUser) => {
         const userToken = foundUser;
-
-        // console.log(userToken);
         try {
           await AsyncStorage.setItem("userToken", userToken);
+          existedUserHandler()
         } catch (e) {
           console.log(e);
         }
-
+        
+        dispatch({ type: "LOGIN", token: userToken });
+      },
+      signInGoogle: async (token, firstName, lastName) => {
+        const userToken = token;
+        try {
+          await AsyncStorage.setItem("userToken", userToken);
+          existedUserHandler()
+          setIsGoogleLogin(true)
+          setFirstName(firstName)
+          setLastName(lastName)
+        } catch (e) {
+          console.log(e);
+        }
+        
         dispatch({ type: "LOGIN", token: userToken });
       },
       signOut: async () => {
         try {
-          await AsyncStorage.removeItem("userToken");
+          // await AsyncStorage.removeItem("userToken");
           await AsyncStorage.clear();
+          setIsExistingUser(false)
+          setIsGoogleLogin(false)
         } catch (e) {
           console.log(e);
         }
@@ -103,13 +138,14 @@ export default function App() {
       },
       signUp: async (foundUser) => {
         const userToken = foundUser;
-
         try {
           await AsyncStorage.setItem("userToken", userToken);
+          setIsUserLoading(false)
+          setIsExistingUser(false)
+          // existedUserHandler()
         } catch (e) {
           console.log(e);
         }
-
         dispatch({ type: "REGISTER", token: userToken });
       },
     }),
@@ -122,27 +158,22 @@ export default function App() {
       userToken = null;
       try {
         userToken = await AsyncStorage.getItem("userToken");
+        if(userToken !== null){
+          existedUserHandler()
+        } 
       } catch (e) {
         console.log(e);
       }
       dispatch({ type: "RETRIEVE_TOKEN", token: userToken });
-    }, 1000);
+    }, 2000);
   }, []);
 
-  if (loginState.isLoading) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  }
-  const Root = () => {
+ 
+  const RootSignUp = () => {
     return (
       <Stack.Navigator style={styles.container}>
-         <Stack.Screen name="Footer" component={Footer} />
         <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
-       
-         
+         <Stack.Screen name="Footer" component={Footer} />
          <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
          <Stack.Screen name="LoggedInGoogle" component={LoggedInGoogle} />
         <Stack.Screen name="ReviewRating" component={ReviewRating} />
@@ -158,7 +189,6 @@ export default function App() {
         <Stack.Screen name="OrderStatus" component={OrderStatus} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="RevealConfirm" component={RevealConfirm} />
-        {/* <Stack.Screen name="Root1" component={Root1} /> */}
       </Stack.Navigator>
     );
   };
@@ -166,11 +196,7 @@ export default function App() {
   const RootSignIn = () => {
     return (
       <Stack.Navigator style={styles.container}>
-         
         <Stack.Screen name="Footer" component={Footer} />
-        <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
-         <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
-         <Stack.Screen name="LoggedInGoogle" component={LoggedInGoogle} />
         <Stack.Screen name="ReviewRating" component={ReviewRating} />
         <Stack.Screen name="ThanksFeedback" component={ThanksFeedback} />
         <Stack.Screen
@@ -187,12 +213,33 @@ export default function App() {
         <Stack.Screen name="OrderStatus" component={OrderStatus} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="RevealConfirm" component={RevealConfirm} />
-        {/* <Stack.Screen name="Root1" component={Root1} /> */}
       </Stack.Navigator>
     );
   };
-
-  const Root1 = () => {
+  const RootGoogle = () => {
+    return (
+      <Stack.Navigator style={styles.container}>
+        <Stack.Screen name="LoggedInGoogle" component={LoggedInGoogle} />
+        <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
+         <Stack.Screen name="Footer" component={Footer} />
+         <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
+        <Stack.Screen name="ReviewRating" component={ReviewRating} />
+        <Stack.Screen name="ThanksFeedback" component={ThanksFeedback} />
+        <Stack.Screen name="EditFlavourProfile" component={EditFlavourProfile} />
+        <Stack.Screen name="EditDelivery" component={EditDelivery} />
+        <Stack.Screen name="EditCustomer" component={EditCustomer} />
+        <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
+        <Stack.Screen name="OrderTab" component={OrderTab} />
+        <Stack.Screen name="OrderConfirmation" component={OrderConfirmation} />
+        <Stack.Screen name="YourOrderScreen" component={YourOrderScreen} />
+        <Stack.Screen name="DishDetailScreen" component={DishDetailScreen} />
+        <Stack.Screen name="OrderStatus" component={OrderStatus} />
+        <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        <Stack.Screen name="RevealConfirm" component={RevealConfirm} />
+      </Stack.Navigator>
+    );
+  };
+  const Root = () => {
     return (
       <Stack.Navigator initialRouteName="WelcomeScreen1" independent={true}>
         <Stack.Screen name="WelcomeScreen1" component={WelcomeScreen} />
@@ -203,24 +250,38 @@ export default function App() {
       </Stack.Navigator>
     );
   };
-
+  const checkUser = () => {
+    if(isExistingUser || (isGoogleLogin && isExistingUser)){
+      return RootSignIn()
+    }
+    else if(isGoogleLogin && !isExistingUser){
+      return RootGoogle()
+    }
+    else {
+      return RootSignUp()
+    }
+  }
+  if (loginState.isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
-        {/* {console.log('token', loginState)} */}
-        {loginState.userToken !== null ? (
-          // user.persisted? ? loginStack() : signUpStack()
-          // if(){
-
-          // }
-          Root()
+        {loginState.userToken !== null && isUserLoading !== true ? (
+          checkUser()
         ) : (
-            Root1()   
+            Root()   
         )}
       </NavigationContainer>
     </AuthContext.Provider>
   );
 }
+
+export default App;
 
 const styles = StyleSheet.create({
   container: {

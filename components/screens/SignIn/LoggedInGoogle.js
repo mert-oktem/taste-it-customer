@@ -14,13 +14,13 @@ import {
 import { putGoogleCustomerInfo} from "../../../services/api";
   import H1 from "../../texts/H1";
 
-const LoggedInGoogle = ({ route, navigation }) => {
-  const { firstName } = route.params;
-  const { lastName } = route.params;
+const LoggedInGoogle = ({ navigation }) => {
+  // const { firstName } = route.params;
+  // const { lastName } = route.params;
   const [data, setData] = React.useState({
    
-    firstName: `${firstName}`,
-    lastName: `${lastName}`,
+    firstName: "",
+    lastName: "",
     phoneNumber: "",
  
     isValidFirst: true,
@@ -127,7 +127,7 @@ const LoggedInGoogle = ({ route, navigation }) => {
 
     putGoogleCustomerInfo(data.firstName, data.lastName, data.phoneNumber).then(
         (res) => {
-            navigation.navigate("Root", { screen: "WelcomeScreen2" });
+            navigation.navigate("WelcomeScreen2" );
           },
           (err) => {
             console.log(err);

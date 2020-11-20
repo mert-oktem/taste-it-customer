@@ -132,14 +132,14 @@ export default function HomeScreen(props) {
                 </View>
               </View>
               <View style={styles.pickerField}>
-                <Text style={styles.pickerText}>Budget</Text>
+                <Text style={styles.pickerText}>Budget per meal</Text>
                 <View style={styles.picker}>
                   <RNPickerSelect
                     onValueChange={(value) => budgetChange(value)}
                     items={[
                       { label: "$6 to $10", value: "10" },
-                      { label: "$11 to $15", value: "15" },
-                      { label: "$16 to $20", value: "20" },
+                      { label: "$10 to $15", value: "15" },
+                      { label: "$15 to $20", value: "20" },
                       { label: "+$20", value: "100" },
                     ]}
                   />

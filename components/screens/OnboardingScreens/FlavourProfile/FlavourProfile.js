@@ -261,16 +261,7 @@ export default class FlavourProfile extends Component {
           },
         ]}
       >
-        <MaterialTopTabs.Screen
-          name="Allergy"
-          children={() => (
-            <AllergyOptions
-              key= "1"
-              allergies={this.state.allergiesData}
-              updateAllergies={this.handleAllergiesChange}
-            />
-          )}
-        />
+        
         <MaterialTopTabs.Screen
           name="Cuisine"
           backgroundColor="white"
@@ -302,7 +293,18 @@ export default class FlavourProfile extends Component {
             />
           )}
         />
+        <MaterialTopTabs.Screen
+          name="Allergy"
+          children={() => (
+            <AllergyOptions
+              key= "1"
+              allergies={this.state.allergiesData}
+              updateAllergies={this.handleAllergiesChange}
+            />
+          )}
+        />
       </MaterialTopTabs.Navigator>
+      
     );
   };
 

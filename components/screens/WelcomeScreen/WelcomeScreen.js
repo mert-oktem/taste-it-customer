@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,23 +7,26 @@ import {
   Image,
   Dimensions,
   Button,
+  ActivityIndicator,
 } from "react-native";
-import ReusableBtn from "../../buttons/ReusableBtn";
-import AsyncStorage from "@react-native-community/async-storage";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { useFonts } from 'expo-font';
-import { AppLoading } from 'expo';
+import * as Font from "expo-font";
 
+let customFonts = {
+  NexaRegular: require("../../../assets/NexaFont/NexaRegular.otf"),
+  NexaBold: require("../../../assets/NexaFont/NexaBold.otf"),
+};
 const WelcomeScreen = ({ navigation }) => {
-  const [fontsLoaded] = useFonts({
-    'NexaRegular': require('../../../assets/NexaFont/NexaRegular.otf'),
-    'NexaBold': require('../../../assets/NexaFont/NexaBold.otf'),
+  const [isLoading, setIsLoading] = React.useState(false);
+  const _loadFontsAsync = async () => {
+    await Font.loadAsync(customFonts);
+    setIsLoading(true);
+  };
+  useEffect(() => {
+    _loadFontsAsync();
+  }, []);
 
-  });
-
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  } else{
+  if (isLoading) {
     return (
       <ScrollView backgroundColor="white">
         <Image
@@ -45,11 +48,15 @@ const WelcomeScreen = ({ navigation }) => {
             <Text style={styles.buttonText}>Get Started</Text>
           </TouchableOpacity>
         </View>
-        {/* <ReusableBtn btnText="Get Started" /> */}
       </ScrollView>
     );
+  } else {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
   }
-  
 };
 
 export default WelcomeScreen;
@@ -69,7 +76,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     lineHeight: 20,
     color: "#3E315A",
-    fontFamily: 'NexaRegular'
+    fontFamily: "NexaRegular",
   },
   heading: {
     fontSize: 30,
@@ -78,7 +85,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     lineHeight: 40,
     color: "#632DF1",
-    fontFamily: 'NexaBold'
+    fontFamily: "NexaBold",
   },
   button: {
     backgroundColor: "#632DF1",
@@ -89,6 +96,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     textAlign: "center",
-    fontFamily: 'NexaBold'
+    fontFamily: "NexaBold",
   },
 });

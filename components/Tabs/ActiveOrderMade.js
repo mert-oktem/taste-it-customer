@@ -6,7 +6,6 @@ export default function ActiveOrderMade(props) {
 
   return (
     <ScrollView>
-      <Image />
       {props.onRenderOrders()}
     </ScrollView>
   );

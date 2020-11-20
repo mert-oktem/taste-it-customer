@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Button,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import Users from "../../Users";
 import H1 from "../../texts/H1";
@@ -22,15 +23,13 @@ import {
   postGoogleEmail,
 } from "../../../services/api";
 import * as Google from "expo-google-app-auth";
-import { useFonts } from 'expo-font';
-import { AppLoading } from 'expo';
+import { useFonts } from "expo-font";
 
 export default function SignIn({ navigation }) {
   const { signIn, signUp } = React.useContext(AuthContext);
   const [fontsLoaded] = useFonts({
-    'NexaRegular': require('../../../assets/NexaFont/NexaRegular.otf'),
-    'NexaBold': require('../../../assets/NexaFont/NexaBold.otf'),
-
+    NexaRegular: require("../../../assets/NexaFont/NexaRegular.otf"),
+    NexaBold: require("../../../assets/NexaFont/NexaBold.otf"),
   });
   const [data, setData] = React.useState({
     email: "",
@@ -172,77 +171,81 @@ export default function SignIn({ navigation }) {
     }
   };
   if (!fontsLoaded) {
-    return <AppLoading />;
-  } else{
-  return (
-    <ScrollView>
-      <Image
-        style={styles.image}
-        source={require("../../../assets/foodIllustration/customerSide/SignIn.jpg")}
-      />
-      <ScrollView style={styles.body}>
-        <H1 h1Text="Welcome Aboard," />
-        <Text style={styles.para1}>Sign in to continue</Text>
-        <TextInput
-          placeholder={"Email"}
-          textContentType={"emailAddress"}
-          autoCapitalize="none"
-          onChangeText={(val) => textInputChange(val)}
-          onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  } else {
+    return (
+      <ScrollView>
+        <Image
+          style={styles.image}
+          source={require("../../../assets/foodIllustration/customerSide/SignIn.jpg")}
         />
-        {data.isValidUser ? null : (
-          <View duration={500}>
-            <Text style={styles.errorMsg}>
-              email must be 4 characters long.
-            </Text>
-          </View>
-        )}
-        <TextInput
-          placeholder={"Password"}
-          textContentType={"password"}
-          secureTextEntry={true}
-          autoCapitalize="none"
-          onChangeText={(val) => handlePasswordChange(val)}
-        />
-        {data.isValidPassword ? null : (
-          <View duration={500}>
-            <Text style={styles.errorMsg}>
-              Password must be 8 characters long.
-            </Text>
-          </View>
-        )}
-        <TouchableOpacity style={styles.forgotPassword}>
-          <Text style={styles.forgot}>Forgot password?</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          type="submit"
-          onPress={() => {
-            loginHandle();
-          }}
-        >
-          <Text style={styles.buttonText}>Sign In</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          type="submit"
-          onPress={() => {
-            loginGoogleHandle();
-          }}
-        >
-          <Text style={styles.buttonText}>Sign In with google</Text>
-        </TouchableOpacity>
-        <View style={styles.signUpText}>
-          <Text style={styles.smallText}>Don't have an account?</Text>
-
-          <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
-            <Text style={styles.signUp}>Sign up now</Text>
+        <ScrollView style={styles.body}>
+          <H1 h1Text="Welcome Aboard," />
+          <Text style={styles.para1}>Sign in to continue</Text>
+          <TextInput
+            placeholder={"Email"}
+            textContentType={"emailAddress"}
+            autoCapitalize="none"
+            onChangeText={(val) => textInputChange(val)}
+            onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
+          />
+          {data.isValidUser ? null : (
+            <View duration={500}>
+              <Text style={styles.errorMsg}>
+                email must be 4 characters long.
+              </Text>
+            </View>
+          )}
+          <TextInput
+            placeholder={"Password"}
+            textContentType={"password"}
+            secureTextEntry={true}
+            autoCapitalize="none"
+            onChangeText={(val) => handlePasswordChange(val)}
+          />
+          {data.isValidPassword ? null : (
+            <View duration={500}>
+              <Text style={styles.errorMsg}>
+                Password must be 8 characters long.
+              </Text>
+            </View>
+          )}
+          <TouchableOpacity style={styles.forgotPassword}>
+            <Text style={styles.forgot}>Forgot password?</Text>
           </TouchableOpacity>
-        </View>
+          <TouchableOpacity
+            style={styles.button}
+            type="submit"
+            onPress={() => {
+              loginHandle();
+            }}
+          >
+            <Text style={styles.buttonText}>Sign In</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            type="submit"
+            onPress={() => {
+              loginGoogleHandle();
+            }}
+          >
+            <Text style={styles.buttonText}>Sign In with google</Text>
+          </TouchableOpacity>
+          <View style={styles.signUpText}>
+            <Text style={styles.smallText}>Don't have an account?</Text>
+
+            <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+              <Text style={styles.signUp}>Sign up now</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
       </ScrollView>
-    </ScrollView>
-  );
-}
+    );
+  }
 }
 const styles = StyleSheet.create({
   image: {
@@ -254,24 +257,23 @@ const styles = StyleSheet.create({
     width: Dimensions.get("screen").width * 0.8,
     marginLeft: Dimensions.get("screen").width * 0.1,
     marginTop: Dimensions.get("screen").width * 0.1,
-    
   },
   para1: {
     marginBottom: Dimensions.get("screen").width * 0.08,
     color: "#3E315A",
-    fontFamily: 'NexaRegular'
+    fontFamily: "NexaRegular",
   },
   signUpText: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
     marginTop: Dimensions.get("screen").width * 0.04,
-    fontFamily: 'NexaRegular'
+    fontFamily: "NexaRegular",
   },
   smallText: {
     fontSize: 10,
     color: "#3E315A",
-    fontFamily: 'NexaRegular'
+    fontFamily: "NexaRegular",
   },
   forgotPassword: {
     marginTop: 10,
@@ -281,14 +283,14 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     marginBottom: Dimensions.get("screen").width * 0.08,
     color: "#3E315A",
-    fontFamily: 'NexaRegular'
+    fontFamily: "NexaRegular",
   },
   signUp: {
     fontSize: 10,
     textDecorationLine: "underline",
     marginBottom: Dimensions.get("screen").width * 0.08,
     color: "#632DF1",
-    fontFamily: 'NexaRegular'
+    fontFamily: "NexaRegular",
   },
   button: {
     backgroundColor: "#632DF1",
@@ -301,6 +303,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     textAlign: "center",
-    fontFamily: 'NexaRegular'
+    fontFamily: "NexaRegular",
   },
 });

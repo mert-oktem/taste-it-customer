@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
 import { useFonts } from "expo-font";
 
 const H1 = (props) => {
@@ -7,12 +7,19 @@ const H1 = (props) => {
     NexaRegular: require("../../assets/NexaFont/NexaRegular.otf"),
     NexaXBold: require("../../assets/NexaFont/NexaXBold.otf"),
   });
-
-  return (
-    <View>
-      <Text style={styles.h1Text}>{props.h1Text}</Text>
+  if (fontsLoaded) {
+    return (
+      <View>
+        <Text style={styles.h1Text}>{props.h1Text}</Text>
+      </View>
+    );
+  } else {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <ActivityIndicator size="large" />
     </View>
-  );
+    )
+  }
 };
 
 export default H1;

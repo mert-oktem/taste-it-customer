@@ -95,6 +95,7 @@ export default function App() {
       signOut: async () => {
         try {
           await AsyncStorage.removeItem("userToken");
+          await AsyncStorage.clear();
         } catch (e) {
           console.log(e);
         }
@@ -138,11 +139,38 @@ export default function App() {
   const Root = () => {
     return (
       <Stack.Navigator style={styles.container}>
+         <Stack.Screen name="Footer" component={Footer} />
         <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
-        <Stack.Screen name="Footer" component={Footer} />
-        <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
+       
+         
+         <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
+         <Stack.Screen name="LoggedInGoogle" component={LoggedInGoogle} />
+        <Stack.Screen name="ReviewRating" component={ReviewRating} />
+        <Stack.Screen name="ThanksFeedback" component={ThanksFeedback} />
+        <Stack.Screen name="EditFlavourProfile" component={EditFlavourProfile} />
+        <Stack.Screen name="EditDelivery" component={EditDelivery} />
+        <Stack.Screen name="EditCustomer" component={EditCustomer} />
+        <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
+        <Stack.Screen name="OrderTab" component={OrderTab} />
+        <Stack.Screen name="OrderConfirmation" component={OrderConfirmation} />
+        <Stack.Screen name="YourOrderScreen" component={YourOrderScreen} />
+        <Stack.Screen name="DishDetailScreen" component={DishDetailScreen} />
+        <Stack.Screen name="OrderStatus" component={OrderStatus} />
+        <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        <Stack.Screen name="RevealConfirm" component={RevealConfirm} />
+        {/* <Stack.Screen name="Root1" component={Root1} /> */}
+      </Stack.Navigator>
+    );
+  };
 
-        <Stack.Screen name="LoggedInGoogle" component={LoggedInGoogle} />
+  const RootSignIn = () => {
+    return (
+      <Stack.Navigator style={styles.container}>
+         
+        <Stack.Screen name="Footer" component={Footer} />
+        <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
+         <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
+         <Stack.Screen name="LoggedInGoogle" component={LoggedInGoogle} />
         <Stack.Screen name="ReviewRating" component={ReviewRating} />
         <Stack.Screen name="ThanksFeedback" component={ThanksFeedback} />
         <Stack.Screen
@@ -179,7 +207,16 @@ export default function App() {
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
-        {loginState.userToken !== null ? Root() : Root1()}
+        {/* {console.log('token', loginState)} */}
+        {loginState.userToken !== null ? (
+          // user.persisted? ? loginStack() : signUpStack()
+          // if(){
+
+          // }
+          Root()
+        ) : (
+            Root1()   
+        )}
       </NavigationContainer>
     </AuthContext.Provider>
   );

@@ -164,6 +164,7 @@ export const getCustomerActiveOrders = async () => {
     throw err;
   }
 };
+
 // *********************  Post *****************************//
 
 export const postCustomerLoginInfo = async (email, password) => {

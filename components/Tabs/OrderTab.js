@@ -140,8 +140,17 @@ const OrderTab = (props) => {
         handleOrderHistoryDetails(item.orderID);
       };
       if (item.orderStatusID > 3) {
+        let newMenuID = item.menuID
+            if(item.menuID > 20){
+              newMenuID = 20
+            }
+            let url = `http://localhost:5000/api/menus/image/${newMenuID}`
         return (
           <TouchableOpacity onPress={handleOrderDetail}>
+            <Image 
+              style = {{ width: 50, height: 50}}
+              source={{uri: `${url}`}}
+            />
             <View>
               <Text>{item.menuName}</Text>
               <Text>{item.restaurantID}</Text>

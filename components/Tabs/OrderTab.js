@@ -5,7 +5,9 @@ import {
   StyleSheet,
   Image,
   ScrollView,
-  TouchableOpacity, Button
+  TouchableOpacity,
+  Button,
+  Dimensions,
 } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import H1 from "../texts/H1";
@@ -18,6 +20,7 @@ import OrderHistoryMade from "./OrderHistoryMade";
 import { getCustomerActiveOrders } from "../../services/api";
 import { set } from "react-native-reanimated";
 import moment from "moment";
+import { useFonts } from "expo-font";
 
 const MaterialTopTabs = createMaterialTopTabNavigator();
 
@@ -39,61 +42,96 @@ const OrderTab = (props) => {
       orderID: orderID,
     });
   };
- 
+
   const handleOrderHistoryDetails = (orderID) => {
     props.navigation.navigate("DishDetailScreen", { orderID: orderID });
   };
 
   useEffect(() => {
-   
     getCustomerActiveOrders().then((res) => {
       // console.log(res)
       setActiveOrders(res);
-      
+
       if (res.length === 0) {
         setIsLoaded(true);
-      }
-      
-      else { 
-        setOrderStatus(res[res.length - 1].orderStatusID);  
-        if(res[res.length-1].orderStatusID < 4){
+      } else {
+        setOrderStatus(res[res.length - 1].orderStatusID);
+        if (res[res.length - 1].orderStatusID < 4) {
           setIsOrderLoaded(true);
-          
-        } 
-        else{
-        
+        } else {
           setIsOrderLoaded(false);
         }
         setIsLoaded(false);
       }
- 
     }),
       (err) => {
         console.log(err);
       };
   }, [activeOrders, orderStatus, isLoaded, isOrderLoaded]);
 
- 
-
   const renderOrders = () => {
-        return activeOrders.map((item) => {
-          const handleOrderDetail = () => {
-            handleActiveOrderStatus(item.orderStatusID, item.orderID);
-          }; 
-          const date = moment(item.createdAt).format("h:mm a - YYYY.MM.DD ");
-          if (item.orderStatusID < 4) {
-            return (
-              <TouchableOpacity onPress={handleOrderDetail}>
-                <View>
-                  <Text>{date}</Text>
-                  <Text>{item.orderStatusDescription}</Text>
-                  <Text>View Details</Text>
-                </View>
-              </TouchableOpacity>
-            );
-          }
-         
-        });
+    const [fontsLoaded] = useFonts({
+      NexaRegular: require("../../assets/NexaFont/NexaRegular.otf"),
+      NexaXBold: require("../../assets/NexaFont/NexaXBold.otf"),
+    });
+    return activeOrders.map((item) => {
+      const handleOrderDetail = () => {
+        handleActiveOrderStatus(item.orderStatusID, item.orderID);
+      };
+      const date = moment(item.createdAt).format("h:mm a - YYYY.MM.DD ");
+      if (item.orderStatusID < 4) {
+        return (
+          <TouchableOpacity style={styles.card} onPress={handleOrderDetail}>
+            <Image
+              style={{ width: 100, height: 100 }}
+              source={require("../../assets/foodIllustration/customerSide/Package.png")}
+            />
+            <View
+              style={{
+                width: Dimensions.get("screen").width * 0.42,
+                marginLeft: 15,
+              }}
+            >
+              <Text style={{ fontFamily: "NexaRegular", color: "#3e315a" }}>
+                {date}
+              </Text>
+              <Text
+                style={{
+                  fontFamily: "NexaXBold",
+                  fontSize: 16,
+                  marginTop: 10,
+                  marginBottom: 15,
+                  color: "#632df1",
+                }}
+              >
+                {item.orderStatusDescription}
+              </Text>
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Text
+                  style={{
+                    fontFamily: "NexaXBold",
+                    color: "#3e315a",
+                  }}
+                >
+                  View Details
+                </Text>
+                <Image
+                  style={{ width: 20, height: 20 }}
+                  source={require("../../assets/Icons/forwardArrow.png")}
+                />
+              </View>
+            </View>
+          </TouchableOpacity>
+        );
+      }
+    });
   };
 
   const renderOrdersHistory = () => {
@@ -102,7 +140,6 @@ const OrderTab = (props) => {
         handleOrderHistoryDetails(item.orderID);
       };
       if (item.orderStatusID > 3) {
-        
         return (
           <TouchableOpacity onPress={handleOrderDetail}>
             <View>
@@ -121,20 +158,15 @@ const OrderTab = (props) => {
       <MaterialTopTabs.Navigator>
         <MaterialTopTabs.Screen
           name="Active Orders"
-          children={() => (
-            <ActiveOrder onHandleOrder={handleOrderNow} />
-          )}
+          children={() => <ActiveOrder onHandleOrder={handleOrderNow} />}
         />
         <MaterialTopTabs.Screen
           name="Order History"
-          children={() => (
-            <OrderHistory onHandleOrder={handleOrderNow} />
-          )}
+          children={() => <OrderHistory onHandleOrder={handleOrderNow} />}
         />
       </MaterialTopTabs.Navigator>
     );
   };
-  
 
   const createTopTabsOrderMade = () => {
     // console.log("i m here")
@@ -144,7 +176,8 @@ const OrderTab = (props) => {
         <MaterialTopTabs.Screen
           name="Active Orders"
           children={() => (
-            <ActiveOrderMade key= {activeOrders[0].orderID}
+            <ActiveOrderMade
+              key={activeOrders[0].orderID}
               // customerActiveOrders = {activeOrders}
               onRenderOrders={renderOrders}
               // changeOrderStatusID={handleOrderStausID()}
@@ -165,9 +198,7 @@ const OrderTab = (props) => {
       <MaterialTopTabs.Navigator>
         <MaterialTopTabs.Screen
           name="Active Orders"
-          children={() => (
-            <ActiveOrder onHandleOrder={handleOrderNow} />
-          )}
+          children={() => <ActiveOrder onHandleOrder={handleOrderNow} />}
         />
         <MaterialTopTabs.Screen
           name="Order History"
@@ -182,33 +213,29 @@ const OrderTab = (props) => {
     return (
       <ScrollView>
         <NavigationContainer independent={true}>
-        {createTopTabs()} 
+          {createTopTabs()}
         </NavigationContainer>
       </ScrollView>
     );
-   
   } else {
-    
-    if (isOrderLoaded){
+    if (isOrderLoaded) {
       return (
         <ScrollView>
           <NavigationContainer independent={true}>
-          {createTopTabsOrderMade()}
+            {createTopTabsOrderMade()}
           </NavigationContainer>
         </ScrollView>
       );
-    }else{
+    } else {
       return (
         <ScrollView>
           <NavigationContainer independent={true}>
-          {createTopTabsOnlyOrderHistory()} 
+            {createTopTabsOnlyOrderHistory()}
           </NavigationContainer>
         </ScrollView>
       );
     }
-  } 
-  
-  
+  }
 };
 
 export default OrderTab;
@@ -223,5 +250,17 @@ export const styles = StyleSheet.create({
   title: {
     fontSize: 36,
     marginBottom: 16,
+  },
+  card: {
+    display: "flex",
+    flexDirection: "row",
+    width: Dimensions.get("screen").width * 0.8,
+    marginLeft: Dimensions.get("screen").width * 0.1,
+    borderColor: "#d4cde3",
+    borderWidth: 2,
+    borderRadius: 15,
+    marginTop: 30,
+    padding: 15,
+    alignItems: "center",
   },
 });

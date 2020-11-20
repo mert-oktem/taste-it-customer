@@ -1,28 +1,27 @@
 import React from "react";
 import {
-    StyleSheet,
-    Text,
-    View,
-    Dimensions,
-    ScrollView,
-    Image,
-    TextInput,
-    Button,
-    Alert,
-    TouchableOpacity,
-  } from "react-native";
-import { putGoogleCustomerInfo} from "../../../services/api";
-  import H1 from "../../texts/H1";
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  ScrollView,
+  Image,
+  TextInput,
+  Button,
+  Alert,
+  TouchableOpacity,
+} from "react-native";
+import { putGoogleCustomerInfo } from "../../../services/api";
+import H1 from "../../texts/H1";
 
 const LoggedInGoogle = ({ navigation }) => {
   // const { firstName } = route.params;
   // const { lastName } = route.params;
   const [data, setData] = React.useState({
-   
     firstName: "",
     lastName: "",
     phoneNumber: "",
- 
+
     isValidFirst: true,
     isValidLast: true,
     isValidPhone: true,
@@ -126,19 +125,18 @@ const LoggedInGoogle = ({ navigation }) => {
     }
 
     putGoogleCustomerInfo(data.firstName, data.lastName, data.phoneNumber).then(
-        (res) => {
-            navigation.navigate("WelcomeScreen2" );
-          },
-          (err) => {
-            console.log(err);
-            Alert.alert("Error", `Something went wrong! ${err}`);
-          }
+      (res) => {
+        navigation.navigate("WelcomeScreen2");
+      },
+      (err) => {
+        console.log(err);
+        Alert.alert("Error", `Something went wrong! ${err}`);
+      }
     );
   };
 
-  
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: "white" }}>
       <Image
         style={styles.image}
         source={require("../../../assets/foodIllustration/customerSide/SignUp2.jpg")}
@@ -189,7 +187,7 @@ const LoggedInGoogle = ({ navigation }) => {
           onEndEditing={(e) => handleValidPhone(e.nativeEvent.text)}
           style={styles.textInput}
         />
-       
+
         {data.isValidPhone ? null : (
           <View duration={500}>
             <Text style={styles.errorMsg}>
@@ -197,7 +195,7 @@ const LoggedInGoogle = ({ navigation }) => {
             </Text>
           </View>
         )}
- <Text style={styles.text}>*Contact for your delivery</Text>
+        <Text style={styles.text}>*Contact for your delivery</Text>
         <TouchableOpacity
           style={styles.button}
           type="submit"
@@ -237,7 +235,9 @@ const styles = StyleSheet.create({
   textInput: {
     height: 50,
     width: Dimensions.get("screen").width * 0.8,
-    backgroundColor: "#D4CDE3",
+    borderColor: "#D4CDE3",
+    borderWidth: 2,
+    backgroundColor: "white",
     // marginLeft: Dimensions.get("screen").width * 0.01,
     marginRight: Dimensions.get("screen").width * 0.01,
     marginTop: Dimensions.get("screen").width * 0.02,

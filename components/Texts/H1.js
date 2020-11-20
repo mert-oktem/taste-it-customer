@@ -16,9 +16,9 @@ const H1 = (props) => {
   } else {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <ActivityIndicator size="large" />
-    </View>
-    )
+        <ActivityIndicator size="large" />
+      </View>
+    );
   }
 };
 
@@ -26,7 +26,8 @@ export default H1;
 
 const styles = StyleSheet.create({
   h1Text: {
-    fontSize: 30,
+    fontSize: 32,
+    lineHeight: 39,
     fontWeight: "bold",
     color: "#632DF1",
     fontFamily: "NexaXBold",

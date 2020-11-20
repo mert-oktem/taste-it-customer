@@ -8,7 +8,8 @@ import {
   ScrollView,
   Button,
   Alert,
-  TouchableOpacity, ActivityIndicator
+  TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import H1 from "../../texts/H1";
 import RNPickerSelect from "react-native-picker-select";
@@ -19,6 +20,7 @@ import {
   getCustomerAddress,
 } from "../../../services/api";
 import { set } from "react-native-reanimated";
+import { useFonts } from "expo-font";
 
 export default function HomeScreen(props) {
   // const HomeScreen = (props) => {
@@ -27,16 +29,21 @@ export default function HomeScreen(props) {
     budget: "",
   });
   // const [count, setCount] = React.useState(1);
-  const [info, setInfo] = React.useState(null)
+  const [info, setInfo] = React.useState(null);
   const [firstName, setFirstName] = React.useState(null);
   const [address, setAddress] = React.useState(null);
-  const [isLoaded, setIsLoaded] = React.useState(true)
+  const [isLoaded, setIsLoaded] = React.useState(true);
+  const [fontsLoaded] = useFonts({
+    NexaRegular: require("../../../assets/NexaFont/NexaRegular.otf"),
+    NexaXBold: require("../../../assets/NexaFont/NexaXBold.otf"),
+  });
+
   useEffect(() => {
     getCustomerInfo().then(
       (res) => {
-        setInfo(res)
+        setInfo(res);
         setFirstName(res.firstName);
-        setIsLoaded(false)
+        setIsLoaded(false);
       },
       (err) => {
         console.log(err);
@@ -50,7 +57,7 @@ export default function HomeScreen(props) {
         console.log(err);
       }
     );
-  }, [info,firstName, address]);
+  }, [info, firstName, address]);
 
   const noOfPeopleChange = (val) => {
     setData({
@@ -78,18 +85,15 @@ export default function HomeScreen(props) {
       }
     );
   };
-  if(isLoaded){
+  if (isLoaded) {
     return (
-      <View
-        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-      >
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <ActivityIndicator size="large" />
       </View>
     );
-  }
-  else{
+  } else {
     return (
-      <ScrollView>
+      <ScrollView style={{ backgroundColor: "white" }}>
         <View>
           <View style={styles.center}>
             <View style={styles.deliverNow}>
@@ -105,7 +109,7 @@ export default function HomeScreen(props) {
         </View>
         <View>
           <Text style={styles.heading}>Hello {firstName}</Text>
-          <Text style={styles.box}>Explore your surprised food today.</Text>
+          <Text style={styles.box}>Explore your surprise food today.</Text>
           <View style={styles.box}>
             <Image
               style={styles.image}
@@ -114,28 +118,32 @@ export default function HomeScreen(props) {
             <View style={styles.boxChild}>
               <View style={styles.pickerField}>
                 <Text style={styles.pickerText}>Quantity</Text>
-                <RNPickerSelect
-                  onValueChange={(value) => noOfPeopleChange(value)}
-                  items={[
-                    { label: "1 Meal", value: "1" },
-                    { label: "2 Meals", value: "2" },
-                    { label: "3 Meals", value: "3" },
-                    { label: "4 Meals", value: "4" },
-                    { label: "5 Meals", value: "5" },
-                  ]}
-                />
+                <View style={styles.picker}>
+                  <RNPickerSelect
+                    onValueChange={(value) => noOfPeopleChange(value)}
+                    items={[
+                      { label: "1 Meal", value: "1" },
+                      { label: "2 Meals", value: "2" },
+                      { label: "3 Meals", value: "3" },
+                      { label: "4 Meals", value: "4" },
+                      { label: "5 Meals", value: "5" },
+                    ]}
+                  />
+                </View>
               </View>
               <View style={styles.pickerField}>
                 <Text style={styles.pickerText}>Budget</Text>
-                <RNPickerSelect
-                  onValueChange={(value) => budgetChange(value)}
-                  items={[
-                    { label: "$6 to $10", value: "10" },
-                    { label: "$11 to $15", value: "15" },
-                    { label: "$16 to $20", value: "20" },
-                    { label: "+$20", value: "100" },
-                  ]}
-                />
+                <View style={styles.picker}>
+                  <RNPickerSelect
+                    onValueChange={(value) => budgetChange(value)}
+                    items={[
+                      { label: "$6 to $10", value: "10" },
+                      { label: "$11 to $15", value: "15" },
+                      { label: "$16 to $20", value: "20" },
+                      { label: "+$20", value: "100" },
+                    ]}
+                  />
+                </View>
               </View>
               <TouchableOpacity
                 style={styles.button}
@@ -150,7 +158,6 @@ export default function HomeScreen(props) {
       </ScrollView>
     );
   }
-  
 }
 
 const styles = StyleSheet.create({
@@ -168,14 +175,17 @@ const styles = StyleSheet.create({
     // marginLeft: 0,
   },
   heading: {
-    fontSize: 30,
-    fontWeight: "bold",
+    fontSize: 32,
+    fontFamily: "NexaXBold",
+    marginTop: 20,
     width: Dimensions.get("screen").width * 0.8,
     marginLeft: Dimensions.get("screen").width * 0.1,
     color: "#3e315a",
   },
   title: {
     fontSize: 12,
+    fontFamily: "NexaRegular",
+    color: "#3E315A",
     marginTop: 16,
     marginBottom: 4,
     marginLeft: 10,
@@ -192,6 +202,7 @@ const styles = StyleSheet.create({
     width: Dimensions.get("screen").width * 0.8,
     marginLeft: Dimensions.get("screen").width * 0.1,
     color: "#3e315a",
+    fontFamily: "NexaRegular",
   },
   boxChild: {
     borderColor: "#D4CDE3",
@@ -207,6 +218,8 @@ const styles = StyleSheet.create({
   },
   pickerText: {
     textAlign: "center",
+    fontFamily: "NexaRegular",
+    color: "#3e315A",
     marginTop: 30,
     marginBottom: 10,
   },
@@ -223,5 +236,17 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     textAlign: "center",
+    fontSize: 16,
+    fontFamily: "NexaXBold",
+  },
+  picker: {
+    borderColor: "#D4CDE3",
+    borderWidth: 2,
+    height: 50,
+    paddingTop: 15,
+    paddingLeft: 15,
+    borderRadius: 15,
+    marginTop: Dimensions.get("screen").width * 0.02,
+    marginBottom: Dimensions.get("screen").width * 0.03,
   },
 });

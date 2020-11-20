@@ -140,21 +140,65 @@ const OrderTab = (props) => {
         handleOrderHistoryDetails(item.orderID);
       };
       if (item.orderStatusID > 3) {
-        let newMenuID = item.menuID
-            if(item.menuID > 20){
-              newMenuID = 20
-            }
-            let url = `http://localhost:5000/api/menus/image/${newMenuID}`
+        let newMenuID = item.menuID;
+        if (item.menuID > 20) {
+          newMenuID = 20;
+        }
+        let url = `http://localhost:5000/api/menus/image/${newMenuID}`;
         return (
-          <TouchableOpacity onPress={handleOrderDetail}>
-            <Image 
-              style = {{ width: 50, height: 50}}
-              source={{uri: `${url}`}}
+          <TouchableOpacity style={styles.card2} onPress={handleOrderDetail}>
+            <Image
+              style={{
+                width: 100,
+                height: 100,
+                borderRadius: 15,
+                marginRight: 20,
+              }}
+              source={require("../../assets/foodIllustration/customerSide/Package.png")}
             />
             <View>
-              <Text>{item.menuName}</Text>
-              <Text>{item.restaurantID}</Text>
-              <Text>{item.price}</Text>
+              <Text
+                style={{
+                  fontFamily: "NexaXBold",
+                  fontSize: 16,
+                  marginTop: 10,
+                  marginBottom: 15,
+                  color: "#632df1",
+                }}
+              >
+                {item.menuName}
+              </Text>
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  // justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: 15,
+                }}
+              >
+                <Image
+                  style={{ width: 20, height: 20, marginRight: 7 }}
+                  source={require("../../assets/Icons/price.png")}
+                />
+                <Text style={{ fontFamily: "NexaRegular" }}>
+                  {item.restaurantID}
+                </Text>
+              </View>
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  // justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Image
+                  style={{ width: 20, height: 20, marginRight: 7 }}
+                  source={require("../../assets/Icons/price.png")}
+                />
+                <Text style={{ fontFamily: "NexaRegular" }}>${item.price}</Text>
+              </View>
             </View>
           </TouchableOpacity>
         );
@@ -204,12 +248,14 @@ const OrderTab = (props) => {
   };
   const createTopTabsOnlyOrderHistory = () => {
     return (
-      <MaterialTopTabs.Navigator>
+      <MaterialTopTabs.Navigator style={{ backgroundColor: "white" }}>
         <MaterialTopTabs.Screen
+          style={{ backgroundColor: "white" }}
           name="Active Orders"
           children={() => <ActiveOrder onHandleOrder={handleOrderNow} />}
         />
         <MaterialTopTabs.Screen
+          style={{ backgroundColor: "white" }}
           name="Order History"
           children={() => (
             <OrderHistoryMade onRenderOrders={renderOrdersHistory} />
@@ -220,7 +266,7 @@ const OrderTab = (props) => {
   };
   if (isLoaded) {
     return (
-      <ScrollView>
+      <ScrollView style={{ backgroundColor: "white" }}>
         <NavigationContainer independent={true}>
           {createTopTabs()}
         </NavigationContainer>
@@ -229,7 +275,7 @@ const OrderTab = (props) => {
   } else {
     if (isOrderLoaded) {
       return (
-        <ScrollView>
+        <ScrollView style={{ backgroundColor: "white" }}>
           <NavigationContainer independent={true}>
             {createTopTabsOrderMade()}
           </NavigationContainer>
@@ -237,7 +283,7 @@ const OrderTab = (props) => {
       );
     } else {
       return (
-        <ScrollView>
+        <ScrollView style={{ backgroundColor: "white" }}>
           <NavigationContainer independent={true}>
             {createTopTabsOnlyOrderHistory()}
           </NavigationContainer>
@@ -271,5 +317,19 @@ export const styles = StyleSheet.create({
     marginTop: 30,
     padding: 15,
     alignItems: "center",
+    backgroundColor: "white",
+  },
+  card2: {
+    display: "flex",
+    flexDirection: "row",
+    width: Dimensions.get("screen").width * 0.8,
+    marginLeft: Dimensions.get("screen").width * 0.1,
+    borderColor: "#d4cde3",
+    borderWidth: 2,
+    borderRadius: 15,
+    marginTop: 30,
+    padding: 5,
+    alignItems: "center",
+    backgroundColor: "white",
   },
 });

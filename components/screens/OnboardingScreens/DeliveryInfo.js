@@ -10,7 +10,7 @@ import {
   TextInput,
   Alert,
   ActivityIndicator,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import H1 from "../../texts/H1";
 import AsyncStorage from "@react-native-community/async-storage";
@@ -189,7 +189,7 @@ export default function DeliveryInfo({ navigation }) {
     );
   } else {
     return (
-      <ScrollView>
+      <ScrollView style={{ backgroundColor: "white" }}>
         <View style={styles.body}>
           <View style={styles.text}>
             <H1 h1Text="Delivery Information" />
@@ -201,26 +201,26 @@ export default function DeliveryInfo({ navigation }) {
               // placeholderTextColor="#3E315A"
               style={pickerSelect}
               onValueChange={(value) => textInputCountryChange(value)}
-              items={ countrydata }
+              items={countrydata}
             />
           </View>
-          <View>
+          <View style={styles.picker}>
             <RNPickerSelect
               placeholder={{ label: "Province" }}
               placeholderTextColor="#3E315A"
               style={pickerSelect}
               onValueChange={(value) => textInputProvinceChange(value)}
-              items={ provincedata }
+              items={provincedata}
             />
           </View>
 
-          <View>
+          <View style={styles.picker}>
             <RNPickerSelect
               placeholder={{ label: "City" }}
               placeholderTextColor="#3E315A"
               style={pickerSelect}
               onValueChange={(value) => textInputCityChange(value)}
-              items={ citydata }
+              items={citydata}
             />
           </View>
 
@@ -245,7 +245,7 @@ export default function DeliveryInfo({ navigation }) {
             textContentType={"none"}
             autoCapitalize="none"
             onChangeText={(val) => textInputInfoChange(val)}
-            style={styles.textInput}
+            style={styles.textInputDelivery}
           />
 
           <TouchableOpacity
@@ -286,12 +286,30 @@ const styles = StyleSheet.create({
   textInput: {
     height: 50,
     width: Dimensions.get("screen").width * 0.8,
-    backgroundColor: "#D4CDE3",
+    backgroundColor: "white",
     // marginLeft: Dimensions.get("screen").width * 0.01,
     marginRight: Dimensions.get("screen").width * 0.01,
     marginTop: Dimensions.get("screen").width * 0.02,
     marginBottom: Dimensions.get("screen").width * 0.03,
     fontSize: 18,
+    borderColor: "#D4CDE3",
+    borderWidth: 2,
+    borderRadius: 15,
+    paddingLeft: 15,
+    paddingTop: 15,
+    paddingBottom: 15,
+  },
+  textInputDelivery: {
+    height: 200,
+    width: Dimensions.get("screen").width * 0.8,
+    backgroundColor: "white",
+    // marginLeft: Dimensions.get("screen").width * 0.01,
+    marginRight: Dimensions.get("screen").width * 0.01,
+    marginTop: Dimensions.get("screen").width * 0.02,
+    marginBottom: Dimensions.get("screen").width * 0.03,
+    fontSize: 18,
+    borderColor: "#D4CDE3",
+    borderWidth: 2,
     borderRadius: 15,
     paddingLeft: 15,
     paddingTop: 15,
@@ -308,9 +326,17 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     textAlign: "center",
+    fontSize: 16,
+    fontFamily: "NexaXBold",
   },
   picker: {
-    borderColor: "black",
-    borderWidth: 5,
+    borderColor: "#D4CDE3",
+    borderWidth: 2,
+    height: 50,
+    paddingTop: 15,
+    paddingLeft: 15,
+    borderRadius: 15,
+    marginTop: Dimensions.get("screen").width * 0.02,
+    marginBottom: Dimensions.get("screen").width * 0.03,
   },
 });

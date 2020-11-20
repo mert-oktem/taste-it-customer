@@ -42,11 +42,11 @@ const App = () => {
     isLoading: true,
     userToken: null,
   };
-  const [isExistingUser, setIsExistingUser] = React.useState(false)
-  const [isGoogleLogin, setIsGoogleLogin] = React.useState(false)
-  const [isUserLoading, setIsUserLoading] = React.useState(true)
-  const [firstName, setFirstName] = React.useState(null)
-  const [lastName, setLastName] = React.useState(null)
+  const [isExistingUser, setIsExistingUser] = React.useState(false);
+  const [isGoogleLogin, setIsGoogleLogin] = React.useState(false);
+  const [isUserLoading, setIsUserLoading] = React.useState(true);
+  const [firstName, setFirstName] = React.useState(null);
+  const [lastName, setLastName] = React.useState(null);
   const loginReducer = (prevState, action) => {
     switch (action.type) {
       case "RETRIEVE_TOKEN":
@@ -84,53 +84,52 @@ const App = () => {
   );
 
   const existedUserHandler = () => {
-    getCustomerAddress().then(
-      (res) => {
-        if(res.address !== undefined){
-          setIsExistingUser(true)
-        } 
+    getCustomerAddress().then((res) => {
+      if (res.address !== undefined) {
+        setIsExistingUser(true);
       }
-    ), (err) => {
-      console.log(err)
-      setIsExistingUser(false)
-    }
-    setIsUserLoading(false)
+    }),
+      (err) => {
+        console.log(err);
+        setIsExistingUser(false);
+      };
+    setIsUserLoading(false);
     // console.log("95", isUserLoading)
     // console.log("96", isExistingUser)
-  }
+  };
   const authContext = React.useMemo(
     () => ({
       signIn: async (foundUser) => {
         const userToken = foundUser;
         try {
           await AsyncStorage.setItem("userToken", userToken);
-          existedUserHandler()
+          existedUserHandler();
         } catch (e) {
           console.log(e);
         }
-        
+
         dispatch({ type: "LOGIN", token: userToken });
       },
       signInGoogle: async (token, firstName, lastName) => {
         const userToken = token;
         try {
           await AsyncStorage.setItem("userToken", userToken);
-          existedUserHandler()
-          setIsGoogleLogin(true)
-          setFirstName(firstName)
-          setLastName(lastName)
+          existedUserHandler();
+          setIsGoogleLogin(true);
+          setFirstName(firstName);
+          setLastName(lastName);
         } catch (e) {
           console.log(e);
         }
-        
+
         dispatch({ type: "LOGIN", token: userToken });
       },
       signOut: async () => {
         try {
           // await AsyncStorage.removeItem("userToken");
           await AsyncStorage.clear();
-          setIsExistingUser(false)
-          setIsGoogleLogin(false)
+          setIsExistingUser(false);
+          setIsGoogleLogin(false);
         } catch (e) {
           console.log(e);
         }
@@ -140,8 +139,8 @@ const App = () => {
         const userToken = foundUser;
         try {
           await AsyncStorage.setItem("userToken", userToken);
-          setIsUserLoading(false)
-          setIsExistingUser(false)
+          setIsUserLoading(false);
+          setIsExistingUser(false);
           // existedUserHandler()
         } catch (e) {
           console.log(e);
@@ -158,9 +157,9 @@ const App = () => {
       userToken = null;
       try {
         userToken = await AsyncStorage.getItem("userToken");
-        if(userToken !== null){
-          existedUserHandler()
-        } 
+        if (userToken !== null) {
+          existedUserHandler();
+        }
       } catch (e) {
         console.log(e);
       }
@@ -168,17 +167,19 @@ const App = () => {
     }, 2000);
   }, []);
 
- 
   const RootSignUp = () => {
     return (
       <Stack.Navigator style={styles.container}>
         <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
-         <Stack.Screen name="Footer" component={Footer} />
-         <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
-         <Stack.Screen name="LoggedInGoogle" component={LoggedInGoogle} />
+        <Stack.Screen name="Footer" component={Footer} />
+        <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
+        <Stack.Screen name="LoggedInGoogle" component={LoggedInGoogle} />
         <Stack.Screen name="ReviewRating" component={ReviewRating} />
         <Stack.Screen name="ThanksFeedback" component={ThanksFeedback} />
-        <Stack.Screen name="EditFlavourProfile" component={EditFlavourProfile} />
+        <Stack.Screen
+          name="EditFlavourProfile"
+          component={EditFlavourProfile}
+        />
         <Stack.Screen name="EditDelivery" component={EditDelivery} />
         <Stack.Screen name="EditCustomer" component={EditCustomer} />
         <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
@@ -221,11 +222,14 @@ const App = () => {
       <Stack.Navigator style={styles.container}>
         <Stack.Screen name="LoggedInGoogle" component={LoggedInGoogle} />
         <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
-         <Stack.Screen name="Footer" component={Footer} />
-         <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
+        <Stack.Screen name="Footer" component={Footer} />
+        <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
         <Stack.Screen name="ReviewRating" component={ReviewRating} />
         <Stack.Screen name="ThanksFeedback" component={ThanksFeedback} />
-        <Stack.Screen name="EditFlavourProfile" component={EditFlavourProfile} />
+        <Stack.Screen
+          name="EditFlavourProfile"
+          component={EditFlavourProfile}
+        />
         <Stack.Screen name="EditDelivery" component={EditDelivery} />
         <Stack.Screen name="EditCustomer" component={EditCustomer} />
         <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
@@ -251,16 +255,14 @@ const App = () => {
     );
   };
   const checkUser = () => {
-    if(isExistingUser || (isGoogleLogin && isExistingUser)){
-      return RootSignIn()
+    if (isExistingUser || (isGoogleLogin && isExistingUser)) {
+      return RootSignIn();
+    } else if (isGoogleLogin && !isExistingUser) {
+      return RootGoogle();
+    } else {
+      return RootSignUp();
     }
-    else if(isGoogleLogin && !isExistingUser){
-      return RootGoogle()
-    }
-    else {
-      return RootSignUp()
-    }
-  }
+  };
   if (loginState.isLoading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -271,15 +273,13 @@ const App = () => {
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
-        {loginState.userToken !== null && isUserLoading !== true ? (
-          checkUser()
-        ) : (
-            Root()   
-        )}
+        {loginState.userToken !== null && isUserLoading !== true
+          ? checkUser()
+          : Root()}
       </NavigationContainer>
     </AuthContext.Provider>
   );
-}
+};
 
 export default App;
 

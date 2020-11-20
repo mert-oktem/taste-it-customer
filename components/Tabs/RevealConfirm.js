@@ -9,9 +9,16 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
+import { useFonts } from "expo-font";
 
 const RevealConfirm = ({ route, navigation }) => {
   const { orderID } = route.params;
+  const [fontsLoaded] = useFonts({
+    NexaRegular: require("../../assets/NexaFont/NexaRegular.otf"),
+    NexaXBold: require("../../assets/NexaFont/NexaXBold.otf"),
+    NexaBold: require("../../assets/NexaFont/NexaBold.otf"),
+  });
+
   return (
     <ScrollView style={{ backgroundColor: "white" }}>
       <View
@@ -21,7 +28,16 @@ const RevealConfirm = ({ route, navigation }) => {
           marginTop: Dimensions.get("screen").width * 0.1,
         }}
       >
-        <Image />
+        <Image
+          style={{
+            width: 171,
+            height: 159,
+            marginTop: 85,
+            marginLeft: 102,
+            marginBottom: 30,
+          }}
+          source={require("../../assets/foodIllustration/customerSide/OpenBox.png")}
+        />
         <Text style={styles.text}>
           {" "}
           Do you want to reveal what you have ordered?{" "}
@@ -32,7 +48,16 @@ const RevealConfirm = ({ route, navigation }) => {
             navigation.navigate("DishDetailScreen", { orderID: orderID });
           }}
         >
-          <Text>Yes, Reveal My Order</Text>
+          <Text
+            style={{
+              color: "white",
+              fontFamily: "NexaXBold",
+              fontSize: 16,
+              textAlign: "center",
+            }}
+          >
+            Yes, Reveal My Order
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button2}
@@ -40,7 +65,16 @@ const RevealConfirm = ({ route, navigation }) => {
             navigation.navigate("HomeScreen");
           }}
         >
-          <Text>No, Not Now</Text>
+          <Text
+            style={{
+              color: "#632DF1",
+              fontFamily: "NexaXBold",
+              fontSize: 16,
+              textAlign: "center",
+            }}
+          >
+            No, Not Now
+          </Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -53,9 +87,10 @@ const styles = StyleSheet.create({
   text: {
     textAlign: "center",
     fontSize: 16,
-    fontFamily: "NexaXBold",
+    fontFamily: "NexaBold",
     color: "#3e315a",
     marginTop: 15,
+    lineHeight: 24,
   },
   button1: {
     backgroundColor: "#d4cde3",
@@ -66,7 +101,9 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   button2: {
-    backgroundColor: "#632DF1",
+    borderColor: "#632DF1",
+    backgroundColor: "white",
+    borderWidth: 2,
     paddingTop: 15,
     paddingBottom: 15,
     borderRadius: 15,

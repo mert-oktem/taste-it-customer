@@ -1,5 +1,6 @@
-import React from 'react';
-import { Text,
+import React from "react";
+import {
+  Text,
   StyleSheet,
   View,
   ScrollView,
@@ -7,12 +8,18 @@ import { Text,
   Button,
   TextInput,
   Alert,
-  Image } from 'react-native';
-import H1 from '../texts/H1';
-import {postCustomerInquiry} from "../../services/api"
+  Image,
+  TouchableOpacity,
+} from "react-native";
+import H1 from "../texts/H1";
+import { postCustomerInquiry } from "../../services/api";
+import { useFonts } from "expo-font";
 
-
-const ContactTab = ({navigation}) => {
+const ContactTab = ({ navigation }) => {
+  const [fontsLoaded] = useFonts({
+    NexaRegular: require("../../assets/NexaFont/NexaRegular.otf"),
+    NexaXBold: require("../../assets/NexaFont/NexaXBold.otf"),
+  });
   const [data, setData] = React.useState({
     email: "",
     name: "",
@@ -21,130 +28,143 @@ const ContactTab = ({navigation}) => {
     body: "",
   });
   const textInputNameChange = (val) => {
-      setData({
-        ...data,
-        name: val,
-    })
+    setData({
+      ...data,
+      name: val,
+    });
   };
   const textInputEmailChange = (val) => {
     setData({
       ...data,
       email: val,
-  })
-};
-const textInputPhoneNumberChange = (val) => {
-  setData({
-    ...data,
-    phoneNumber: val,
-})
-};
-const textInputSubjectChange = (val) => {
-  setData({
-    ...data,
-    subject: val,
-})
-};
-const textInputBodyChange = (val) => {
-  setData({
-    ...data,
-    body: val,
-})
-};
-const onInquiryHandle = async () => {
-  
-  if (
-    data.email.length == 0 ||
-    data.body.length == 0 ||
-    data.subject.length == 0 ||
-    data.name.length == 0 ||
-    data.phoneNumber.length == 0
-  ) {
-    Alert.alert("Wrong Input!", "fields cannot be empty.", [
-      { text: "Okay" },
-    ]);
-    return;
-  }
-  postCustomerInquiry(
-    data.email,
-    data.name,
-    data.subject,
-    data.body,
-    data.phoneNumber
-  ).then(
-    (res) => {
-      console.log(res)
-      Alert.alert("Your Inquiry is submitted", "Thank you", [
-        { text: "Ok" },
+    });
+  };
+  const textInputPhoneNumberChange = (val) => {
+    setData({
+      ...data,
+      phoneNumber: val,
+    });
+  };
+  const textInputSubjectChange = (val) => {
+    setData({
+      ...data,
+      subject: val,
+    });
+  };
+  const textInputBodyChange = (val) => {
+    setData({
+      ...data,
+      body: val,
+    });
+  };
+  const onInquiryHandle = async () => {
+    if (
+      data.email.length == 0 ||
+      data.body.length == 0 ||
+      data.subject.length == 0 ||
+      data.name.length == 0 ||
+      data.phoneNumber.length == 0
+    ) {
+      Alert.alert("Wrong Input!", "fields cannot be empty.", [
+        { text: "Okay" },
       ]);
-      setData({
-        ...data,
-        email: "",
-        name: "",
-        phoneNumber: "",
-        subject: "",
-        body: "",
-    })
-    },
-    (err) => {
-      console.log(err);
-      Alert.alert("Error", `Something went wrong! ${err}`);
+      return;
     }
-  );
-};
+    postCustomerInquiry(
+      data.email,
+      data.name,
+      data.subject,
+      data.body,
+      data.phoneNumber
+    ).then(
+      (res) => {
+        console.log(res);
+        Alert.alert("Your Inquiry is submitted", "Thank you", [{ text: "Ok" }]);
+        setData({
+          ...data,
+          email: "",
+          name: "",
+          phoneNumber: "",
+          subject: "",
+          body: "",
+        });
+      },
+      (err) => {
+        console.log(err);
+        Alert.alert("Error", `Something went wrong! ${err}`);
+      }
+    );
+  };
 
   return (
-    <ScrollView >
-    <Image />
-    <H1 h1Text="Contact Us" />
-    <Text>Leave us a message, we will get in
-        touch with you as soon as possible.</Text>
+    <ScrollView style={{ backgroundColor: "white" }}>
+      <View
+        style={{
+          width: Dimensions.get("screen").width * 0.8,
+          marginLeft: Dimensions.get("screen").width * 0.1,
+          marginTop: Dimensions.get("screen").width * 0.1,
+        }}
+      >
+        <H1 h1Text="Contact Us" />
+        <Text
+          style={{
+            fontFamily: "NexaRegular",
+            color: "#3e315a",
+            lineHeight: 19,
+            marginTop: 7,
+            marginBottom: 41,
+          }}
+        >
+          Leave us a message, we will get in touch with you as soon as possible.
+        </Text>
         <TextInput
-        placeholder={"Name"}
-        textContentType={"name"}
-        autoCapitalize="none"
-        onChangeText={(val) => textInputNameChange(val)}
-        style={styles.textInput}
-      />
-      <TextInput
-        placeholder={"Email"}
-        textContentType={"emailAddress"}
-        autoCapitalize="none"
-        onChangeText={(val) => textInputEmailChange(val)}
-        style={styles.textInput}
-      />
-      <TextInput
-        placeholder={"Mobile"}
-        textContentType={"none"}
-        autoCapitalize="none"
-        onChangeText={(val) => textInputPhoneNumberChange(val)}
-        style={styles.textInput}
-      />
-      <TextInput
-        placeholder={"Subject"}
-        textContentType={"none"}
-        autoCapitalize="none"
-        onChangeText={(val) => textInputSubjectChange(val)}
-        style={styles.textInput}
-      />
-      <TextInput
-        placeholder={"Message"}
-        textContentType={"none"}
-        autoCapitalize="none"
-        onChangeText={(val) => textInputBodyChange(val)}
-        style={styles.textInput}
-      />
-       <Button
-          title="Submit"
+          placeholder={"Name"}
+          textContentType={"name"}
+          autoCapitalize="none"
+          onChangeText={(val) => textInputNameChange(val)}
+          style={styles.textInput}
+        />
+        <TextInput
+          placeholder={"Email"}
+          textContentType={"emailAddress"}
+          autoCapitalize="none"
+          onChangeText={(val) => textInputEmailChange(val)}
+          style={styles.textInput}
+        />
+        <TextInput
+          placeholder={"Mobile"}
+          textContentType={"none"}
+          autoCapitalize="none"
+          onChangeText={(val) => textInputPhoneNumberChange(val)}
+          style={styles.textInput}
+        />
+        <TextInput
+          placeholder={"Subject"}
+          textContentType={"none"}
+          autoCapitalize="none"
+          onChangeText={(val) => textInputSubjectChange(val)}
+          style={styles.textInput}
+        />
+        <TextInput
+          placeholder={"Message"}
+          textContentType={"none"}
+          autoCapitalize="none"
+          onChangeText={(val) => textInputBodyChange(val)}
+          style={styles.textInput1}
+        />
+        <TouchableOpacity
+          style={styles.button}
           type="submit"
           onPress={() => {
             onInquiryHandle();
           }}
-        />
-  </ScrollView>
-  )
-}
-
-  
+        >
+          <Text style={styles.buttonText}>Submit</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
+  );
+};
 
 export default ContactTab;
 
@@ -152,23 +172,57 @@ export const styles = StyleSheet.create({
   center: {
     flex: 1,
     margin: 24,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center",
   },
   title: {
     fontSize: 36,
-    marginBottom: 16
+    marginBottom: 16,
   },
   textInput: {
-    height: Dimensions.get("screen").width * 0.1,
+    height: 50,
     width: Dimensions.get("screen").width * 0.8,
-    backgroundColor: "lightgray",
-    marginLeft: Dimensions.get("screen").width * 0.01,
+    backgroundColor: "white",
+    // marginLeft: Dimensions.get("screen").width * 0.01,
     marginRight: Dimensions.get("screen").width * 0.01,
     marginTop: Dimensions.get("screen").width * 0.02,
-    marginBottom: Dimensions.get("screen").width * 0.02,
-    fontSize: 23,
-    borderRadius: 20,
+    marginBottom: Dimensions.get("screen").width * 0.03,
+    fontSize: 18,
+    borderColor: "#D4CDE3",
+    borderWidth: 2,
+    borderRadius: 15,
     paddingLeft: 15,
+    paddingTop: 15,
+    paddingBottom: 15,
+  },
+  textInput1: {
+    height: 200,
+    width: Dimensions.get("screen").width * 0.8,
+    backgroundColor: "white",
+    // marginLeft: Dimensions.get("screen").width * 0.01,
+    marginRight: Dimensions.get("screen").width * 0.01,
+    marginTop: Dimensions.get("screen").width * 0.02,
+    marginBottom: Dimensions.get("screen").width * 0.03,
+    fontSize: 18,
+    borderColor: "#D4CDE3",
+    borderWidth: 2,
+    borderRadius: 15,
+    paddingLeft: 15,
+    paddingTop: 15,
+    paddingBottom: 15,
+  },
+  button: {
+    backgroundColor: "#632DF1",
+    paddingTop: 15,
+    paddingBottom: 15,
+    borderRadius: 15,
+    marginBottom: 30,
+    marginTop: 50,
+  },
+  buttonText: {
+    color: "white",
+    textAlign: "center",
+    fontSize: 16,
+    fontFamily: "NexaXBold",
   },
 });

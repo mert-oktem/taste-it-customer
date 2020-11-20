@@ -13,18 +13,23 @@ import {
 } from "react-native";
 import ReusableBtn from "../../buttons/ReusableBtn";
 import AsyncStorage from "@react-native-community/async-storage";
-import {getCustomerInfo} from "../../../services/api"
+import { getCustomerInfo } from "../../../services/api";
+import { useFonts } from "expo-font";
 
 const WelcomeScreen2 = ({ navigation }) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [items, setItems] = React.useState(null);
+  const [fontsLoaded] = useFonts({
+    NexaRegular: require("../../../assets/NexaFont/NexaRegular.otf"),
+    NexaXBold: require("../../../assets/NexaFont/NexaXBold.otf"),
+  });
 
   useEffect(() => {
     setTimeout(async () => {
       getCustomerInfo().then(
         (res) => {
           setItems(res.firstName);
-          setIsLoading(false)
+          setIsLoading(false);
         },
         (err) => {
           console.log(err);
@@ -62,7 +67,7 @@ const WelcomeScreen2 = ({ navigation }) => {
         >
           <Text style={styles.buttonText}>Create Flavour Profile</Text>
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.button}
           onPress={() => {
             AsyncStorage.clear();
@@ -70,7 +75,7 @@ const WelcomeScreen2 = ({ navigation }) => {
           }}
         >
           <Text style={styles.buttonText}>Log Out</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </ScrollView>
   );
@@ -92,15 +97,18 @@ const styles = StyleSheet.create({
   text1: {
     fontSize: 16,
     color: "#3e315a",
+    fontFamily: "NexaRegular",
   },
   text2: {
     marginBottom: 15,
     fontSize: 16,
     color: "#3e315a",
+    lineHeight: 24,
+    fontFamily: "NexaRegular",
   },
   heading: {
     fontSize: 32,
-    fontWeight: "bold",
+    fontFamily: "NexaXBold",
     marginTop: 5,
     marginBottom: 15,
     lineHeight: 40,
@@ -119,6 +127,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     textAlign: "center",
-    fontWeight: "bold",
+    fontFamily: "NexaXBold",
+    fontSize: 16,
   },
 });

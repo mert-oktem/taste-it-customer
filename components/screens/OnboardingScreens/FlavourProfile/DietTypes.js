@@ -24,11 +24,25 @@ export default class DietTypes extends Component {
     return this.props.dietTypes.map((item, key) => {
       return (
         <View key={item.id} style={styles.optionsList}>
-           <Image
-                style={styles.icons}
-                source={{uri: `${item.icon}`}}
-              />
-          <Text>{item.key}</Text>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Image style={styles.icons} source={{ uri: `${item.icon}` }} />
+            <Text
+              style={{
+                fontFamily: "NexaXBold",
+                fontSize: 16,
+                color: "#3E315A",
+              }}
+            >
+              {item.key}
+            </Text>
+          </View>
           <CheckBox
             key={item.id}
             onPress={() => {
@@ -64,8 +78,9 @@ const styles = StyleSheet.create({
     // marginTop: 50,
     // width: Dimensions.get("screen").width * 0.8,
     paddingLeft: Dimensions.get("screen").width * 0.1,
-    paddingRight: Dimensions.get("screen").width * 0.1,
+    paddingRight: Dimensions.get("screen").width * 0.05,
     paddingTop: Dimensions.get("screen").width * 0.1,
+    paddingBottom: Dimensions.get("screen").width * 0.08,
     backgroundColor: "white",
   },
   optionsList: {
@@ -75,7 +90,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   icons: {
-    width: 15,
-    height: 15
+    width: 22,
+    height: 22,
+    marginRight: 20,
   },
 });

@@ -11,12 +11,13 @@ import {
   Button,
   Alert,
   ActivityIndicator,
+  TextInput,
 } from "react-native";
 import Users from "../../Users";
 import H1 from "../../texts/H1";
 import AsyncStorage from "@react-native-community/async-storage";
 import { AuthSession, WebBrowser, Linking } from "expo";
-import { TextInput } from "react-native-paper";
+// import { TextInput } from "react-native-paper";
 import {
   getCustomerInfo,
   postCustomerLoginInfo,
@@ -29,7 +30,7 @@ export default function SignIn({ navigation }) {
   const { signIn, signInGoogle } = React.useContext(AuthContext);
   const [fontsLoaded] = useFonts({
     NexaRegular: require("../../../assets/NexaFont/NexaRegular.otf"),
-    NexaBold: require("../../../assets/NexaFont/NexaBold.otf"),
+    NexaXBold: require("../../../assets/NexaFont/NexaXBold.otf"),
   });
   const [data, setData] = React.useState({
     email: "",
@@ -135,7 +136,11 @@ export default function SignIn({ navigation }) {
         postGoogleEmail(result.user.email).then(
           (res) => {
             let accessToken = res.token;
-            signInGoogle(accessToken, result.user.givenName, result.user.familyName);
+            signInGoogle(
+              accessToken,
+              result.user.givenName,
+              result.user.familyName
+            );
             // setToken(accessToken);
             // getCustomerInfo().then((res) => {
             //   if (res.phoneNumber !== null) {
@@ -178,7 +183,7 @@ export default function SignIn({ navigation }) {
     );
   } else {
     return (
-      <ScrollView>
+      <ScrollView style={{ backgroundColor: "white" }}>
         <Image
           style={styles.image}
           source={require("../../../assets/foodIllustration/customerSide/SignIn.jpg")}
@@ -186,13 +191,20 @@ export default function SignIn({ navigation }) {
         <ScrollView style={styles.body}>
           <H1 h1Text="Welcome Aboard," />
           <Text style={styles.para1}>Sign in to continue</Text>
-          <TextInput
-            placeholder={"Email"}
-            textContentType={"emailAddress"}
-            autoCapitalize="none"
-            onChangeText={(val) => textInputChange(val)}
-            onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-          />
+          <View>
+            <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+              <Text style={styles.placeholder}>Email</Text>
+              <View style={{ flexGrow: 1 }} />
+            </View>
+            <TextInput
+              // placeholder={"Email"}
+              textContentType={"emailAddress"}
+              style={styles.textInput}
+              autoCapitalize="none"
+              onChangeText={(val) => textInputChange(val)}
+              onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
+            />
+          </View>
           {data.isValidUser ? null : (
             <View duration={500}>
               <Text style={styles.errorMsg}>
@@ -200,13 +212,20 @@ export default function SignIn({ navigation }) {
               </Text>
             </View>
           )}
-          <TextInput
-            placeholder={"Password"}
-            textContentType={"password"}
-            secureTextEntry={true}
-            autoCapitalize="none"
-            onChangeText={(val) => handlePasswordChange(val)}
-          />
+          <View>
+            <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+              <Text style={styles.placeholder}>Password</Text>
+              <View style={{ flexGrow: 1 }} />
+            </View>
+            <TextInput
+              // placeholder={"Password"}
+              textContentType={"password"}
+              style={styles.textInput}
+              secureTextEntry={true}
+              autoCapitalize="none"
+              onChangeText={(val) => handlePasswordChange(val)}
+            />
+          </View>
           {data.isValidPassword ? null : (
             <View duration={500}>
               <Text style={styles.errorMsg}>
@@ -226,14 +245,39 @@ export default function SignIn({ navigation }) {
           >
             <Text style={styles.buttonText}>Sign In</Text>
           </TouchableOpacity>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: 15,
+            }}
+          >
+            <View
+              style={{ flexGrow: 1, backgroundColor: "#D4CDE3", height: 2 }}
+            />
+            <Text
+              style={{
+                fontFamily: "NexaRegular",
+                fontSize: 16,
+                paddingHorizontal: 10,
+              }}
+            >
+              or
+            </Text>
+            <View
+              style={{ flexGrow: 1, backgroundColor: "#D4CDE3", height: 2 }}
+            />
+          </View>
           <TouchableOpacity
-            style={styles.button}
+            style={styles.button1}
             type="submit"
             onPress={() => {
               loginGoogleHandle();
             }}
           >
-            <Text style={styles.buttonText}>Sign In with google</Text>
+            <Text style={styles.buttonText1}>Sign In with Google</Text>
           </TouchableOpacity>
           <View style={styles.signUpText}>
             <Text style={styles.smallText}>Don't have an account?</Text>
@@ -251,12 +295,12 @@ const styles = StyleSheet.create({
   image: {
     height: Dimensions.get("screen").width,
     width: Dimensions.get("screen").width,
-    backgroundColor: "lightgray",
   },
   body: {
     width: Dimensions.get("screen").width * 0.8,
     marginLeft: Dimensions.get("screen").width * 0.1,
     marginTop: Dimensions.get("screen").width * 0.1,
+    backgroundColor: "white",
   },
   para1: {
     marginBottom: Dimensions.get("screen").width * 0.08,
@@ -294,15 +338,66 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "#632DF1",
-    paddingTop: 15,
-    paddingBottom: 15,
-    borderRadius: 15,
+    paddingTop: 17.5,
+    paddingBottom: 17.5,
+    borderRadius: 16,
     marginBottom: 25,
     marginTop: 10,
+  },
+  button1: {
+    borderColor: "#632DF1",
+    backgroundColor: "white",
+    borderWidth: 2,
+    paddingTop: 17.5,
+    paddingBottom: 17.5,
+    borderRadius: 16,
+    marginBottom: 25,
+    marginTop: 30,
+  },
+  placeholder: {
+    fontFamily: "NexaRegular",
+    fontSize: 12,
+    color: "#3e315a",
+    backgroundColor: "white",
+    position: "relative",
+    top: 17,
+    left: 19,
+    lineHeight: 15,
+    zIndex: 1,
+    paddingHorizontal: 5,
+    // paddingVertical: 10,
   },
   buttonText: {
     color: "white",
     textAlign: "center",
+    fontFamily: "NexaXBold",
+    fontSize: 16,
+  },
+  buttonText1: {
+    color: "#632DF1",
+    textAlign: "center",
+    fontFamily: "NexaXBold",
+    fontSize: 16,
+  },
+  textInput: {
+    height: 50,
+    width: Dimensions.get("screen").width * 0.8,
+    backgroundColor: "white",
+    // marginLeft: Dimensions.get("screen").width * 0.01,
+    marginRight: Dimensions.get("screen").width * 0.01,
+    marginTop: Dimensions.get("screen").width * 0.02,
+    marginBottom: Dimensions.get("screen").width * 0.03,
+    fontSize: 18,
+    borderColor: "#D4CDE3",
+    borderWidth: 2,
+    borderRadius: 16,
+    paddingLeft: 15,
+    paddingTop: 15,
+    paddingBottom: 15,
+  },
+  errorMsg: {
     fontFamily: "NexaRegular",
+    fontSize: 12,
+    color: "#3e315a",
   },
 });

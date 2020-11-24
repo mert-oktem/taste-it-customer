@@ -37,7 +37,7 @@ const DishDetailScreen = ({ route, navigation }) => {
           if (res[i].menuID > 20) {
             newMenuID = 20;
           }
-          let url = `http://localhost:5000/api/menus/image/${newMenuID}`;
+          let url = `https://taste-it.ca/api/menus/image/${newMenuID}`;
           setImageUrl(url);
           setIsLoaded(false);
         }

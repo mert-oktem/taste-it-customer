@@ -13,6 +13,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { getCustomerInfo } from "../../services/api";
 import AsyncStorage from "@react-native-community/async-storage";
 import { AuthContext } from "../Context";
+import { useFonts } from "expo-font";
 
 const ProfileTab = (props) => {
   const { signOut } = React.useContext(AuthContext);
@@ -20,6 +21,11 @@ const ProfileTab = (props) => {
   const [isLoaded, setIsLoaded] = React.useState(true);
   const [info, setInfo] = React.useState(null);
   const [value, setValue] = React.useState();
+  const [fontsLoaded] = useFonts({
+    NexaRegular: require("../../assets/NexaFont/NexaRegular.otf"),
+    NexaXBold: require("../../assets/NexaFont/NexaXBold.otf"),
+    NexaBold: require("../../assets/NexaFont/NexaBold.otf"),
+  });
 
   useEffect(() => {
     getCustomerInfo().then(
@@ -41,7 +47,7 @@ const ProfileTab = (props) => {
   //     console.log(e);
   //   }
   //   props.navigation.navigate("Root1", {screen : "WelcomeScreen1"});
-    
+
   // };
 
   if (isLoaded) {
@@ -96,7 +102,7 @@ const ProfileTab = (props) => {
           >
             <View style={styles.cardInner}>
               <Image
-                style={styles.icons}
+                style={styles.icons2}
                 source={require("../../assets/Icons/flavourProfile.png")}
               />
               <Text style={styles.cardText}>Flavour Profile</Text>
@@ -109,10 +115,8 @@ const ProfileTab = (props) => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              
               // signOutHandler();
               signOut();
-              
             }}
           >
             <Text style={styles.buttonText}>Log Out</Text>
@@ -133,9 +137,10 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
-    fontSize: 36,
+    fontSize: 28,
     marginBottom: 16,
     color: "#632df1",
+    fontFamily: "NexaXBold",
     marginBottom: Dimensions.get("screen").width * 0.1,
   },
   page: {
@@ -164,12 +169,18 @@ export const styles = StyleSheet.create({
   cardText: {
     color: "#3e315a",
     alignSelf: "center",
+    fontFamily: "NexaBold",
     marginLeft: 20,
     fontSize: 16,
   },
   icons: {
     width: 42,
     height: 42,
+    marginLeft: 20,
+  },
+  icons2: {
+    width: 42,
+    height: 44,
     marginLeft: 20,
   },
   arrow: {
@@ -182,14 +193,17 @@ export const styles = StyleSheet.create({
     backgroundColor: "#632DF1",
     width: Dimensions.get("screen").width * 0.8,
     // marginLeft: Dimensions.get("screen").width * 0.1,
-    paddingTop: 15,
-    paddingBottom: 15,
-    borderRadius: 15,
+    paddingTop: 17.5,
+    paddingBottom: 17.5,
+    borderRadius: 16,
     marginBottom: 30,
     marginTop: 50,
   },
   buttonText: {
     color: "white",
     textAlign: "center",
+    fontFamily: "NexaXBold",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });

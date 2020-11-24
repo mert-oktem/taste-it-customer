@@ -26,33 +26,46 @@ export default class SpicinessOptions extends Component {
     return this.props.spiciness.map((item, key) => {
       return (
         <View key={item.id} style={styles.optionsList}>
-           <Image
-                style={styles.icons}
-                source={{uri: `${item.icon}`}}
-              />
-          <Text>{item.key}</Text>
-             <CheckBox
-          key={item.id}
-          onPress={() => {
-            this.onchecked(item.id);
-          }}
-          checked={item.checked}
-          // title={item.key}
-          center={true}
-          iconRight={true}
-          checkedColor="#3e315a"
-          uncheckedColor="#d4cde3"
-          checkedIcon="check-square"
-          uncheckedIcon="square"
-          containerStyle={[
-            {
-              borderWidth: 0,
-              backgroundColor: "white",
-            },
-          ]}
-        />
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Image style={styles.icons} source={{ uri: `${item.icon}` }} />
+            <Text
+              style={{
+                fontFamily: "NexaXBold",
+                fontSize: 16,
+                color: "#3E315A",
+              }}
+            >
+              {item.key}
+            </Text>
+          </View>
+          <CheckBox
+            key={item.id}
+            onPress={() => {
+              this.onchecked(item.id);
+            }}
+            checked={item.checked}
+            // title={item.key}
+            center={true}
+            iconRight={true}
+            checkedColor="#3e315a"
+            uncheckedColor="#d4cde3"
+            checkedIcon="check-square"
+            uncheckedIcon="square"
+            containerStyle={[
+              {
+                borderWidth: 0,
+                backgroundColor: "white",
+              },
+            ]}
+          />
         </View>
-       
       );
     });
   }
@@ -65,8 +78,9 @@ const styles = StyleSheet.create({
     // marginTop: 50,
     // width: Dimensions.get("screen").width * 0.8,
     paddingLeft: Dimensions.get("screen").width * 0.1,
-    paddingRight: Dimensions.get("screen").width * 0.1,
+    paddingRight: Dimensions.get("screen").width * 0.05,
     paddingTop: Dimensions.get("screen").width * 0.1,
+    paddingBottom: Dimensions.get("screen").width * 0.6,
     backgroundColor: "white",
   },
   optionsList: {
@@ -76,7 +90,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   icons: {
-    width: 15,
-    height: 15
+    width: 20,
+    height: 20,
+    marginRight: 20,
   },
 });

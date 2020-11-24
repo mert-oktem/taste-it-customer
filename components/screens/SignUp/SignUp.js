@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import H1 from "../../texts/H1";
-import {postCustomerInfo} from "../../../services/api"
+import { postCustomerInfo } from "../../../services/api";
 
 export default function SignUp({ navigation }) {
   const { signUp } = React.useContext(AuthContext);
@@ -175,7 +175,13 @@ export default function SignUp({ navigation }) {
       return;
     }
 
-    postCustomerInfo(data.email, data.password, data.firstName, data.lastName, data.phoneNumber).then(
+    postCustomerInfo(
+      data.email,
+      data.password,
+      data.firstName,
+      data.lastName,
+      data.phoneNumber
+    ).then(
       (res) => {
         let accessToken = res.token;
         signUp(accessToken);
@@ -189,7 +195,7 @@ export default function SignUp({ navigation }) {
   };
 
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: "white" }}>
       <Image
         style={styles.image}
         source={require("../../../assets/foodIllustration/customerSide/SignUp2.jpg")}
@@ -197,16 +203,22 @@ export default function SignUp({ navigation }) {
       <View style={styles.body}>
         <View style={styles.text}>
           <H1 h1Text="Set Up Your Profile." />
-          <Text style={styles.textChild}>Sign up to set up your profile</Text>
+          <Text style={styles.textChild}>Let's get to know each other.</Text>
         </View>
-        <TextInput
-          placeholder={"First Name"}
-          textContentType={"name"}
-          autoCapitalize="none"
-          onChangeText={(val) => textInputFirstChange(val)}
-          onEndEditing={(e) => handleValidFirst(e.nativeEvent.text)}
-          style={styles.textInput}
-        />
+        <View>
+          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+            <Text style={styles.placeholder}>First Name</Text>
+            <View style={{ flexGrow: 1 }} />
+          </View>
+          <TextInput
+            // placeholder={"First Name"}
+            textContentType={"name"}
+            autoCapitalize="none"
+            onChangeText={(val) => textInputFirstChange(val)}
+            onEndEditing={(e) => handleValidFirst(e.nativeEvent.text)}
+            style={styles.textInput}
+          />
+        </View>
         {data.isValidFirst ? null : (
           <View duration={500}>
             <Text style={styles.errorMsg}>
@@ -214,14 +226,20 @@ export default function SignUp({ navigation }) {
             </Text>
           </View>
         )}
-        <TextInput
-          placeholder={"Last Name"}
-          textContentType={"name"}
-          autoCapitalize="none"
-          onChangeText={(val) => textInputLastChange(val)}
-          onEndEditing={(e) => handleValidLast(e.nativeEvent.text)}
-          style={styles.textInput}
-        />
+        <View>
+          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+            <Text style={styles.placeholder}>Last Name</Text>
+            <View style={{ flexGrow: 1 }} />
+          </View>
+          <TextInput
+            // placeholder={"Last Name"}
+            textContentType={"name"}
+            autoCapitalize="none"
+            onChangeText={(val) => textInputLastChange(val)}
+            onEndEditing={(e) => handleValidLast(e.nativeEvent.text)}
+            style={styles.textInput}
+          />
+        </View>
         {data.isValidLast ? null : (
           <View duration={500}>
             <Text style={styles.errorMsg}>
@@ -229,15 +247,21 @@ export default function SignUp({ navigation }) {
             </Text>
           </View>
         )}
-        <TextInput
-          placeholder={"Phone Number"}
-          textContentType={"name"}
-          autoCapitalize="none"
-          onChangeText={(val) => textInputPhoneChange(val)}
-          onEndEditing={(e) => handleValidPhone(e.nativeEvent.text)}
-          style={styles.textInput}
-        />
-        
+        <View>
+          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+            <Text style={styles.placeholder}>Phone Number</Text>
+            <View style={{ flexGrow: 1 }} />
+          </View>
+          <TextInput
+            // placeholder={"Phone Number"}
+            textContentType={"name"}
+            autoCapitalize="none"
+            onChangeText={(val) => textInputPhoneChange(val)}
+            onEndEditing={(e) => handleValidPhone(e.nativeEvent.text)}
+            style={styles.textInput}
+          />
+        </View>
+
         {data.isValidPhone ? null : (
           <View duration={500}>
             <Text style={styles.errorMsg}>
@@ -245,18 +269,23 @@ export default function SignUp({ navigation }) {
             </Text>
           </View>
         )}
-        <Text style={styles.text}>
-                  *Contact for your delivery
-                </Text>
-        <TextInput
-          placeholder={"Email"}
-          textContentType={"emailAddress"}
-          autoCapitalize="none"
-          // value="johnRemi@hotmail.com"
-          onChangeText={(val) => textInputChange(val)}
-          onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-          style={styles.textInput}
-        />
+        <Text style={styles.text}>*Contact for your delivery</Text>
+
+        <View>
+          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+            <Text style={styles.placeholder}>Email</Text>
+            <View style={{ flexGrow: 1 }} />
+          </View>
+          <TextInput
+            // placeholder={"Email"}
+            textContentType={"emailAddress"}
+            autoCapitalize="none"
+            // value="johnRemi@hotmail.com"
+            onChangeText={(val) => textInputChange(val)}
+            onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
+            style={styles.textInput}
+          />
+        </View>
         {data.isValidUser ? null : (
           <View duration={500}>
             <Text style={styles.errorMsg}>
@@ -264,15 +293,21 @@ export default function SignUp({ navigation }) {
             </Text>
           </View>
         )}
-        <TextInput
-          placeholder={"Password"}
-          textContentType={"password"}
-          secureTextEntry={true}
-          autoCapitalize="none"
-          // value="testpassword"
-          onChangeText={(val) => handlePasswordChange(val)}
-          style={styles.textInput}
-        />
+        <View>
+          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+            <Text style={styles.placeholder}>Password</Text>
+            <View style={{ flexGrow: 1 }} />
+          </View>
+          <TextInput
+            // placeholder={"Password"}
+            textContentType={"password"}
+            secureTextEntry={true}
+            autoCapitalize="none"
+            // value="testpassword"
+            onChangeText={(val) => handlePasswordChange(val)}
+            style={styles.textInput}
+          />
+        </View>
         {data.isValidPassword ? null : (
           <View duration={500}>
             <Text style={styles.errorMsg}>
@@ -309,36 +344,63 @@ const styles = StyleSheet.create({
     marginTop: Dimensions.get("screen").width * 0.1,
   },
   text: {
-    marginBottom: 20,
+    // marginBottom: 20,
+    fontSize: 12,
+    fontFamily: "NexaRegular",
+    color: "#3e315a",
   },
   textChild: {
     color: "#3E315A",
     lineHeight: 20,
+    fontFamily: "NexaRegular",
+    fontSize: 16,
   },
   textInput: {
     height: 50,
     width: Dimensions.get("screen").width * 0.8,
-    backgroundColor: "#D4CDE3",
+    backgroundColor: "white",
     // marginLeft: Dimensions.get("screen").width * 0.01,
     marginRight: Dimensions.get("screen").width * 0.01,
     marginTop: Dimensions.get("screen").width * 0.02,
     marginBottom: Dimensions.get("screen").width * 0.03,
     fontSize: 18,
-    borderRadius: 15,
+    borderColor: "#D4CDE3",
+    borderWidth: 2,
+    borderRadius: 16,
     paddingLeft: 15,
     paddingTop: 15,
     paddingBottom: 15,
   },
+  errorMsg: {
+    fontFamily: "NexaRegular",
+    fontSize: 12,
+    color: "#3e315a",
+  },
   button: {
     backgroundColor: "#632DF1",
-    paddingTop: 15,
-    paddingBottom: 15,
-    borderRadius: 15,
+    paddingTop: 17.5,
+    paddingBottom: 17.5,
+    borderRadius: 16,
     marginBottom: 30,
     marginTop: 50,
   },
   buttonText: {
     color: "white",
     textAlign: "center",
+    fontFamily: "NexaXBold",
+    fontSize: 16,
+  },
+  placeholder: {
+    fontFamily: "NexaRegular",
+    fontSize: 12,
+    color: "#3e315a",
+    backgroundColor: "white",
+    position: "relative",
+    top: 17,
+    left: 19,
+    lineHeight: 15,
+    zIndex: 1,
+    paddingHorizontal: 5,
+    // paddingVertical: 10,
   },
 });

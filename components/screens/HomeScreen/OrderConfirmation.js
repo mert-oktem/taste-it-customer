@@ -129,7 +129,7 @@ const OrderConfirmation = ({ route, navigation }) => {
               >
                 <Image
                   style={styles.icons}
-                  source={require("../../../assets/Icons/deliveryInformation.png")}
+                  source={require("../../../assets/Icons/location.png")}
                 />
                 <Text style={styles.orderConfText}>
                   {data.address} {data.city} {data.postcode}
@@ -147,7 +147,7 @@ const OrderConfirmation = ({ route, navigation }) => {
               >
                 <Image
                   style={styles.icons}
-                  source={require("../../../assets/Icons/deliveryInformation.png")}
+                  source={require("../../../assets/Icons/time.png")}
                 />
                 <Text style={styles.orderConfText}>{data.time}</Text>
               </View>
@@ -161,7 +161,7 @@ const OrderConfirmation = ({ route, navigation }) => {
                   display: "flex",
                   flexDirection: "row",
                   justifyContent: "space-between",
-                  width: Dimensions.get("screen").width * 0.65,
+                  width: Dimensions.get("screen").width * 0.6,
                 }}
               >
                 <Text
@@ -199,7 +199,7 @@ const OrderConfirmation = ({ route, navigation }) => {
                   display: "flex",
                   flexDirection: "row",
                   justifyContent: "space-between",
-                  width: Dimensions.get("screen").width * 0.65,
+                  width: Dimensions.get("screen").width * 0.6,
                 }}
               >
                 <Text
@@ -228,7 +228,7 @@ const OrderConfirmation = ({ route, navigation }) => {
                   fontFamily: "NexaXBold",
                 }}
               >
-                {tax}
+                ${tax}
               </Text>
             </View>
             <View style={styles.billingDetails}>
@@ -248,7 +248,7 @@ const OrderConfirmation = ({ route, navigation }) => {
                   fontFamily: "NexaXBold",
                 }}
               >
-                {total}
+                ${total}
               </Text>
             </View>
           </View>
@@ -278,8 +278,8 @@ const styles = StyleSheet.create({
     fontFamily: "NexaXBold",
   },
   icons: {
-    width: 30,
-    height: 30,
+    width: 40,
+    height: 40,
     marginRight: 15,
   },
   orderConfText: {

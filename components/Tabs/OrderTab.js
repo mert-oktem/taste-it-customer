@@ -81,54 +81,56 @@ const OrderTab = (props) => {
       const date = moment(item.createdAt).format("h:mm a - YYYY.MM.DD ");
       if (item.orderStatusID < 4) {
         return (
-          <TouchableOpacity style={styles.card} onPress={handleOrderDetail}>
-            <Image
-              style={{ width: 100, height: 100 }}
-              source={require("../../assets/foodIllustration/customerSide/Package.png")}
-            />
-            <View
-              style={{
-                width: Dimensions.get("screen").width * 0.42,
-                marginLeft: 15,
-              }}
-            >
-              <Text style={{ fontFamily: "NexaRegular", color: "#3e315a" }}>
-                {date}
-              </Text>
-              <Text
-                style={{
-                  fontFamily: "NexaXBold",
-                  fontSize: 16,
-                  marginTop: 10,
-                  marginBottom: 15,
-                  color: "#632df1",
-                }}
-              >
-                {item.orderStatusDescription}
-              </Text>
+          <ScrollView style={{ backgroundColor: "white" }}>
+            <TouchableOpacity style={styles.card} onPress={handleOrderDetail}>
+              <Image
+                style={{ width: 100, height: 100 }}
+                source={require("../../assets/foodIllustration/customerSide/Package.png")}
+              />
               <View
                 style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
+                  width: Dimensions.get("screen").width * 0.42,
+                  marginLeft: 15,
                 }}
               >
+                <Text style={{ fontFamily: "NexaRegular", color: "#3e315a" }}>
+                  {date}
+                </Text>
                 <Text
                   style={{
                     fontFamily: "NexaXBold",
-                    color: "#3e315a",
+                    fontSize: 16,
+                    marginTop: 10,
+                    marginBottom: 15,
+                    color: "#632df1",
                   }}
                 >
-                  View Details
+                  {item.orderStatusDescription}
                 </Text>
-                <Image
-                  style={{ width: 20, height: 20 }}
-                  source={require("../../assets/Icons/forwardArrow.png")}
-                />
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontFamily: "NexaXBold",
+                      color: "#3e315a",
+                    }}
+                  >
+                    View Details
+                  </Text>
+                  <Image
+                    style={{ width: 20, height: 20 }}
+                    source={require("../../assets/Icons/forwardArrow.png")}
+                  />
+                </View>
               </View>
-            </View>
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </ScrollView>
         );
       }
     });
@@ -144,63 +146,67 @@ const OrderTab = (props) => {
         if (item.menuID > 20) {
           newMenuID = 20;
         }
-        let url = `http://localhost:5000/api/menus/image/${newMenuID}`;
+        let url = `https://taste-it.ca/api/menus/image/${newMenuID}`;
         return (
-          <TouchableOpacity style={styles.card2} onPress={handleOrderDetail}>
-            <Image
-              style={{
-                width: 100,
-                height: 100,
-                borderRadius: 15,
-                marginRight: 20,
-              }}
-              source={require("../../assets/foodIllustration/customerSide/Package.png")}
-            />
-            <View>
-              <Text
+          <ScrollView style={{ backgroundColor: "white" }}>
+            <TouchableOpacity style={styles.card2} onPress={handleOrderDetail}>
+              <Image
                 style={{
-                  fontFamily: "NexaXBold",
-                  fontSize: 16,
-                  marginTop: 10,
-                  marginBottom: 15,
-                  color: "#632df1",
+                  width: 100,
+                  height: 100,
+                  borderRadius: 15,
+                  marginRight: 20,
                 }}
-              >
-                {item.menuName}
-              </Text>
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  // justifyContent: "space-between",
-                  alignItems: "center",
-                  marginBottom: 15,
-                }}
-              >
-                <Image
-                  style={{ width: 20, height: 20, marginRight: 7 }}
-                  source={require("../../assets/Icons/price.png")}
-                />
-                <Text style={{ fontFamily: "NexaRegular" }}>
-                  {item.restaurantID}
+                source={require("../../assets/foodIllustration/customerSide/Package.png")}
+              />
+              <View>
+                <Text
+                  style={{
+                    fontFamily: "NexaXBold",
+                    fontSize: 16,
+                    marginTop: 10,
+                    marginBottom: 15,
+                    color: "#632df1",
+                  }}
+                >
+                  {item.menuName}
                 </Text>
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    // justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: 15,
+                  }}
+                >
+                  <Image
+                    style={{ width: 20, height: 20, marginRight: 7 }}
+                    source={require("../../assets/Icons/price.png")}
+                  />
+                  <Text style={{ fontFamily: "NexaRegular" }}>
+                    {item.restaurantID}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    // justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Image
+                    style={{ width: 20, height: 20, marginRight: 7 }}
+                    source={require("../../assets/Icons/price.png")}
+                  />
+                  <Text style={{ fontFamily: "NexaRegular" }}>
+                    ${item.price}
+                  </Text>
+                </View>
               </View>
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  // justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <Image
-                  style={{ width: 20, height: 20, marginRight: 7 }}
-                  source={require("../../assets/Icons/price.png")}
-                />
-                <Text style={{ fontFamily: "NexaRegular" }}>${item.price}</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </ScrollView>
         );
       }
     });

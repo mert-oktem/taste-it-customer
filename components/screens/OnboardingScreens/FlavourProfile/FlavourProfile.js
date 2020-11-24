@@ -10,6 +10,7 @@ import {
   Alert,
   ActivityIndicator,
   Dimensions,
+  TouchableOpacity,
 } from "react-native";
 import AllergyOptions from "./AllergyOptions";
 import CuisineOptions from "./CuisineOptions";
@@ -56,7 +57,7 @@ export default class FlavourProfile extends Component {
             id: i,
             key: res[i].choiceDescription,
             checked: false,
-            icon: res[i].pictureURI
+            icon: res[i].pictureURI,
           });
         }
         this.setState({
@@ -79,7 +80,7 @@ export default class FlavourProfile extends Component {
               id: i,
               key: res[i].choiceDescription,
               checked: false,
-              icon: res[i].pictureURI
+              icon: res[i].pictureURI,
             });
           }
         }
@@ -102,7 +103,7 @@ export default class FlavourProfile extends Component {
             id: i,
             key: res[i].choiceDescription,
             checked: false,
-            icon: res[i].pictureURI
+            icon: res[i].pictureURI,
           });
         }
         this.setState({
@@ -124,7 +125,7 @@ export default class FlavourProfile extends Component {
             id: i,
             key: res[i].choiceDescription,
             checked: false,
-            icon: res[i].pictureURI
+            icon: res[i].pictureURI,
           });
         }
         this.setState({
@@ -250,6 +251,13 @@ export default class FlavourProfile extends Component {
     return (
       <MaterialTopTabs.Navigator
         style={styles.navContainer}
+        tabBarOptions={{
+          activeTintColor: "#3E315A",
+          indicatorStyle: { backgroundColor: "#632DF1" },
+          labelStyle: {
+            fontFamily: "NexaXBold",
+          },
+        }}
         sceneContainerStyle={[
           {
             borderWidth: 2,
@@ -261,7 +269,6 @@ export default class FlavourProfile extends Component {
           },
         ]}
       >
-        
         <MaterialTopTabs.Screen
           name="Cuisine"
           backgroundColor="white"
@@ -297,14 +304,13 @@ export default class FlavourProfile extends Component {
           name="Allergy"
           children={() => (
             <AllergyOptions
-              key= "1"
+              key="1"
               allergies={this.state.allergiesData}
               updateAllergies={this.handleAllergiesChange}
             />
           )}
         />
       </MaterialTopTabs.Navigator>
-      
     );
   };
 
@@ -332,17 +338,21 @@ export default class FlavourProfile extends Component {
               ]}
             >
               <H1 h1Text="Flavour Profile" />
-              <Text>Tell us what you love</Text>
+              <Text style={{ fontFamily: "NexaRegular", color: "#3e315A" }}>
+                Tell us what you love
+              </Text>
             </View>
             <NavigationContainer independent={true}>
               {this.createTopTabs()}
             </NavigationContainer>
-            <Button
-              title="Next"
+            <TouchableOpacity
+              style={styles.button}
               onPress={() => {
                 this.onNext();
               }}
-            />
+            >
+              <Text style={styles.buttonText}>Next</Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       );
@@ -356,5 +366,23 @@ const styles = StyleSheet.create({
   },
   navContainer: {
     backgroundColor: "white",
+  },
+  button: {
+    backgroundColor: "#632DF1",
+    width: Dimensions.get("screen").width * 0.8,
+    marginLeft: Dimensions.get("screen").width * 0.1,
+    marginVertical: Dimensions.get("screen").width * 0.2,
+    paddingTop: 17.5,
+    paddingBottom: 17.5,
+    borderRadius: 16,
+    marginBottom: 25,
+    marginTop: 30,
+  },
+  buttonText: {
+    color: "white",
+    textAlign: "center",
+    fontFamily: "NexaXBold",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });

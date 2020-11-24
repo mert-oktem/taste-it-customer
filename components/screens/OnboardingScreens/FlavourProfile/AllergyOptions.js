@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, StyleSheet, View, Dimensions, Image} from "react-native";
+import { Text, StyleSheet, View, Dimensions, Image } from "react-native";
 import { CheckBox } from "react-native-elements";
 
 export default class AllergyOptions extends Component {
@@ -22,11 +22,25 @@ export default class AllergyOptions extends Component {
     return this.props.allergies.map((item, key) => {
       return (
         <View key={item.id} style={styles.optionsList}>
-          <Image
-                style={styles.icons}
-                source={{uri: `${item.icon}`}}
-              />
-          <Text style = {styles.optionsListText}>{item.key}</Text>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Image style={styles.icons} source={{ uri: `${item.icon}` }} />
+            <Text
+              style={{
+                fontFamily: "NexaXBold",
+                fontSize: 16,
+                color: "#3E315A",
+              }}
+            >
+              {item.key}
+            </Text>
+          </View>
           <CheckBox
             key={item.id}
             onPress={() => {
@@ -60,8 +74,8 @@ const styles = StyleSheet.create({
   options: {
     // marginTop: 50,
     // width: Dimensions.get("screen").width * 0.8,
-    paddingLeft: Dimensions.get("screen").width * 0.05,
-    paddingRight: Dimensions.get("screen").width * 0.03,
+    paddingLeft: Dimensions.get("screen").width * 0.1,
+    paddingRight: Dimensions.get("screen").width * 0.05,
     paddingTop: Dimensions.get("screen").width * 0.05,
     backgroundColor: "white",
   },
@@ -72,10 +86,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   icons: {
-    width: 15,
-    height: 15,
+    width: 21,
+    height: 20,
+    marginRight: 20,
   },
-  optionsListText: {
-    marginLeft: 30
-  }
 });

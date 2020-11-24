@@ -117,41 +117,66 @@ const ContactTab = ({ navigation }) => {
         >
           Leave us a message, we will get in touch with you as soon as possible.
         </Text>
-        <TextInput
-          placeholder={"Name"}
-          textContentType={"name"}
-          autoCapitalize="none"
-          onChangeText={(val) => textInputNameChange(val)}
-          style={styles.textInput}
-        />
-        <TextInput
-          placeholder={"Email"}
-          textContentType={"emailAddress"}
-          autoCapitalize="none"
-          onChangeText={(val) => textInputEmailChange(val)}
-          style={styles.textInput}
-        />
-        <TextInput
-          placeholder={"Mobile"}
-          textContentType={"none"}
-          autoCapitalize="none"
-          onChangeText={(val) => textInputPhoneNumberChange(val)}
-          style={styles.textInput}
-        />
-        <TextInput
-          placeholder={"Subject"}
-          textContentType={"none"}
-          autoCapitalize="none"
-          onChangeText={(val) => textInputSubjectChange(val)}
-          style={styles.textInput}
-        />
-        <TextInput
-          placeholder={"Message"}
-          textContentType={"none"}
-          autoCapitalize="none"
-          onChangeText={(val) => textInputBodyChange(val)}
-          style={styles.textInput1}
-        />
+        <View>
+          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+            <Text style={styles.placeholder}>Name</Text>
+            <View style={{ flexGrow: 1 }} />
+          </View>
+          <TextInput
+            textContentType={"name"}
+            autoCapitalize="none"
+            onChangeText={(val) => textInputNameChange(val)}
+            style={styles.textInput}
+          />
+        </View>
+        <View>
+          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+            <Text style={styles.placeholder}>Email</Text>
+            <View style={{ flexGrow: 1 }} />
+          </View>
+          <TextInput
+            textContentType={"emailAddress"}
+            autoCapitalize="none"
+            onChangeText={(val) => textInputEmailChange(val)}
+            style={styles.textInput}
+          />
+        </View>
+        <View>
+          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+            <Text style={styles.placeholder}>Phone Number</Text>
+            <View style={{ flexGrow: 1 }} />
+          </View>
+          <TextInput
+            textContentType={"none"}
+            autoCapitalize="none"
+            onChangeText={(val) => textInputPhoneNumberChange(val)}
+            style={styles.textInput}
+          />
+        </View>
+        <View>
+          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+            <Text style={styles.placeholder}>Subject</Text>
+            <View style={{ flexGrow: 1 }} />
+          </View>
+          <TextInput
+            textContentType={"none"}
+            autoCapitalize="none"
+            onChangeText={(val) => textInputSubjectChange(val)}
+            style={styles.textInput}
+          />
+        </View>
+        <View>
+          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+            <Text style={styles.placeholder}>Message</Text>
+            <View style={{ flexGrow: 1 }} />
+          </View>
+          <TextInput
+            textContentType={"none"}
+            autoCapitalize="none"
+            onChangeText={(val) => textInputBodyChange(val)}
+            style={styles.textInput1}
+          />
+        </View>
         <TouchableOpacity
           style={styles.button}
           type="submit"
@@ -190,10 +215,28 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     borderColor: "#D4CDE3",
     borderWidth: 2,
-    borderRadius: 15,
+    borderRadius: 16,
     paddingLeft: 15,
     paddingTop: 15,
     paddingBottom: 15,
+  },
+  placeholder: {
+    fontFamily: "NexaRegular",
+    fontSize: 12,
+    color: "#3e315a",
+    backgroundColor: "white",
+    position: "relative",
+    top: 17,
+    left: 19,
+    lineHeight: 15,
+    zIndex: 1,
+    paddingHorizontal: 5,
+    // paddingVertical: 10,
+  },
+  errorMsg: {
+    fontFamily: "NexaRegular",
+    fontSize: 12,
+    color: "#3e315a",
   },
   textInput1: {
     height: 200,
@@ -213,10 +256,10 @@ export const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "#632DF1",
-    paddingTop: 15,
-    paddingBottom: 15,
-    borderRadius: 15,
-    marginBottom: 30,
+    paddingTop: 17.5,
+    paddingBottom: 17.5,
+    borderRadius: 16,
+    marginBottom: 80,
     marginTop: 50,
   },
   buttonText: {

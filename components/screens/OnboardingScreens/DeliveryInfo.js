@@ -142,26 +142,23 @@ export default function DeliveryInfo({ navigation }) {
       token = await AsyncStorage.getItem("userToken");
 
       setUserToken(token);
-      let response = await fetch(
-        "http://localhost:5000/api/customers/address",
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `${token}`,
-          },
-          body: JSON.stringify({
-            countryName: data.countryName,
-            provinceName: data.provinceName,
-            cityName: data.cityName,
-            address: data.address,
-            postcode: data.postcode,
+      let response = await fetch("https://taste-it.ca/api/customers/address", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `${token}`,
+        },
+        body: JSON.stringify({
+          countryName: data.countryName,
+          provinceName: data.provinceName,
+          cityName: data.cityName,
+          address: data.address,
+          postcode: data.postcode,
 
-            instructions: data.instructions,
-          }),
-        }
-      );
+          instructions: data.instructions,
+        }),
+      });
 
       const res = await response.json();
 
@@ -195,58 +192,88 @@ export default function DeliveryInfo({ navigation }) {
             <H1 h1Text="Delivery Information" />
             <Text style={styles.textChild}>You say when and where</Text>
           </View>
-          <View style={styles.picker}>
-            <RNPickerSelect
-              placeholder={{ label: "Country" }}
-              // placeholderTextColor="#3E315A"
-              style={pickerSelect}
-              onValueChange={(value) => textInputCountryChange(value)}
-              items={countrydata}
+          <View>
+            <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+              <Text style={styles.placeholder}>Country</Text>
+              <View style={{ flexGrow: 1 }} />
+            </View>
+            <View style={styles.picker}>
+              <RNPickerSelect
+                // placeholderTextColor="#3E315A"
+                style={pickerSelect}
+                onValueChange={(value) => textInputCountryChange(value)}
+                items={countrydata}
+              />
+            </View>
+          </View>
+          <View>
+            <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+              <Text style={styles.placeholder}>Province</Text>
+              <View style={{ flexGrow: 1 }} />
+            </View>
+            <View style={styles.picker}>
+              <RNPickerSelect
+                placeholderTextColor="#3E315A"
+                style={pickerSelect}
+                onValueChange={(value) => textInputProvinceChange(value)}
+                items={provincedata}
+              />
+            </View>
+          </View>
+          <View>
+            <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+              <Text style={styles.placeholder}>City</Text>
+              <View style={{ flexGrow: 1 }} />
+            </View>
+            <View style={styles.picker}>
+              <RNPickerSelect
+                placeholder={" "}
+                placeholderTextColor="#3E315A"
+                style={pickerSelect}
+                onValueChange={(value) => textInputCityChange(value)}
+                items={citydata}
+              />
+            </View>
+          </View>
+          <View>
+            <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+              <Text style={styles.placeholder}>Address</Text>
+              <View style={{ flexGrow: 1 }} />
+            </View>
+            <TextInput
+              textContentType={"fullStreetAddress"}
+              autoCapitalize="none"
+              onChangeText={(val) => textInputAddressChange(val)}
+              style={styles.textInput}
             />
           </View>
-          <View style={styles.picker}>
-            <RNPickerSelect
-              placeholder={{ label: "Province" }}
-              placeholderTextColor="#3E315A"
-              style={pickerSelect}
-              onValueChange={(value) => textInputProvinceChange(value)}
-              items={provincedata}
+
+          <View>
+            <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+              <Text style={styles.placeholder}>Postcode</Text>
+              <View style={{ flexGrow: 1 }} />
+            </View>
+
+            <TextInput
+              textContentType={"postalCode"}
+              autoCapitalize="none"
+              onChangeText={(val) => textInputPostChange(val)}
+              style={styles.textInput}
             />
           </View>
 
-          <View style={styles.picker}>
-            <RNPickerSelect
-              placeholder={{ label: "City" }}
-              placeholderTextColor="#3E315A"
-              style={pickerSelect}
-              onValueChange={(value) => textInputCityChange(value)}
-              items={citydata}
+          <View>
+            <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+              <Text style={styles.placeholder}>Delivery Instructions</Text>
+              <View style={{ flexGrow: 1 }} />
+            </View>
+            <TextInput
+              textContentType={"none"}
+              autoCapitalize="none"
+              onChangeText={(val) => textInputInfoChange(val)}
+              style={styles.textInputDelivery}
             />
           </View>
-
-          <TextInput
-            placeholder={"Address"}
-            textContentType={"fullStreetAddress"}
-            autoCapitalize="none"
-            onChangeText={(val) => textInputAddressChange(val)}
-            style={styles.textInput}
-          />
-
-          <TextInput
-            placeholder={"Postcode"}
-            textContentType={"postalCode"}
-            autoCapitalize="none"
-            onChangeText={(val) => textInputPostChange(val)}
-            style={styles.textInput}
-          />
-
-          <TextInput
-            placeholder={"Delivery Instruction"}
-            textContentType={"none"}
-            autoCapitalize="none"
-            onChangeText={(val) => textInputInfoChange(val)}
-            style={styles.textInputDelivery}
-          />
 
           <TouchableOpacity
             style={styles.button}
@@ -317,9 +344,9 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "#632DF1",
-    paddingTop: 15,
-    paddingBottom: 15,
-    borderRadius: 15,
+    paddingTop: 17.5,
+    paddingBottom: 17.5,
+    borderRadius: 16,
     marginBottom: 30,
     marginTop: 50,
   },
@@ -338,5 +365,18 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginTop: Dimensions.get("screen").width * 0.02,
     marginBottom: Dimensions.get("screen").width * 0.03,
+  },
+  placeholder: {
+    fontFamily: "NexaRegular",
+    fontSize: 12,
+    color: "#3e315a",
+    backgroundColor: "white",
+    position: "relative",
+    top: 17,
+    left: 19,
+    lineHeight: 15,
+    zIndex: 1,
+    paddingHorizontal: 5,
+    // paddingVertical: 10,
   },
 });

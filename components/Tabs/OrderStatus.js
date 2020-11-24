@@ -55,8 +55,16 @@ const OrderStatus = ({ route, navigation }) => {
           {/* ***************** Order Status 1st Screen ***************** */}
 
           <View>
-            <Image />
-
+            <Image
+              style={{
+                width: Dimensions.get("screen").width * 0.8,
+                height: Dimensions.get("screen").width * 0.7,
+                alignSelf: "center",
+                marginTop: 40,
+                marginBottom: 40,
+              }}
+              source={require("../../assets/foodIllustration/customerSide/SignUp2.jpg")}
+            />
             <Text style={styles.statusText}>
               Confirming order with the restaurants
             </Text>
@@ -275,17 +283,17 @@ const styles = StyleSheet.create({
   },
   button1: {
     backgroundColor: "#d4cde3",
-    paddingTop: 15,
-    paddingBottom: 15,
-    borderRadius: 15,
+    paddingTop: 17.5,
+    paddingBottom: 17.5,
+    borderRadius: 16,
     marginBottom: 25,
     marginTop: 30,
   },
   button2: {
     backgroundColor: "#632DF1",
-    paddingTop: 15,
-    paddingBottom: 15,
-    borderRadius: 15,
+    paddingTop: 17.5,
+    paddingBottom: 17.5,
+    borderRadius: 16,
     marginBottom: 25,
     marginTop: 30,
   },

@@ -99,11 +99,24 @@ export default function HomeScreen(props) {
             <View style={styles.deliverNow}>
               <Image
                 style={{ width: 30, height: "auto" }}
-                source={require("../../../assets/Icons/accountProfile.png")}
+                source={require("../../../assets/Icons/location.png")}
               />
               <Text style={styles.title}>Deliver now</Text>
             </View>
-            <Text style={styles.address}>{address}</Text>
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Text style={styles.address}>{address}</Text>
+              <Image
+                style={{ width: 22, height: 22 }}
+                source={require("../../../assets/Icons/addressEdit.png")}
+              />
+            </View>
           </View>
           <Image />
         </View>
@@ -172,6 +185,8 @@ const styles = StyleSheet.create({
   deliverNow: {
     display: "flex",
     flexDirection: "row",
+    marginTop: Dimensions.get("screen").width * 0.05,
+    marginBottom: Dimensions.get("screen").width * 0.025,
     // marginLeft: 0,
   },
   heading: {
@@ -186,9 +201,14 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: "NexaRegular",
     color: "#3E315A",
-    marginTop: 16,
+    marginTop: 8,
     marginBottom: 4,
-    marginLeft: 10,
+    marginLeft: 3,
+  },
+  address: {
+    fontSize: 16,
+    fontFamily: "NexaXBold",
+    color: "#632DF1",
   },
   image: {
     height: Dimensions.get("screen").width * 0.6,

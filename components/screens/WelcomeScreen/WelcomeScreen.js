@@ -14,7 +14,7 @@ import * as Font from "expo-font";
 
 let customFonts = {
   NexaRegular: require("../../../assets/NexaFont/NexaRegular.otf"),
-  NexaBold: require("../../../assets/NexaFont/NexaBold.otf"),
+  NexaXBold: require("../../../assets/NexaFont/NexaXBold.otf"),
 };
 const WelcomeScreen = ({ navigation }) => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -74,28 +74,31 @@ const styles = StyleSheet.create({
   },
   text: {
     marginBottom: 15,
-    lineHeight: 20,
+    fontSize: 16,
+    lineHeight: 24,
     color: "#3E315A",
     fontFamily: "NexaRegular",
   },
   heading: {
-    fontSize: 30,
+    fontSize: 32,
     fontWeight: "bold",
     marginTop: 30,
     marginBottom: 15,
     lineHeight: 40,
     color: "#632DF1",
-    fontFamily: "NexaBold",
+    fontFamily: "NexaXBold",
   },
   button: {
     backgroundColor: "#632DF1",
-    paddingTop: 15,
-    paddingBottom: 15,
-    borderRadius: 15,
+    paddingTop: 17.5,
+    paddingBottom: 17.5,
+    borderRadius: 16,
   },
   buttonText: {
     color: "white",
     textAlign: "center",
-    fontFamily: "NexaBold",
+    fontFamily: "NexaXBold",
+    fontSize: 16,
+    lineHeight: 19,
   },
 });

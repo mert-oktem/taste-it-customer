@@ -82,7 +82,7 @@ const OrderStatus = ({ route, navigation }) => {
           <View>
             <Image
               style={{
-                width: Dimensions.get("screen").width * 0.7,
+                width: Dimensions.get("screen").width * 0.8,
                 height: Dimensions.get("screen").width * 0.7,
                 alignSelf: "center",
                 marginTop: 40,

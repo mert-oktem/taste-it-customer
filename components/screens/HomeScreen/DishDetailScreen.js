@@ -80,6 +80,7 @@ const DishDetailScreen = ({ route, navigation }) => {
               style={{
                 fontWeight: "bold",
                 fontFamily: "NexaXBold",
+                color: "#3e315a",
                 marginBottom: 10,
               }}
             >
@@ -92,6 +93,7 @@ const DishDetailScreen = ({ route, navigation }) => {
                 marginTop: 15,
                 lineHeight: 24,
                 fontSize: 16,
+                color: "#3e315a",
               }}
             >
               {orderSelected.menuDescription}
@@ -103,6 +105,7 @@ const DishDetailScreen = ({ route, navigation }) => {
                 fontWeight: "bold",
                 fontFamily: "NexaXBold",
                 marginBottom: 10,
+                color: "#3e315a",
               }}
             >
               Served by
@@ -114,20 +117,39 @@ const DishDetailScreen = ({ route, navigation }) => {
                 marginTop: 15,
                 lineHeight: 24,
                 fontSize: 16,
+                color: "#3e315a",
               }}
             >
               {orderSelected.restaurantDescription}
             </Text>
           </View>
-          <View>
-            <View>
-              <Image />
+          <View style={{ marginTop: 20 }}>
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Image
+                style={{ width: 30, height: 32, marginRight: 10 }}
+                source={require("../../../assets/Icons/location.png")}
+              />
               <Text style={styles.restaurantAddress}>
                 {orderSelected.address}
               </Text>
             </View>
-            <View>
-              <Image />
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Image
+                style={{ width: 30, height: 32, marginRight: 10 }}
+                source={require("../../../assets/Icons/phone.png")}
+              />
               <Text style={styles.restaurantAddress}>
                 {orderSelected.phoneNumber}
               </Text>
@@ -154,9 +176,9 @@ export default DishDetailScreen;
 const styles = StyleSheet.create({
   button: {
     backgroundColor: "#632DF1",
-    paddingTop: 15,
-    paddingBottom: 15,
-    borderRadius: 15,
+    paddingTop: 17.5,
+    paddingBottom: 17.5,
+    borderRadius: 16,
     marginBottom: 25,
     marginTop: 30,
   },
@@ -166,5 +188,10 @@ const styles = StyleSheet.create({
     fontFamily: "NexaXBold",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  restaurantAddress: {
+    fontFamily: "NexaRegular",
+    fontSize: 16,
+    color: "#3e315a",
   },
 });

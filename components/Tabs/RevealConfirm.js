@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   button1: {
-    backgroundColor: "#d4cde3",
+    backgroundColor: "#632DF1",
     paddingTop: 15,
     paddingBottom: 15,
     borderRadius: 15,

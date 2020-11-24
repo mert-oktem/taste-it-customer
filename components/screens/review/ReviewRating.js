@@ -31,6 +31,7 @@ export default function ReviewRating({ route, navigation }) {
     setComment(val);
   };
   const textInputRatingChange = (val) => {
+    console.log(val);
     setRating(val);
   };
   const reviewHandler = () => {

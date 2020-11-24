@@ -19,7 +19,6 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { AuthSession, WebBrowser, Linking } from "expo";
 // import { TextInput } from "react-native-paper";
 import {
-  getCustomerInfo,
   postCustomerLoginInfo,
   postGoogleEmail,
 } from "../../../services/api";
@@ -108,13 +107,6 @@ export default function SignIn({ navigation }) {
       }
     );
   };
-  // const setToken = async (accessToken) => {
-  //   try {
-  //     await AsyncStorage.setItem("userToken", accessToken);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
   const loginGoogleHandle = async () => {
     try {
       const result = await Google.logInAsync({
@@ -141,24 +133,6 @@ export default function SignIn({ navigation }) {
               result.user.givenName,
               result.user.familyName
             );
-            // setToken(accessToken);
-            // getCustomerInfo().then((res) => {
-            //   if (res.phoneNumber !== null) {
-            //     navigation.navigate("Root", { screen: "Footer" });
-            //   } else {
-            //     navigation.navigate("Root", {
-            //       screen: "LoggedInGoogle",
-            //       params: {
-            //         firstName: result.user.givenName,
-            //         lastName: result.user.familyName,
-            //         email: result.user.email,
-            //       },
-            //     });
-            //   }
-            // }),
-            //   (err) => {
-            //     console.log(err);
-            //   };
 
             Alert.alert("Done", "user logged In with google", [
               { text: "Okay" },
@@ -197,7 +171,6 @@ export default function SignIn({ navigation }) {
               <View style={{ flexGrow: 1 }} />
             </View>
             <TextInput
-              // placeholder={"Email"}
               textContentType={"emailAddress"}
               style={styles.textInput}
               autoCapitalize="none"
@@ -218,7 +191,6 @@ export default function SignIn({ navigation }) {
               <View style={{ flexGrow: 1 }} />
             </View>
             <TextInput
-              // placeholder={"Password"}
               textContentType={"password"}
               style={styles.textInput}
               secureTextEntry={true}

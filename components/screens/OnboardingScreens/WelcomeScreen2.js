@@ -11,10 +11,9 @@ import {
   Alert,
   TouchableOpacity,
 } from "react-native";
-import ReusableBtn from "../../buttons/ReusableBtn";
-import AsyncStorage from "@react-native-community/async-storage";
 import { getCustomerInfo } from "../../../services/api";
 import { useFonts } from "expo-font";
+import axios from "axios";
 
 const WelcomeScreen2 = ({ navigation }) => {
   const [isLoading, setIsLoading] = React.useState(true);
@@ -25,17 +24,32 @@ const WelcomeScreen2 = ({ navigation }) => {
   });
 
   useEffect(() => {
-    setTimeout(async () => {
-      getCustomerInfo().then(
-        (res) => {
-          setItems(res.firstName);
-          setIsLoading(false);
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
-    }, 1000);
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+
+    const loadData = () => {
+      try{
+        getCustomerInfo(source).then(
+          (res) => {
+            setItems(res.firstName);
+            setIsLoading(false);
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+      }catch (error) {
+        // if (axios.isCancel(error)) {
+        //   console.log("cancelled");
+        // } else {
+          throw error;
+        // }
+      }
+    };
+    loadData();
+    return () => {
+      source.cancel();
+    };
   }, []);
 
   if (isLoading) {
@@ -45,8 +59,6 @@ const WelcomeScreen2 = ({ navigation }) => {
       </View>
     );
   }
-
-  // console.log(items)
   return (
     <ScrollView style={{ backgroundColor: "white" }}>
       <Image

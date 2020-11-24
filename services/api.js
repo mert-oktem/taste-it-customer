@@ -82,20 +82,21 @@ export const getCities = async () => {
   }
 };
 
-export const getCustomerInfo = async () => {
+export const getCustomerInfo = async (source) => {
   const url = `${BASE_URL}/customers/`;
   let token = null;
   token = await AsyncStorage.getItem("userToken");
   try {
     const res = await axios.get(url, {
+      cancelToken: source.token,
       headers: {
         Authorization: `${token}`,
       },
     });
     const customer = res.data;
     return customer;
-  } catch (err) {
-    throw err;
+  } catch (error) {
+    throw error;
   }
 };
 export const getDeactivateChoices = async () => {
@@ -181,7 +182,13 @@ export const postCustomerLoginInfo = async (email, password) => {
     throw err;
   }
 };
-export const postCustomerInfo = async (email, password, firstName, lastName, phoneNumber) => {
+export const postCustomerInfo = async (
+  email,
+  password,
+  firstName,
+  lastName,
+  phoneNumber
+) => {
   const url = `${BASE_URL}/customers`;
   const body = {
     email: `${email}`,
@@ -192,6 +199,38 @@ export const postCustomerInfo = async (email, password, firstName, lastName, pho
   };
   try {
     const res = await axios.post(url, body);
+    const response = res.data;
+    return response;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const postDeliveryInfo = async (
+  countryName,
+  provinceName,
+  cityName,
+  address,
+  postcode,
+  instructions
+) => {
+  const url = `${BASE_URL}/customers/address`;
+  let token = null;
+  token = await AsyncStorage.getItem("userToken");
+  const body = {
+    countryName: `${countryName}`,
+    provinceName: `${provinceName}`,
+    cityName: `${cityName}`,
+    address: `${address}`,
+    postcode: `${postcode}`,
+    instructions: `${instructions}`,
+  };
+  try {
+    const res = await axios.post(url, body, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    });
     const response = res.data;
     return response;
   } catch (err) {

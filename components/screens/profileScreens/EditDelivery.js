@@ -13,8 +13,12 @@ import {
 import H1 from "../../texts/H1";
 import { makeStyles } from "@material-ui/core/styles";
 import RNPickerSelect from "react-native-picker-select";
-import { getCities, getCountries, getProvinces, putDeliveryInfo } from "../../../services/api";
-
+import {
+  getCities,
+  getCountries,
+  getProvinces,
+  putDeliveryInfo,
+} from "../../../services/api";
 
 const useStyles = makeStyles({
   inputField: {
@@ -25,7 +29,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function EditDelivery({navigation}) {
+export default function EditDelivery({ navigation }) {
   const classes = useStyles();
   const [citydata, setCitydata] = React.useState("null");
   const [countrydata, setCountrydata] = React.useState("null");
@@ -49,14 +53,15 @@ export default function EditDelivery({navigation}) {
           needDataCity.push({
             label: res[i].cityDescription,
             value: res[i].cityDescription,
+            key: res[i].cityDescription,
           });
         }
-        setCitydata(needDataCity)
-       
-      }, (err) => {
+        setCitydata(needDataCity);
+      },
+      (err) => {
         console.log(err);
       }
-    )
+    );
     getProvinces().then(
       (res) => {
         let needDataProvince = [];
@@ -64,14 +69,15 @@ export default function EditDelivery({navigation}) {
           needDataProvince.push({
             label: res[i].provinceDescription,
             value: res[i].provinceDescription,
+            key: res[i].cityDescription,
           });
         }
-       setProvincedata(needDataProvince)
-      
-      }, (err) => {
+        setProvincedata(needDataProvince);
+      },
+      (err) => {
         console.log(err);
       }
-    )
+    );
     getCountries().then(
       (res) => {
         let needDataCountry = [];
@@ -79,20 +85,20 @@ export default function EditDelivery({navigation}) {
           needDataCountry.push({
             label: res[i].countryDescription,
             value: res[i].countryDescription,
+            key: res[i].cityDescription,
           });
         }
-       setCountrydata(needDataCountry)
-        
-      }, (err) => {
+        setCountrydata(needDataCountry);
+        setData({
+          ...data,
+          isLoaded: false,
+        });
+      },
+      (err) => {
         console.log(err);
       }
-    )
-    setData({
-      ...data,
-      isLoaded: false,
-    });
-    
-}, []);
+    );
+  }, []);
 
   const textInputCountryChange = (val) => {
     setData({
@@ -145,19 +151,26 @@ export default function EditDelivery({navigation}) {
       return;
     }
 
-    putDeliveryInfo(data.countryName, data.provinceName, data.cityName, data.address, data.postcode, data.instructions).then(
+    putDeliveryInfo(
+      data.countryName,
+      data.provinceName,
+      data.cityName,
+      data.address,
+      data.postcode,
+      data.instructions
+    ).then(
       (res) => {
-        console.log(res)
-        Alert.alert("User delivery Info saved successfully", "Thank you", [{ text: "Ok" }]);
-        navigation.navigate("Footer")
+        console.log(res);
+        Alert.alert("User delivery Info saved successfully", "Thank you", [
+          { text: "Ok" },
+        ]);
+        navigation.navigate("Footer");
       },
       (err) => {
         console.log(err);
         Alert.alert("Error", `Something went wrong! ${err}`);
       }
-    )
-    
-    
+    );
   };
   if (data.isLoaded) {
     return (
@@ -166,14 +179,14 @@ export default function EditDelivery({navigation}) {
       </View>
     );
   } else {
-  return (
-    <ScrollView>
-      <View style={styles.body}>
-        <View style={styles.text}>
-          <H1 h1Text="Delivery Information" />
-          <Text>You say when and where</Text>
-        </View>
-        <View>
+    return (
+      <ScrollView>
+        <View style={styles.body}>
+          <View style={styles.text}>
+            <H1 h1Text="Delivery Information" />
+            <Text>You say when and where</Text>
+          </View>
+          <View>
             <Text>Country</Text>
             <RNPickerSelect
               onValueChange={(value) => textInputCountryChange(value)}
@@ -187,46 +200,43 @@ export default function EditDelivery({navigation}) {
               items={provincedata}
             />
           </View>
-      
-        <View>
+
+          <View>
             <Text>City</Text>
             <RNPickerSelect
               onValueChange={(value) => textInputCityChange(value)}
               items={citydata}
             />
           </View>
-     
-        <TextInput
-          placeholder={"Address"}
-          textContentType={"fullStreetAddress"}
-          autoCapitalize="none"
-          onChangeText={(val) => textInputAddressChange(val)}
-          style={styles.textInput}
-        />
 
-        <TextInput
-          placeholder={"Postcode"}
-          textContentType={"postalCode"}
-          autoCapitalize="none"
-          onChangeText={(val) => textInputPostChange(val)}
-          style={styles.textInput}
-        />
+          <TextInput
+            placeholder={"Address"}
+            textContentType={"fullStreetAddress"}
+            autoCapitalize="none"
+            onChangeText={(val) => textInputAddressChange(val)}
+            style={styles.textInput}
+          />
 
-        <TextInput
-          placeholder={"Delivery Instruction"}
-          textContentType={"none"}
-          autoCapitalize="none"
-          onChangeText={(val) => textInputInfoChange(val)}
-          style={styles.textInput}
-        />
+          <TextInput
+            placeholder={"Postcode"}
+            textContentType={"postalCode"}
+            autoCapitalize="none"
+            onChangeText={(val) => textInputPostChange(val)}
+            style={styles.textInput}
+          />
 
-        <Button title="Done" type="submit" onPress={() => deliveryHandle()} />
+          <TextInput
+            placeholder={"Delivery Instruction"}
+            textContentType={"none"}
+            autoCapitalize="none"
+            onChangeText={(val) => textInputInfoChange(val)}
+            style={styles.textInput}
+          />
 
-       
-      </View>
-
-    </ScrollView>
-  );
+          <Button title="Done" type="submit" onPress={() => deliveryHandle()} />
+        </View>
+      </ScrollView>
+    );
   }
 }
 

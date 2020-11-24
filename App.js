@@ -84,8 +84,9 @@ const App = () => {
   );
 
   const existedUserHandler = () => {
+  
     getCustomerAddress().then((res) => {
-      if (res.address !== undefined) {
+      if (res !== undefined) {
         setIsExistingUser(true);
       }
     }),
@@ -94,8 +95,6 @@ const App = () => {
         setIsExistingUser(false);
       };
     setIsUserLoading(false);
-    // console.log("95", isUserLoading)
-    // console.log("96", isExistingUser)
   };
   const authContext = React.useMemo(
     () => ({
@@ -204,6 +203,7 @@ const App = () => {
           name="EditFlavourProfile"
           component={EditFlavourProfile}
         />
+        <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
         <Stack.Screen name="EditDelivery" component={EditDelivery} />
         <Stack.Screen name="EditCustomer" component={EditCustomer} />
         <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />

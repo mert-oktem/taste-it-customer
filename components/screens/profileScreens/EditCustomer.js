@@ -14,6 +14,7 @@ import {
 import H1 from "../../texts/H1";
 import { putCustomerInfo } from "../../../services/api";
 import { getCustomerInfo } from "../../../services/api";
+import axios from "axios"
 
 export default function EditCustomer({ navigation }) {
   const [data, setData] = React.useState({
@@ -30,21 +31,34 @@ export default function EditCustomer({ navigation }) {
   });
   const [firstName, setFirstName] = React.useState(null);
   useEffect(() => {
-    getCustomerInfo().then(
-      (res) => {
-        setData({
-          ...data,
-          firstName: res.firstName,
-          lastName: res.lastName,
-          phoneNumber: res.phoneNumber,
-          email: res.email,
-          password: res.password,
-        });
-      },
-      (err) => {
-        console.log(err);
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+    try{
+      getCustomerInfo(source).then(
+        (res) => {
+          setData({
+            ...data,
+            firstName: res.firstName,
+            lastName: res.lastName,
+            phoneNumber: res.phoneNumber,
+            email: res.email,
+            password: res.password,
+          });
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    }catch (error) {
+        // if (axios.isCancel(error)) {
+        //   console.log("cancelled");
+        // } else {
+          throw error;
+        // }
       }
-    );
+    return () => {
+      source.cancel();
+    };
   }, []);
 
   const textInputChange = (val) => {

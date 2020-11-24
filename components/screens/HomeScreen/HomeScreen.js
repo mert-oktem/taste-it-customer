@@ -6,29 +6,24 @@ import {
   Image,
   Dimensions,
   ScrollView,
-  Button,
   Alert,
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
-import H1 from "../../texts/H1";
 import RNPickerSelect from "react-native-picker-select";
-import { NavigationContainer } from "@react-navigation/native";
 import {
   getSuitableMenu,
   getCustomerInfo,
   getCustomerAddress,
 } from "../../../services/api";
-import { set } from "react-native-reanimated";
 import { useFonts } from "expo-font";
+import axios from "axios";
 
-export default function HomeScreen(props) {
-  // const HomeScreen = (props) => {
+const HomeScreen = (props) => {
   const [data, setData] = React.useState({
     numberOfPeople: "",
     budget: "",
   });
-  // const [count, setCount] = React.useState(1);
   const [info, setInfo] = React.useState(null);
   const [firstName, setFirstName] = React.useState(null);
   const [address, setAddress] = React.useState(null);
@@ -39,24 +34,44 @@ export default function HomeScreen(props) {
   });
 
   useEffect(() => {
-    getCustomerInfo().then(
-      (res) => {
-        setInfo(res);
-        setFirstName(res.firstName);
-        setIsLoaded(false);
-      },
-      (err) => {
-        console.log(err);
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+
+    const loadData = () => {
+      try{
+        getCustomerInfo(source).then(
+          (res) => {
+            setInfo(res);
+            setFirstName(res.firstName);
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+        getCustomerAddress().then(
+          (res) => {
+            setAddress(res.address);
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+              
+      setIsLoaded(false);
+      }catch (error) {
+        // if (axios.isCancel(error)) {
+        //   console.log("cancelled");
+        // } else {
+          throw error;
+        // }
       }
-    );
-    getCustomerAddress().then(
-      (res) => {
-        setAddress(res.address);
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+
+    };
+
+    loadData();
+    return () => {
+      source.cancel();
+    };
   }, [info, firstName, address]);
 
   const noOfPeopleChange = (val) => {
@@ -76,7 +91,6 @@ export default function HomeScreen(props) {
   const orderHandle = () => {
     getSuitableMenu(data.numberOfPeople, data.budget).then(
       (res) => {
-        // console.log(res)
         props.onHandleHomeChange(res, data.numberOfPeople);
       },
       (err) => {
@@ -85,7 +99,7 @@ export default function HomeScreen(props) {
       }
     );
   };
-  if (isLoaded) {
+  if (isLoaded || !fontsLoaded) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <ActivityIndicator size="large" />
@@ -171,7 +185,8 @@ export default function HomeScreen(props) {
       </ScrollView>
     );
   }
-}
+};
+export default HomeScreen;
 
 const styles = StyleSheet.create({
   center: {

@@ -14,6 +14,7 @@ import { getCustomerInfo } from "../../services/api";
 import AsyncStorage from "@react-native-community/async-storage";
 import { AuthContext } from "../Context";
 import { useFonts } from "expo-font";
+import axios from "axios";
 
 const ProfileTab = (props) => {
   const { signOut } = React.useContext(AuthContext);
@@ -28,35 +29,51 @@ const ProfileTab = (props) => {
   });
 
   useEffect(() => {
-    getCustomerInfo().then(
-      (res) => {
-        setInfo(res);
-        setFirstName(res.firstName);
-        setIsLoaded(false);
-      },
-      (err) => {
-        console.log(err);
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+    const loadData = () => {
+      try{
+        getCustomerInfo(source).then(
+          (res) => {
+            setInfo(res);
+            setFirstName(res.firstName);
+            setIsLoaded(false);
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+      }catch (error) {
+        // if (axios.isCancel(error)) {
+        //   console.log("cancelled");
+        // } else {
+          throw error;
+        // }
       }
-    );
-  }, [info, firstName]);
-
-  // const signOutHandler = async () => {
-  //   try {
-  //     await AsyncStorage.removeItem("userToken");
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  //   props.navigation.navigate("Root1", {screen : "WelcomeScreen1"});
-
-  // };
-
+    }
+    loadData();
+    return () => {
+      source.cancel();
+    };
+  }, [info,firstName]);
+  const handleFlavourChange = () => {
+    props.navigation.navigate("EditFlavourProfile");
+  };
   if (isLoaded) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <ActivityIndicator size="large" />
       </View>
     );
-  } else {
+  } 
+  // else if(fontsLoaded){
+  //   return (
+  //     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+  //       <ActivityIndicator size="large" />
+  //     </View>
+  //   );
+  // }
+  else {
     return (
       <ScrollView style={{ backgroundColor: "white" }}>
         <View style={styles.page}>
@@ -98,7 +115,7 @@ const ProfileTab = (props) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.card}
-            onPress={props.onHandleFlavourChange}
+            onPress={handleFlavourChange}
           >
             <View style={styles.cardInner}>
               <Image

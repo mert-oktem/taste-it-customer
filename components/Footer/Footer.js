@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import React, { Component } from "react";
-import { Text, StyleSheet, View, Image } from "react-native";
+import {StyleSheet, Image } from "react-native";
 
 import OrderTab from "../tabs/OrderTab";
 import ContactTab from "../tabs/ContactTab";
@@ -19,7 +19,6 @@ export default class Footer extends Component {
       meal: "",
       restaurantID: "",
     };
-    // console.log(props.navigation)
   }
 
   handleHomeChange = (data, meal) => {
@@ -43,9 +42,9 @@ export default class Footer extends Component {
   handleDeliveryChange = () => {
     this.props.navigation.navigate("EditDelivery");
   };
-  handleFlavourChange = () => {
-    this.props.navigation.navigate("EditFlavourProfile");
-  };
+  // handleFlavourChange = () => {
+  //   this.props.navigation.navigate("FlavourProfile");
+  // };
   handleOrderNow = () => {
     this.props.navigation.navigate("Footer");
   };
@@ -122,7 +121,7 @@ export default class Footer extends Component {
             <ProfileTab
               onHandleCustomerChange={this.handleCustomerChange}
               onHandleDeliveryChange={this.handleDeliveryChange}
-              onHandleFlavourChange={this.handleFlavourChange}
+              // onHandleFlavourChange={this.handleFlavourChange}
               navigation={this.props.navigation}
             />
           )}

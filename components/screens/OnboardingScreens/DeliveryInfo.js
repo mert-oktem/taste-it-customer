@@ -1,5 +1,4 @@
 import React, { Component, useEffect } from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import {
   Text,
   StyleSheet,
@@ -15,11 +14,9 @@ import {
 import H1 from "../../texts/H1";
 import AsyncStorage from "@react-native-community/async-storage";
 import RNPickerSelect from "react-native-picker-select";
-import DropDownPicker from "react-native-dropdown-picker";
-import { getCities, getCountries, getProvinces } from "../../../services/api";
+import { getCities, getCountries, getProvinces, postDeliveryInfo } from "../../../services/api";
 
 export default function DeliveryInfo({ navigation }) {
-  // const classes = useStyles();
   const [citydata, setCitydata] = React.useState("null");
   const [countrydata, setCountrydata] = React.useState("null");
   const [provincedata, setProvincedata] = React.useState("null");
@@ -42,6 +39,7 @@ export default function DeliveryInfo({ navigation }) {
           needDataCity.push({
             label: res[i].cityDescription,
             value: res[i].cityDescription,
+            key: res[i].cityDescription,
           });
         }
         setCitydata(needDataCity);
@@ -57,6 +55,7 @@ export default function DeliveryInfo({ navigation }) {
           needDataProvince.push({
             label: res[i].provinceDescription,
             value: res[i].provinceDescription,
+            key: res[i].cityDescription,
           });
         }
         setProvincedata(needDataProvince);
@@ -72,18 +71,19 @@ export default function DeliveryInfo({ navigation }) {
           needDataCountry.push({
             label: res[i].countryDescription,
             value: res[i].countryDescription,
+            key: res[i].cityDescription,
           });
         }
         setCountrydata(needDataCountry);
+        setData({
+          ...data,
+          isLoaded: false,
+        });
       },
       (err) => {
         console.log(err);
       }
     );
-    setData({
-      ...data,
-      isLoaded: false,
-    });
   }, []);
 
   const [userToken, setUserToken] = React.useState(null);
@@ -137,46 +137,14 @@ export default function DeliveryInfo({ navigation }) {
       ]);
       return;
     }
-    let token = null;
-    try {
-      token = await AsyncStorage.getItem("userToken");
-
-      setUserToken(token);
-      let response = await fetch("https://taste-it.ca/api/customers/address", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `${token}`,
-        },
-        body: JSON.stringify({
-          countryName: data.countryName,
-          provinceName: data.provinceName,
-          cityName: data.cityName,
-          address: data.address,
-          postcode: data.postcode,
-
-          instructions: data.instructions,
-        }),
-      });
-
-      const res = await response.json();
-
-      if (response.status >= 200 && response.status < 300) {
-        Alert.alert("User delivery Info saved successfully", "Thank you", [
-          { text: "Ok" },
-        ]);
+   
+    postDeliveryInfo(data.countryName, data.provinceName, data.cityName, data.address, data.postcode, data.instructions).then(
+      () => {
         navigation.navigate("Footer");
-      } else {
-        Alert.alert("Invalid Input!", "Something went wrong, Try again", [
-          { text: "Okay" },
-        ]);
-        let error = res;
-        throw error;
+      }, (err)=> {
+        console.log(err)
       }
-    } catch (error) {
-      console.log(error);
-    }
+    )
   };
   if (data.isLoaded) {
     return (
@@ -199,7 +167,7 @@ export default function DeliveryInfo({ navigation }) {
             </View>
             <View style={styles.picker}>
               <RNPickerSelect
-                // placeholderTextColor="#3E315A"
+                placeholderTextColor="#3E315A"
                 style={pickerSelect}
                 onValueChange={(value) => textInputCountryChange(value)}
                 items={countrydata}
@@ -227,7 +195,6 @@ export default function DeliveryInfo({ navigation }) {
             </View>
             <View style={styles.picker}>
               <RNPickerSelect
-                placeholder={" "}
                 placeholderTextColor="#3E315A"
                 style={pickerSelect}
                 onValueChange={(value) => textInputCityChange(value)}
@@ -244,6 +211,7 @@ export default function DeliveryInfo({ navigation }) {
               textContentType={"fullStreetAddress"}
               autoCapitalize="none"
               onChangeText={(val) => textInputAddressChange(val)}
+              autoCorrect={false}
               style={styles.textInput}
             />
           </View>
@@ -258,6 +226,7 @@ export default function DeliveryInfo({ navigation }) {
               textContentType={"postalCode"}
               autoCapitalize="none"
               onChangeText={(val) => textInputPostChange(val)}
+              autoCorrect={false}
               style={styles.textInput}
             />
           </View>
@@ -271,6 +240,7 @@ export default function DeliveryInfo({ navigation }) {
               textContentType={"none"}
               autoCapitalize="none"
               onChangeText={(val) => textInputInfoChange(val)}
+              autoCorrect={false}
               style={styles.textInputDelivery}
             />
           </View>

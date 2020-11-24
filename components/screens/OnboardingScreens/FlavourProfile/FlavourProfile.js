@@ -214,7 +214,6 @@ export default class FlavourProfile extends Component {
           }
         );
       }
-      Alert.alert("successfull", "choices saved");
       this.props.navigation.navigate("DeliveryInfo1");
     } else {
       Alert.alert("Choices Missing", "Please Select Choices by switching tabs");

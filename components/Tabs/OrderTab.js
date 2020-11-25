@@ -25,13 +25,10 @@ import { useFonts } from "expo-font";
 const MaterialTopTabs = createMaterialTopTabNavigator();
 
 const OrderTab = (props) => {
-  // console.log(props)
   const [isLoaded, setIsLoaded] = React.useState(true);
   const [activeOrders, setActiveOrders] = React.useState(null);
   const [orderStatus, setOrderStatus] = React.useState(1);
   const [isOrderLoaded, setIsOrderLoaded] = React.useState(true);
-  // const [flag, setFlag] = React.useState(0);
-  const [countOrderStatus, setCountOrderStatus] = React.useState(0);
   // const isFocused = useIsFocused();
   const handleOrderNow = () => {
     props.navigation.navigate("HomeScreen");

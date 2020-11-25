@@ -88,10 +88,20 @@ const HomeScreen = (props) => {
     });
   };
 
+  const handleHomeChange = (data, meal) => {
+    const details = data[0];
+    props.navigation.navigate("OrderConfirmation", {
+      menuID: details.menuID,
+      price: details.price,
+      meal: meal,
+      restaurantID: details.restaurantID,
+    });
+  };
+
   const orderHandle = () => {
     getSuitableMenu(data.numberOfPeople, data.budget).then(
       (res) => {
-        props.onHandleHomeChange(res, data.numberOfPeople);
+        handleHomeChange(res, data.numberOfPeople);
       },
       (err) => {
         console.log(err);

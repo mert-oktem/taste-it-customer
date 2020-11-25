@@ -6,34 +6,15 @@ import {
   Text,
   ActivityIndicator,
 } from "react-native";
-import SignIn from "./components/screens/signIn/SignIn";
-import SignUp from "./components/screens/signUp/SignUp";
-import DeliveryInfo from "./components/screens/onboardingScreens/DeliveryInfo";
-import Home from "./components/screens/home/Home";
-import WelcomeScreen from "./components/screens/welcomeScreen/WelcomeScreen";
-import WelcomeScreen2 from "./components/screens/onboardingScreens/WelcomeScreen2";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import AllergyOptions from "./components/screens/onboardingScreens/flavourProfile/AllergyOptions";
-import FlavourProfile from "./components/screens/onboardingScreens/flavourProfile/FlavourProfile";
 import { AuthContext } from "./components/Context";
 import AsyncStorage from "@react-native-community/async-storage";
-import RootStack from "./components/RootStack";
-import HomeScreen from "./components/screens/homeScreen/HomeScreen";
-import Footer from "./components/footer/Footer";
-import OrderConfirmation from "./components/screens/homeScreen/OrderConfirmation";
-import YourOrderScreen from "./components/screens/homeScreen/YourOrderScreen";
-import DishDetailScreen from "./components/screens/homeScreen/DishDetailScreen";
-import EditDelivery from "./components/screens/profileScreens/EditDelivery";
-import EditCustomer from "./components/screens/profileScreens/EditCustomer";
-import EditFlavourProfile from "./components/screens/profileScreens/EditFlavourProfile";
-import OrderStatus from "./components/tabs/OrderStatus";
-import RevealConfirm from "./components/tabs/RevealConfirm";
-import OrderTab from "./components/tabs/OrderTab";
-import ReviewRating from "./components/screens/review/ReviewRating";
-import ThanksFeedback from "./components/screens/review/ThanksFeedback";
-import LoggedInGoogle from "./components/screens/signIn/LoggedInGoogle";
 import { getCustomerAddress } from "./services/api";
+import RootGoogle from "./stacks/RootGoogle"
+import RootSignIn from "./stacks/RootSignIn"
+import RootSignUp from "./stacks/RootSignUp"
+import Root from "./stacks/Root"
 
 const Stack = createStackNavigator();
 
@@ -166,101 +147,13 @@ const App = () => {
     }, 2000);
   }, []);
 
-  const RootSignUp = () => {
-    return (
-      <Stack.Navigator style={styles.container}>
-        <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
-        <Stack.Screen name="Footer" component={Footer} />
-        <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
-        <Stack.Screen name="LoggedInGoogle" component={LoggedInGoogle} />
-        <Stack.Screen name="ReviewRating" component={ReviewRating} />
-        <Stack.Screen name="ThanksFeedback" component={ThanksFeedback} />
-        <Stack.Screen
-          name="EditFlavourProfile"
-          component={EditFlavourProfile}
-        />
-        <Stack.Screen name="EditDelivery" component={EditDelivery} />
-        <Stack.Screen name="EditCustomer" component={EditCustomer} />
-        <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
-        <Stack.Screen name="OrderTab" component={OrderTab} />
-        <Stack.Screen name="OrderConfirmation" component={OrderConfirmation} />
-        <Stack.Screen name="YourOrderScreen" component={YourOrderScreen} />
-        <Stack.Screen name="DishDetailScreen" component={DishDetailScreen} />
-        <Stack.Screen name="OrderStatus" component={OrderStatus} />
-        <Stack.Screen name="HomeScreen" component={HomeScreen} />
-        <Stack.Screen name="RevealConfirm" component={RevealConfirm} />
-      </Stack.Navigator>
-    );
-  };
-
-  const RootSignIn = () => {
-    return (
-      <Stack.Navigator style={styles.container}>
-        <Stack.Screen name="Footer" component={Footer} />
-        <Stack.Screen name="ReviewRating" component={ReviewRating} />
-        <Stack.Screen name="ThanksFeedback" component={ThanksFeedback} />
-        <Stack.Screen
-          name="EditFlavourProfile"
-          component={EditFlavourProfile}
-        />
-        <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
-        <Stack.Screen name="EditDelivery" component={EditDelivery} />
-        <Stack.Screen name="EditCustomer" component={EditCustomer} />
-        <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
-        <Stack.Screen name="OrderTab" component={OrderTab} />
-        <Stack.Screen name="OrderConfirmation" component={OrderConfirmation} />
-        <Stack.Screen name="YourOrderScreen" component={YourOrderScreen} />
-        <Stack.Screen name="DishDetailScreen" component={DishDetailScreen} />
-        <Stack.Screen name="OrderStatus" component={OrderStatus} />
-        <Stack.Screen name="HomeScreen" component={HomeScreen} />
-        <Stack.Screen name="RevealConfirm" component={RevealConfirm} />
-      </Stack.Navigator>
-    );
-  };
-  const RootGoogle = () => {
-    return (
-      <Stack.Navigator style={styles.container}>
-        <Stack.Screen name="LoggedInGoogle" component={LoggedInGoogle} />
-        <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
-        <Stack.Screen name="Footer" component={Footer} />
-        <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
-        <Stack.Screen name="ReviewRating" component={ReviewRating} />
-        <Stack.Screen name="ThanksFeedback" component={ThanksFeedback} />
-        <Stack.Screen
-          name="EditFlavourProfile"
-          component={EditFlavourProfile}
-        />
-        <Stack.Screen name="EditDelivery" component={EditDelivery} />
-        <Stack.Screen name="EditCustomer" component={EditCustomer} />
-        <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
-        <Stack.Screen name="OrderTab" component={OrderTab} />
-        <Stack.Screen name="OrderConfirmation" component={OrderConfirmation} />
-        <Stack.Screen name="YourOrderScreen" component={YourOrderScreen} />
-        <Stack.Screen name="DishDetailScreen" component={DishDetailScreen} />
-        <Stack.Screen name="OrderStatus" component={OrderStatus} />
-        <Stack.Screen name="HomeScreen" component={HomeScreen} />
-        <Stack.Screen name="RevealConfirm" component={RevealConfirm} />
-      </Stack.Navigator>
-    );
-  };
-  const Root = () => {
-    return (
-      <Stack.Navigator initialRouteName="WelcomeScreen1" independent={true}>
-        <Stack.Screen name="WelcomeScreen1" component={WelcomeScreen} />
-        <Stack.Screen name="OrderConfirmation" component={OrderConfirmation} />
-        <Stack.Screen name="SignIn" component={SignIn} />
-        <Stack.Screen name="SignUp" component={SignUp} />
-        <Stack.Screen name="Root" component={Root} />
-      </Stack.Navigator>
-    );
-  };
   const checkUser = () => {
     if (isExistingUser || (isGoogleLogin && isExistingUser)) {
-      return RootSignIn();
+      return <RootSignIn />
     } else if (isGoogleLogin && !isExistingUser) {
-      return RootGoogle();
+      return <RootGoogle />
     } else {
-      return RootSignUp();
+      return <RootSignUp />
     }
   };
   if (loginState.isLoading) {
@@ -275,7 +168,7 @@ const App = () => {
       <NavigationContainer>
         {loginState.userToken !== null && isUserLoading !== true
           ? checkUser()
-          : Root()}
+          : <Root />}
       </NavigationContainer>
     </AuthContext.Provider>
   );

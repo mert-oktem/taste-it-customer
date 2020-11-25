@@ -8,10 +8,9 @@ import {
   Button,
   TextInput,
   Alert,
-  ActivityIndicator,
+  ActivityIndicator, TouchableOpacity
 } from "react-native";
 import H1 from "../../texts/H1";
-import { makeStyles } from "@material-ui/core/styles";
 import RNPickerSelect from "react-native-picker-select";
 import {
   getCities,
@@ -20,17 +19,7 @@ import {
   putDeliveryInfo,
 } from "../../../services/api";
 
-const useStyles = makeStyles({
-  inputField: {
-    borderRadius: 20,
-    width: Dimensions.get("screen").width * 0.8,
-    paddingLeft: 1,
-    marginBottom: 20,
-  },
-});
-
 export default function EditDelivery({ navigation }) {
-  const classes = useStyles();
   const [citydata, setCitydata] = React.useState("null");
   const [countrydata, setCountrydata] = React.useState("null");
   const [provincedata, setProvincedata] = React.useState("null");
@@ -78,6 +67,7 @@ export default function EditDelivery({ navigation }) {
         console.log(err);
       }
     );
+    let timer
     getCountries().then(
       (res) => {
         let needDataCountry = [];
@@ -88,16 +78,21 @@ export default function EditDelivery({ navigation }) {
             key: res[i].cityDescription,
           });
         }
-        setCountrydata(needDataCountry);
-        setData({
-          ...data,
-          isLoaded: false,
-        });
+        setCountrydata(needDataCountry); 
+        timer = setTimeout(() => {
+          setData({
+            ...data,
+            isLoaded: false,
+          });
+        }, 2000);
       },
       (err) => {
         console.log(err);
       }
     );
+    
+
+    return () => clearTimeout(timer);
   }, []);
 
   const textInputCountryChange = (val) => {
@@ -159,16 +154,11 @@ export default function EditDelivery({ navigation }) {
       data.postcode,
       data.instructions
     ).then(
-      (res) => {
-        console.log(res);
-        Alert.alert("User delivery Info saved successfully", "Thank you", [
-          { text: "Ok" },
-        ]);
+      () => {
         navigation.navigate("Footer");
       },
       (err) => {
         console.log(err);
-        Alert.alert("Error", `Something went wrong! ${err}`);
       }
     );
   };
@@ -180,65 +170,117 @@ export default function EditDelivery({ navigation }) {
     );
   } else {
     return (
-      <ScrollView>
-        <View style={styles.body}>
-          <View style={styles.text}>
-            <H1 h1Text="Delivery Information" />
-            <Text>You say when and where</Text>
+      <ScrollView style={{ backgroundColor: "white" }}>
+      <View style={styles.body}>
+        <View style={styles.text}>
+          <H1 h1Text="Delivery Information" />
+          <Text style={styles.textChild}>You say when and where</Text>
+        </View>
+        <View>
+          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+            <Text style={styles.placeholder}>Country</Text>
+            <View style={{ flexGrow: 1 }} />
           </View>
-          <View>
-            <Text>Country</Text>
+          <View style={styles.picker}>
             <RNPickerSelect
+              placeholderTextColor="#3E315A"
+              style={pickerSelect}
               onValueChange={(value) => textInputCountryChange(value)}
               items={countrydata}
             />
           </View>
-          <View>
-            <Text>Province</Text>
+        </View>
+        <View>
+          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+            <Text style={styles.placeholder}>Province</Text>
+            <View style={{ flexGrow: 1 }} />
+          </View>
+          <View style={styles.picker}>
             <RNPickerSelect
+              placeholderTextColor="#3E315A"
+              style={pickerSelect}
               onValueChange={(value) => textInputProvinceChange(value)}
               items={provincedata}
             />
           </View>
-
-          <View>
-            <Text>City</Text>
+        </View>
+        <View>
+          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+            <Text style={styles.placeholder}>City</Text>
+            <View style={{ flexGrow: 1 }} />
+          </View>
+          <View style={styles.picker}>
             <RNPickerSelect
+              placeholderTextColor="#3E315A"
+              style={pickerSelect}
               onValueChange={(value) => textInputCityChange(value)}
               items={citydata}
             />
           </View>
-
+        </View>
+        <View>
+          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+            <Text style={styles.placeholder}>Address</Text>
+            <View style={{ flexGrow: 1 }} />
+          </View>
           <TextInput
-            placeholder={"Address"}
             textContentType={"fullStreetAddress"}
             autoCapitalize="none"
             onChangeText={(val) => textInputAddressChange(val)}
+            autoCorrect={false}
             style={styles.textInput}
           />
+        </View>
+
+        <View>
+          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+            <Text style={styles.placeholder}>Postcode</Text>
+            <View style={{ flexGrow: 1 }} />
+          </View>
 
           <TextInput
-            placeholder={"Postcode"}
             textContentType={"postalCode"}
             autoCapitalize="none"
             onChangeText={(val) => textInputPostChange(val)}
+            autoCorrect={false}
             style={styles.textInput}
           />
+        </View>
 
+        <View>
+          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+            <Text style={styles.placeholder}>Delivery Instructions</Text>
+            <View style={{ flexGrow: 1 }} />
+          </View>
           <TextInput
-            placeholder={"Delivery Instruction"}
             textContentType={"none"}
             autoCapitalize="none"
             onChangeText={(val) => textInputInfoChange(val)}
-            style={styles.textInput}
+            autoCorrect={false}
+            style={styles.textInputDelivery}
           />
-
-          <Button title="Done" type="submit" onPress={() => deliveryHandle()} />
         </View>
-      </ScrollView>
+
+        <TouchableOpacity
+          style={styles.button}
+          type="submit"
+          onPress={() => deliveryHandle()}
+        >
+          <Text style={styles.buttonText}>Done</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
     );
   }
 }
+const pickerSelect = {
+  inputiOS: {
+    color: "red",
+    backgroundColor: "red",
+  },
+  placeholderColor: "white",
+};
+
 
 const styles = StyleSheet.create({
   body: {
@@ -250,16 +292,77 @@ const styles = StyleSheet.create({
   text: {
     marginBottom: 20,
   },
+  textChild: {
+    color: "#3E315A",
+    lineHeight: 20,
+  },
   textInput: {
-    height: Dimensions.get("screen").width * 0.1,
+    height: 50,
     width: Dimensions.get("screen").width * 0.8,
-    backgroundColor: "lightgray",
-    marginLeft: Dimensions.get("screen").width * 0.01,
+    backgroundColor: "white",
+    // marginLeft: Dimensions.get("screen").width * 0.01,
     marginRight: Dimensions.get("screen").width * 0.01,
     marginTop: Dimensions.get("screen").width * 0.02,
-    marginBottom: Dimensions.get("screen").width * 0.02,
-    fontSize: 23,
-    borderRadius: 20,
+    marginBottom: Dimensions.get("screen").width * 0.03,
+    fontSize: 18,
+    borderColor: "#D4CDE3",
+    borderWidth: 2,
+    borderRadius: 15,
     paddingLeft: 15,
+    paddingTop: 15,
+    paddingBottom: 15,
+  },
+  textInputDelivery: {
+    height: 200,
+    width: Dimensions.get("screen").width * 0.8,
+    backgroundColor: "white",
+    // marginLeft: Dimensions.get("screen").width * 0.01,
+    marginRight: Dimensions.get("screen").width * 0.01,
+    marginTop: Dimensions.get("screen").width * 0.02,
+    marginBottom: Dimensions.get("screen").width * 0.03,
+    fontSize: 18,
+    borderColor: "#D4CDE3",
+    borderWidth: 2,
+    borderRadius: 15,
+    paddingLeft: 15,
+    paddingTop: 15,
+    paddingBottom: 15,
+  },
+  button: {
+    backgroundColor: "#632DF1",
+    paddingTop: 17.5,
+    paddingBottom: 17.5,
+    borderRadius: 16,
+    marginBottom: 30,
+    marginTop: 50,
+  },
+  buttonText: {
+    color: "white",
+    textAlign: "center",
+    fontSize: 16,
+    fontFamily: "NexaXBold",
+  },
+  picker: {
+    borderColor: "#D4CDE3",
+    borderWidth: 2,
+    height: 50,
+    paddingTop: 15,
+    paddingLeft: 15,
+    borderRadius: 15,
+    marginTop: Dimensions.get("screen").width * 0.02,
+    marginBottom: Dimensions.get("screen").width * 0.03,
+  },
+  placeholder: {
+    fontFamily: "NexaRegular",
+    fontSize: 12,
+    color: "#3e315a",
+    backgroundColor: "white",
+    position: "relative",
+    top: 17,
+    left: 19,
+    lineHeight: 15,
+    zIndex: 1,
+    paddingHorizontal: 5,
+    // paddingVertical: 10,
   },
 });

@@ -12,7 +12,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import H1 from "../../texts/H1";
-import AsyncStorage from "@react-native-community/async-storage";
 import RNPickerSelect from "react-native-picker-select";
 import { getCities, getCountries, getProvinces, postDeliveryInfo } from "../../../services/api";
 
@@ -64,6 +63,7 @@ export default function DeliveryInfo({ navigation }) {
         console.log(err);
       }
     );
+    let timer
     getCountries().then(
       (res) => {
         let needDataCountry = [];
@@ -74,19 +74,23 @@ export default function DeliveryInfo({ navigation }) {
             key: res[i].cityDescription,
           });
         }
-        setCountrydata(needDataCountry);
-        setData({
-          ...data,
-          isLoaded: false,
-        });
+        setCountrydata(needDataCountry); 
+        timer = setTimeout(() => {
+          setData({
+            ...data,
+            isLoaded: false,
+          });
+        }, 2000);
       },
       (err) => {
         console.log(err);
       }
     );
+    
+
+    return () => clearTimeout(timer);
   }, []);
 
-  const [userToken, setUserToken] = React.useState(null);
   const textInputCountryChange = (val) => {
     setData({
       ...data,
@@ -140,7 +144,16 @@ export default function DeliveryInfo({ navigation }) {
    
     postDeliveryInfo(data.countryName, data.provinceName, data.cityName, data.address, data.postcode, data.instructions).then(
       () => {
-        navigation.navigate("Footer");
+        // navigation.reset({
+        //   index: 0,
+        //   routes: [
+        //     {
+        //       name: 'RootSignIn'
+        //     },
+        //   ],
+        // })
+        navigation.navigate("RootSignIn");
+        // <RootSignIn />
       }, (err)=> {
         console.log(err)
       }

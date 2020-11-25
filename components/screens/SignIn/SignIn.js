@@ -17,7 +17,6 @@ import Users from "../../Users";
 import H1 from "../../texts/H1";
 import AsyncStorage from "@react-native-community/async-storage";
 import { AuthSession, WebBrowser, Linking } from "expo";
-// import { TextInput } from "react-native-paper";
 import {
   postCustomerLoginInfo,
   postGoogleEmail,

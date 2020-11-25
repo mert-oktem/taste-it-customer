@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { getCustomerInfo } from "../../services/api";
-import AsyncStorage from "@react-native-community/async-storage";
 import { AuthContext } from "../Context";
 import { useFonts } from "expo-font";
 import axios from "axios";
@@ -21,7 +20,6 @@ const ProfileTab = (props) => {
   const [firstName, setFirstName] = React.useState(null);
   const [isLoaded, setIsLoaded] = React.useState(true);
   const [info, setInfo] = React.useState(null);
-  const [value, setValue] = React.useState();
   const [fontsLoaded] = useFonts({
     NexaRegular: require("../../assets/NexaFont/NexaRegular.otf"),
     NexaXBold: require("../../assets/NexaFont/NexaXBold.otf"),
@@ -56,6 +54,14 @@ const ProfileTab = (props) => {
       source.cancel();
     };
   }, [info,firstName]);
+
+  const handleCustomerChange = () => {
+    props.navigation.navigate("EditCustomer");
+  };
+  const handleDeliveryChange = () => {
+    props.navigation.navigate("EditDelivery");
+  };
+
   const handleFlavourChange = () => {
     props.navigation.navigate("EditFlavourProfile");
   };
@@ -66,13 +72,13 @@ const ProfileTab = (props) => {
       </View>
     );
   } 
-  // else if(fontsLoaded){
-  //   return (
-  //     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-  //       <ActivityIndicator size="large" />
-  //     </View>
-  //   );
-  // }
+  else if(!fontsLoaded){
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
   else {
     return (
       <ScrollView style={{ backgroundColor: "white" }}>
@@ -83,7 +89,7 @@ const ProfileTab = (props) => {
           </View>
           <TouchableOpacity
             style={styles.card}
-            onPress={props.onHandleCustomerChange}
+            onPress={handleCustomerChange}
           >
             <View style={styles.cardInner}>
               <Image
@@ -99,7 +105,7 @@ const ProfileTab = (props) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.card}
-            onPress={props.onHandleDeliveryChange}
+            onPress={handleDeliveryChange}
           >
             <View style={styles.cardInner}>
               <Image

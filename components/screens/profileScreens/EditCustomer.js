@@ -44,6 +44,7 @@ export default function EditCustomer({ navigation }) {
             email: res.email,
             password: res.password,
           });
+          setFirstName(res.firstName)
         },
         (err) => {
           console.log(err);

@@ -13,51 +13,7 @@ const MaterialBottomTabs = createMaterialBottomTabNavigator();
 export default class Footer extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      menuID: "",
-      price: "",
-      meal: "",
-      restaurantID: "",
-    };
   }
-
-  handleHomeChange = (data, meal) => {
-    const details = data[0];
-    this.setState({
-      menuID: details.menuID,
-      price: details.price,
-      meal: meal,
-      restaurantID: details.restaurantID,
-    });
-    this.props.navigation.navigate("OrderConfirmation", {
-      menuID: details.menuID,
-      price: details.price,
-      meal: meal,
-      restaurantID: details.restaurantID,
-    });
-  };
-  handleCustomerChange = () => {
-    this.props.navigation.navigate("EditCustomer");
-  };
-  handleDeliveryChange = () => {
-    this.props.navigation.navigate("EditDelivery");
-  };
-  // handleFlavourChange = () => {
-  //   this.props.navigation.navigate("FlavourProfile");
-  // };
-  handleOrderNow = () => {
-    this.props.navigation.navigate("Footer");
-  };
-  handleActiveOrderStatus = (orderStatus, orderID) => {
-    this.props.navigation.navigate("OrderStatus", {
-      orderStatusID: orderStatus,
-      orderID: orderID,
-    });
-  };
-
-  handleOrderHistoryDetails = (orderID) => {
-    this.props.navigation.navigate("DishDetailScreen", { orderID: orderID });
-  };
   BottomTabs = () => {
     return (
       <MaterialBottomTabs.Navigator
@@ -70,7 +26,7 @@ export default class Footer extends Component {
           name="Home"
           style={{ marginBottom: 20 }}
           children={() => (
-            <HomeScreen onHandleHomeChange={this.handleHomeChange} />
+            <HomeScreen navigation={this.props.navigation} />
           )}
           options={{
             tabBarLabel: "Home",
@@ -86,9 +42,6 @@ export default class Footer extends Component {
           name="Orders"
           children={() => (
             <OrderTab
-              onHandleOrderNow={this.handleOrderNow}
-              onHandleActiveOrderStatus={this.handleActiveOrderStatus}
-              onHandleOrderHistoryDetails={this.handleOrderHistoryDetails}
               navigation={this.props.navigation}
             />
           )}
@@ -119,9 +72,6 @@ export default class Footer extends Component {
           name="Profile"
           children={() => (
             <ProfileTab
-              onHandleCustomerChange={this.handleCustomerChange}
-              onHandleDeliveryChange={this.handleDeliveryChange}
-              // onHandleFlavourChange={this.handleFlavourChange}
               navigation={this.props.navigation}
             />
           )}

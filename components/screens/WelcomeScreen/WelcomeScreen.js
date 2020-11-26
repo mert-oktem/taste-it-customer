@@ -34,7 +34,7 @@ const WelcomeScreen = ({ navigation }) => {
           source={require("../../../assets/foodIllustration/customerSide/Banner.jpg")}
         />
         <View style={styles.page}>
-          <Text style={styles.heading}>Tailored Food Just For You.</Text>
+          <Text style={styles.heading}>Tailored Meal Just For You.</Text>
           <Text style={styles.text}>
             Get a unique culinary experience by having a delivered surprise meal
             picked out to suit your preferences.

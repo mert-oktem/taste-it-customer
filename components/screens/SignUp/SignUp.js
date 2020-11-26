@@ -185,7 +185,6 @@ export default function SignUp({ navigation }) {
       (res) => {
         let accessToken = res.token;
         signUp(accessToken);
-        Alert.alert("Done", "user logged In", [{ text: "Okay" }]);
       },
       (err) => {
         console.log(err);

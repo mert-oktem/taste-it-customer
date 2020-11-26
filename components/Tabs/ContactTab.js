@@ -10,12 +10,16 @@ import {
   Alert,
   Image,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import H1 from "../texts/H1";
 import { postCustomerInquiry } from "../../services/api";
 import { useFonts } from "expo-font";
+import { useIsFocused } from "@react-navigation/native";
+import Footer from "../footer/Footer";
 
 const ContactTab = ({ navigation }) => {
+  const isFocused = useIsFocused();
   const [fontsLoaded] = useFonts({
     NexaRegular: require("../../assets/NexaFont/NexaRegular.otf"),
     NexaXBold: require("../../assets/NexaFont/NexaXBold.otf"),
@@ -78,8 +82,7 @@ const ContactTab = ({ navigation }) => {
       data.phoneNumber
     ).then(
       (res) => {
-        console.log(res);
-        Alert.alert("Your Inquiry is submitted", "Thank you", [{ text: "Ok" }]);
+        Alert.alert("Thank you", [{ text: "Ok" }]);
         setData({
           ...data,
           email: "",
@@ -95,100 +98,104 @@ const ContactTab = ({ navigation }) => {
       }
     );
   };
-
-  return (
-    <ScrollView style={{ backgroundColor: "white" }}>
-      <View
-        style={{
-          width: Dimensions.get("screen").width * 0.8,
-          marginLeft: Dimensions.get("screen").width * 0.1,
-          marginTop: Dimensions.get("screen").width * 0.1,
-        }}
-      >
-        <H1 h1Text="Contact Us" />
-        <Text
+  if (isFocused) {
+    return (
+      <ScrollView style={{ backgroundColor: "white" }}>
+        <View
           style={{
-            fontFamily: "NexaRegular",
-            color: "#3e315a",
-            lineHeight: 19,
-            marginTop: 7,
-            marginBottom: 41,
+            width: Dimensions.get("screen").width * 0.8,
+            marginLeft: Dimensions.get("screen").width * 0.1,
+            marginTop: Dimensions.get("screen").width * 0.1,
           }}
         >
-          Leave us a message, we will get in touch with you as soon as possible.
-        </Text>
-        <View>
-          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
-            <Text style={styles.placeholder}>Name</Text>
-            <View style={{ flexGrow: 1 }} />
+          <H1 h1Text="Contact Us" />
+          <Text
+            style={{
+              fontFamily: "NexaRegular",
+              color: "#3e315a",
+              lineHeight: 19,
+              marginTop: 7,
+              marginBottom: 41,
+            }}
+          >
+            Leave us a message, we will get in touch with you as soon as
+            possible.
+          </Text>
+          <View>
+            <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+              <Text style={styles.placeholder}>Name</Text>
+              <View style={{ flexGrow: 1 }} />
+            </View>
+            <TextInput
+              textContentType={"name"}
+              autoCapitalize="none"
+              onChangeText={(val) => textInputNameChange(val)}
+              style={styles.textInput}
+            />
           </View>
-          <TextInput
-            textContentType={"name"}
-            autoCapitalize="none"
-            onChangeText={(val) => textInputNameChange(val)}
-            style={styles.textInput}
-          />
-        </View>
-        <View>
-          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
-            <Text style={styles.placeholder}>Email</Text>
-            <View style={{ flexGrow: 1 }} />
+          <View>
+            <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+              <Text style={styles.placeholder}>Email</Text>
+              <View style={{ flexGrow: 1 }} />
+            </View>
+            <TextInput
+              textContentType={"emailAddress"}
+              autoCapitalize="none"
+              onChangeText={(val) => textInputEmailChange(val)}
+              style={styles.textInput}
+            />
           </View>
-          <TextInput
-            textContentType={"emailAddress"}
-            autoCapitalize="none"
-            onChangeText={(val) => textInputEmailChange(val)}
-            style={styles.textInput}
-          />
-        </View>
-        <View>
-          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
-            <Text style={styles.placeholder}>Phone Number</Text>
-            <View style={{ flexGrow: 1 }} />
+          <View>
+            <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+              <Text style={styles.placeholder}>Phone Number</Text>
+              <View style={{ flexGrow: 1 }} />
+            </View>
+            <TextInput
+              textContentType={"none"}
+              autoCapitalize="none"
+              onChangeText={(val) => textInputPhoneNumberChange(val)}
+              style={styles.textInput}
+            />
           </View>
-          <TextInput
-            textContentType={"none"}
-            autoCapitalize="none"
-            onChangeText={(val) => textInputPhoneNumberChange(val)}
-            style={styles.textInput}
-          />
-        </View>
-        <View>
-          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
-            <Text style={styles.placeholder}>Subject</Text>
-            <View style={{ flexGrow: 1 }} />
+          <View>
+            <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+              <Text style={styles.placeholder}>Subject</Text>
+              <View style={{ flexGrow: 1 }} />
+            </View>
+            <TextInput
+              textContentType={"none"}
+              autoCapitalize="none"
+              onChangeText={(val) => textInputSubjectChange(val)}
+              style={styles.textInput}
+            />
           </View>
-          <TextInput
-            textContentType={"none"}
-            autoCapitalize="none"
-            onChangeText={(val) => textInputSubjectChange(val)}
-            style={styles.textInput}
-          />
-        </View>
-        <View>
-          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
-            <Text style={styles.placeholder}>Message</Text>
-            <View style={{ flexGrow: 1 }} />
+          <View>
+            <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+              <Text style={styles.placeholder}>Message</Text>
+              <View style={{ flexGrow: 1 }} />
+            </View>
+            <TextInput
+              textContentType={"none"}
+              autoCapitalize="none"
+              onChangeText={(val) => textInputBodyChange(val)}
+              style={styles.textInput1}
+            />
           </View>
-          <TextInput
-            textContentType={"none"}
-            autoCapitalize="none"
-            onChangeText={(val) => textInputBodyChange(val)}
-            style={styles.textInput1}
-          />
+          <TouchableOpacity
+            style={styles.button}
+            type="submit"
+            onPress={() => {
+              onInquiryHandle();
+            }}
+          >
+            <Text style={styles.buttonText}>Submit</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={styles.button}
-          type="submit"
-          onPress={() => {
-            onInquiryHandle();
-          }}
-        >
-          <Text style={styles.buttonText}>Submit</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
-  );
+      </ScrollView>
+    );
+  } else {
+    return <Footer />;
+  }
 };
 
 export default ContactTab;

@@ -13,7 +13,12 @@ import {
 } from "react-native";
 import H1 from "../../texts/H1";
 import RNPickerSelect from "react-native-picker-select";
-import { getCities, getCountries, getProvinces, postDeliveryInfo } from "../../../services/api";
+import {
+  getCities,
+  getCountries,
+  getProvinces,
+  postDeliveryInfo,
+} from "../../../services/api";
 
 export default function DeliveryInfo({ navigation }) {
   const [citydata, setCitydata] = React.useState("null");
@@ -63,7 +68,7 @@ export default function DeliveryInfo({ navigation }) {
         console.log(err);
       }
     );
-    let timer
+    let timer;
     getCountries().then(
       (res) => {
         let needDataCountry = [];
@@ -74,7 +79,7 @@ export default function DeliveryInfo({ navigation }) {
             key: res[i].cityDescription,
           });
         }
-        setCountrydata(needDataCountry); 
+        setCountrydata(needDataCountry);
         timer = setTimeout(() => {
           setData({
             ...data,
@@ -86,7 +91,6 @@ export default function DeliveryInfo({ navigation }) {
         console.log(err);
       }
     );
-    
 
     return () => clearTimeout(timer);
   }, []);
@@ -141,23 +145,22 @@ export default function DeliveryInfo({ navigation }) {
       ]);
       return;
     }
-   
-    postDeliveryInfo(data.countryName, data.provinceName, data.cityName, data.address, data.postcode, data.instructions).then(
+
+    postDeliveryInfo(
+      data.countryName,
+      data.provinceName,
+      data.cityName,
+      data.address,
+      data.postcode,
+      data.instructions
+    ).then(
       () => {
-        // navigation.reset({
-        //   index: 0,
-        //   routes: [
-        //     {
-        //       name: 'RootSignIn'
-        //     },
-        //   ],
-        // })
         navigation.navigate("RootSignIn");
-        // <RootSignIn />
-      }, (err)=> {
-        console.log(err)
+      },
+      (err) => {
+        console.log(err);
       }
-    )
+    );
   };
   if (data.isLoaded) {
     return (

@@ -14,7 +14,7 @@ import {
 import H1 from "../../texts/H1";
 import { putCustomerInfo } from "../../../services/api";
 import { getCustomerInfo } from "../../../services/api";
-import axios from "axios"
+import axios from "axios";
 
 export default function EditCustomer({ navigation }) {
   const [data, setData] = React.useState({
@@ -33,7 +33,7 @@ export default function EditCustomer({ navigation }) {
   useEffect(() => {
     const CancelToken = axios.CancelToken;
     const source = CancelToken.source();
-    try{
+    try {
       getCustomerInfo(source).then(
         (res) => {
           setData({
@@ -44,19 +44,19 @@ export default function EditCustomer({ navigation }) {
             email: res.email,
             password: res.password,
           });
-          setFirstName(res.firstName)
+          setFirstName(res.firstName);
         },
         (err) => {
           console.log(err);
         }
       );
-    }catch (error) {
-        // if (axios.isCancel(error)) {
-        //   console.log("cancelled");
-        // } else {
-          throw error;
-        // }
-      }
+    } catch (error) {
+      // if (axios.isCancel(error)) {
+      //   console.log("cancelled");
+      // } else {
+      throw error;
+      // }
+    }
     return () => {
       source.cancel();
     };
@@ -215,7 +215,7 @@ export default function EditCustomer({ navigation }) {
       data.phoneNumber
     ).then(
       (res) => {
-        navigation.navigate("Footer");
+        navigation.navigate("ProfileTab");
       },
       (err) => {
         console.log(err);
@@ -279,7 +279,7 @@ export default function EditCustomer({ navigation }) {
             </Text>
           </View>
         )}
-         <Text style={styles.text}>*Contact for your delivery</Text>
+        <Text style={styles.text}>*Contact for your delivery</Text>
         <TextInput
           placeholder={"Email"}
           textContentType={"emailAddress"}

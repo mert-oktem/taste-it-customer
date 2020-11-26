@@ -136,10 +136,13 @@ const HomeScreen = (props) => {
               }}
             >
               <Text style={styles.address}>{address}</Text>
+              <TouchableOpacity onPress={() => props.navigation.navigate("EditDelivery")}>
               <Image
                 style={{ width: 22, height: 22 }}
                 source={require("../../../assets/Icons/addressEdit.png")}
               />
+              </TouchableOpacity>
+              
             </View>
           </View>
           <Image />

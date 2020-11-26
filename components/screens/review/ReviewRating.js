@@ -31,18 +31,14 @@ export default function ReviewRating({ route, navigation }) {
     setComment(val);
   };
   const textInputRatingChange = (val) => {
-    console.log(val);
     setRating(val);
   };
   const reviewHandler = () => {
-    //   console.log("done")
     putReviewOrder(orderID, rating, comment, isOrderAgain).then(
       (res) => {
-        alert("review saved");
         navigation.navigate("ThanksFeedback");
       },
       (err) => {
-        console.log(err);
         Alert.alert("Error", `Something went wrong! ${err}`);
       }
     );

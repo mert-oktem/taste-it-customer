@@ -13,11 +13,11 @@ const Stack = createStackNavigator();
 
 const RootSignUp = () => {
     return (
-        <Stack.Navigator style={styles.container}>
-          <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} />
-          <Stack.Screen name="FlavourProfile" component={FlavourProfile} />
-          <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} />
-          <Stack.Screen name="RootSignIn" component={RootSignIn} />
+        <Stack.Navigator style={styles.container} initialRouteName="WelcomeScreen2" independent={true}>
+          <Stack.Screen name="WelcomeScreen2" component={WelcomeScreen2} options={{headerShown: false, title: ""}}/>
+          <Stack.Screen name="FlavourProfile" component={FlavourProfile} options={{title: ""}}/>
+          <Stack.Screen name="DeliveryInfo1" component={DeliveryInfo} options={{title: ""}}/>
+          <Stack.Screen name="RootSignIn" component={RootSignIn} options={{headerShown: false, title: ""}}/>
         </Stack.Navigator>
       );
 }

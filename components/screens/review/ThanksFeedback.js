@@ -58,7 +58,7 @@ const ThanksFeedback = ({ route, navigation }) => {
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            navigation.navigate("Footer");
+            navigation.navigate("HomeStack");
           }}
         >
           <Text style={styles.buttonText}>Order Again</Text>

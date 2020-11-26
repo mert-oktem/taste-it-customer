@@ -8,7 +8,8 @@ import {
   Button,
   TextInput,
   Alert,
-  ActivityIndicator, TouchableOpacity
+  ActivityIndicator,
+  TouchableOpacity,
 } from "react-native";
 import H1 from "../../texts/H1";
 import RNPickerSelect from "react-native-picker-select";
@@ -67,7 +68,7 @@ export default function EditDelivery({ navigation }) {
         console.log(err);
       }
     );
-    let timer
+    let timer;
     getCountries().then(
       (res) => {
         let needDataCountry = [];
@@ -78,7 +79,7 @@ export default function EditDelivery({ navigation }) {
             key: res[i].cityDescription,
           });
         }
-        setCountrydata(needDataCountry); 
+        setCountrydata(needDataCountry);
         timer = setTimeout(() => {
           setData({
             ...data,
@@ -90,7 +91,6 @@ export default function EditDelivery({ navigation }) {
         console.log(err);
       }
     );
-    
 
     return () => clearTimeout(timer);
   }, []);
@@ -155,7 +155,7 @@ export default function EditDelivery({ navigation }) {
       data.instructions
     ).then(
       () => {
-        navigation.navigate("Footer");
+        navigation.navigate("ProfileTab");
       },
       (err) => {
         console.log(err);
@@ -171,105 +171,105 @@ export default function EditDelivery({ navigation }) {
   } else {
     return (
       <ScrollView style={{ backgroundColor: "white" }}>
-      <View style={styles.body}>
-        <View style={styles.text}>
-          <H1 h1Text="Delivery Information" />
-          <Text style={styles.textChild}>You say when and where</Text>
-        </View>
-        <View>
-          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
-            <Text style={styles.placeholder}>Country</Text>
-            <View style={{ flexGrow: 1 }} />
+        <View style={styles.body}>
+          <View style={styles.text}>
+            <H1 h1Text="Delivery Information" />
+            <Text style={styles.textChild}>You say when and where</Text>
           </View>
-          <View style={styles.picker}>
-            <RNPickerSelect
-              placeholderTextColor="#3E315A"
-              style={pickerSelect}
-              onValueChange={(value) => textInputCountryChange(value)}
-              items={countrydata}
+          <View>
+            <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+              <Text style={styles.placeholder}>Country</Text>
+              <View style={{ flexGrow: 1 }} />
+            </View>
+            <View style={styles.picker}>
+              <RNPickerSelect
+                placeholderTextColor="#3E315A"
+                style={pickerSelect}
+                onValueChange={(value) => textInputCountryChange(value)}
+                items={countrydata}
+              />
+            </View>
+          </View>
+          <View>
+            <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+              <Text style={styles.placeholder}>Province</Text>
+              <View style={{ flexGrow: 1 }} />
+            </View>
+            <View style={styles.picker}>
+              <RNPickerSelect
+                placeholderTextColor="#3E315A"
+                style={pickerSelect}
+                onValueChange={(value) => textInputProvinceChange(value)}
+                items={provincedata}
+              />
+            </View>
+          </View>
+          <View>
+            <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+              <Text style={styles.placeholder}>City</Text>
+              <View style={{ flexGrow: 1 }} />
+            </View>
+            <View style={styles.picker}>
+              <RNPickerSelect
+                placeholderTextColor="#3E315A"
+                style={pickerSelect}
+                onValueChange={(value) => textInputCityChange(value)}
+                items={citydata}
+              />
+            </View>
+          </View>
+          <View>
+            <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+              <Text style={styles.placeholder}>Address</Text>
+              <View style={{ flexGrow: 1 }} />
+            </View>
+            <TextInput
+              textContentType={"fullStreetAddress"}
+              autoCapitalize="none"
+              onChangeText={(val) => textInputAddressChange(val)}
+              autoCorrect={false}
+              style={styles.textInput}
             />
           </View>
-        </View>
-        <View>
-          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
-            <Text style={styles.placeholder}>Province</Text>
-            <View style={{ flexGrow: 1 }} />
-          </View>
-          <View style={styles.picker}>
-            <RNPickerSelect
-              placeholderTextColor="#3E315A"
-              style={pickerSelect}
-              onValueChange={(value) => textInputProvinceChange(value)}
-              items={provincedata}
+
+          <View>
+            <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+              <Text style={styles.placeholder}>Postcode</Text>
+              <View style={{ flexGrow: 1 }} />
+            </View>
+
+            <TextInput
+              textContentType={"postalCode"}
+              autoCapitalize="none"
+              onChangeText={(val) => textInputPostChange(val)}
+              autoCorrect={false}
+              style={styles.textInput}
             />
           </View>
-        </View>
-        <View>
-          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
-            <Text style={styles.placeholder}>City</Text>
-            <View style={{ flexGrow: 1 }} />
-          </View>
-          <View style={styles.picker}>
-            <RNPickerSelect
-              placeholderTextColor="#3E315A"
-              style={pickerSelect}
-              onValueChange={(value) => textInputCityChange(value)}
-              items={citydata}
+
+          <View>
+            <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+              <Text style={styles.placeholder}>Delivery Instructions</Text>
+              <View style={{ flexGrow: 1 }} />
+            </View>
+            <TextInput
+              textContentType={"none"}
+              autoCapitalize="none"
+              onChangeText={(val) => textInputInfoChange(val)}
+              autoCorrect={false}
+              style={styles.textInputDelivery}
             />
           </View>
-        </View>
-        <View>
-          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
-            <Text style={styles.placeholder}>Address</Text>
-            <View style={{ flexGrow: 1 }} />
-          </View>
-          <TextInput
-            textContentType={"fullStreetAddress"}
-            autoCapitalize="none"
-            onChangeText={(val) => textInputAddressChange(val)}
-            autoCorrect={false}
-            style={styles.textInput}
-          />
-        </View>
 
-        <View>
-          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
-            <Text style={styles.placeholder}>Postcode</Text>
-            <View style={{ flexGrow: 1 }} />
-          </View>
-
-          <TextInput
-            textContentType={"postalCode"}
-            autoCapitalize="none"
-            onChangeText={(val) => textInputPostChange(val)}
-            autoCorrect={false}
-            style={styles.textInput}
-          />
+          <TouchableOpacity
+            style={styles.button}
+            type="submit"
+            onPress={() => deliveryHandle()}
+          >
+            <Text style={styles.buttonText}>Done</Text>
+          </TouchableOpacity>
         </View>
-
-        <View>
-          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
-            <Text style={styles.placeholder}>Delivery Instructions</Text>
-            <View style={{ flexGrow: 1 }} />
-          </View>
-          <TextInput
-            textContentType={"none"}
-            autoCapitalize="none"
-            onChangeText={(val) => textInputInfoChange(val)}
-            autoCorrect={false}
-            style={styles.textInputDelivery}
-          />
-        </View>
-
-        <TouchableOpacity
-          style={styles.button}
-          type="submit"
-          onPress={() => deliveryHandle()}
-        >
-          <Text style={styles.buttonText}>Done</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+      </ScrollView>
     );
   }
 }
@@ -280,7 +280,6 @@ const pickerSelect = {
   },
   placeholderColor: "white",
 };
-
 
 const styles = StyleSheet.create({
   body: {

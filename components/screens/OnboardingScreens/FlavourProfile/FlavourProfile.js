@@ -202,14 +202,12 @@ export default class FlavourProfile extends Component {
       cuisinesArray.length > 0 ||
       dietTypesArray.length > 0
     ) {
-      console.log("here at 229");
       for (let i = 0; i < finalArray.length; i++) {
         postChoice(finalArray[i]).then(
-          (res) => {
-            console.log(res);
+          () => {
+            console.log("Choices Saved");
           },
           (error) => {
-            console.log(error);
             Alert.alert("Error", `Something went wrong! ${error}`);
           }
         );
@@ -224,25 +222,21 @@ export default class FlavourProfile extends Component {
     this.setState({
       spicinessData: update,
     });
-    // console.log(this.state.spicinessData);
   };
   handleAllergiesChange = (update) => {
     this.setState({
       allergiesData: update,
     });
-    // console.log(this.state.allergiesData);
   };
   handleDietTypesChange = (update) => {
     this.setState({
       dietTypesData: update,
     });
-    // console.log(this.state.dietTypesData);
   };
   handleCuisinesChange = (update) => {
     this.setState({
       cuisinesData: update,
     });
-    // console.log(this.state.cuisinesData);
   };
 
   // ***************************************to render all tabs and pass props *********************************************/

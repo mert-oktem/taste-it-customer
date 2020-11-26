@@ -17,10 +17,7 @@ import Users from "../../Users";
 import H1 from "../../texts/H1";
 import AsyncStorage from "@react-native-community/async-storage";
 import { AuthSession, WebBrowser, Linking } from "expo";
-import {
-  postCustomerLoginInfo,
-  postGoogleEmail,
-} from "../../../services/api";
+import { postCustomerLoginInfo, postGoogleEmail } from "../../../services/api";
 import * as Google from "expo-google-app-auth";
 import { useFonts } from "expo-font";
 
@@ -98,8 +95,6 @@ export default function SignIn({ navigation }) {
       (res) => {
         let accessToken = res.token;
         signIn(accessToken);
-        Alert.alert("Done", "user logged In", [{ text: "Okay" }]);
-        navigation.navigate("Root", { screen: "Footer" });
       },
       (err) => {
         console.log(err);
@@ -132,10 +127,6 @@ export default function SignIn({ navigation }) {
               result.user.givenName,
               result.user.familyName
             );
-
-            Alert.alert("Done", "user logged In with google", [
-              { text: "Okay" },
-            ]);
           },
           (err) => {
             console.log(err);
@@ -162,7 +153,7 @@ export default function SignIn({ navigation }) {
           source={require("../../../assets/foodIllustration/customerSide/SignIn.jpg")}
         />
         <ScrollView style={styles.body}>
-          <H1 h1Text="Welcome Aboard," />
+          <H1 h1Text="Welcome Back," />
           <Text style={styles.para1}>Sign in to continue</Text>
           <View>
             <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>

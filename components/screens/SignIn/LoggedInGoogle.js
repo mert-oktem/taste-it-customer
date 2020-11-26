@@ -125,11 +125,10 @@ const LoggedInGoogle = ({ navigation }) => {
     }
 
     putGoogleCustomerInfo(data.firstName, data.lastName, data.phoneNumber).then(
-      (res) => {
-        navigation.navigate("WelcomeScreen2");
+      () => {
+        navigation.navigate("RootSignUp");
       },
       (err) => {
-        console.log(err);
         Alert.alert("Error", `Something went wrong! ${err}`);
       }
     );

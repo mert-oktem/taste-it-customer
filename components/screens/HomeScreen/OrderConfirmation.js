@@ -18,6 +18,7 @@ import {
   getCustomerAddress,
   getDeliveryTime,
 } from "../../../services/api";
+import Footer from "../../footer/Footer";
 
 const OrderConfirmation = ({ route, navigation }) => {
   const [fontsLoaded] = useFonts({
@@ -44,8 +45,6 @@ const OrderConfirmation = ({ route, navigation }) => {
   });
 
   useEffect(() => {
-    // setTimeout(() => {
-
     let addressTest = "";
     let cityTest = "";
     let postcodeTest = "";
@@ -79,11 +78,8 @@ const OrderConfirmation = ({ route, navigation }) => {
 
   const orderSubmitHandle = () => {
     getSubmitOrder(menuID).then(
-      (res) => {
-        console.log(res);
-        alert("order sent");
-        // props.onHandleHomeChange(res,data.numberOfPeople);
-        navigation.navigate("OrderTab", { navigation: navigation });
+      () => {
+        navigation.navigate("OrderStack");
       },
       (err) => {
         console.log(err);

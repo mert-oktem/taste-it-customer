@@ -10,9 +10,9 @@ const Stack = createStackNavigator();
 const Root = () => {
     return (
         <Stack.Navigator initialRouteName="WelcomeScreen" independent={true}>
-          <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
-          <Stack.Screen name="SignIn" component={SignIn} />
-          <Stack.Screen name="SignUp" component={SignUp} />
+          <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} options={{headerShown: false, title: "" }}/>
+          <Stack.Screen name="SignIn" component={SignIn} options={{headerShown: false, title: "" }}/>
+          <Stack.Screen name="SignUp" component={SignUp} options={{title: "" }}/>
         </Stack.Navigator>
       );
 }

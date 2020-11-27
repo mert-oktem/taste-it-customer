@@ -63,8 +63,8 @@ export default WelcomeScreen;
 
 const styles = StyleSheet.create({
   image: {
-    height: Dimensions.get("screen").width,
-    width: "auto",
+    height: Dimensions.get("screen").width * 1.2,
+    width: Dimensions.get("screen").width,
     // backgroundColor: "lightgray",
     // marginTop: Dimensions.get("screen").width * 0.15,
   },
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 32,
     fontWeight: "bold",
-    marginTop: 30,
+    marginTop: 20,
     marginBottom: 15,
     lineHeight: 40,
     color: "#632DF1",

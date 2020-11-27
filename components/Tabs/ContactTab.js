@@ -100,12 +100,12 @@ const ContactTab = ({ navigation }) => {
   };
   if (isFocused) {
     return (
-      <ScrollView style={{ backgroundColor: "white" }}>
+      <ScrollView style={{ backgroundColor: "white", paddingTop: 60 }}>
         <View
           style={{
             width: Dimensions.get("screen").width * 0.8,
             marginLeft: Dimensions.get("screen").width * 0.1,
-            marginTop: Dimensions.get("screen").width * 0.1,
+            marginTop: Dimensions.get("screen").width * 0.05,
           }}
         >
           <H1 h1Text="Contact Us" />

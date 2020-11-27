@@ -15,6 +15,7 @@ import ContactTab from "../components/tabs/ContactTab";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { StyleSheet, Dimensions, Image } from "react-native";
 import ProfileTab from "../components/tabs/ProfileTab";
+import { useIsFocused } from "@react-navigation/native";
 
 const Stack = createStackNavigator();
 const MaterialBottomTabs = createMaterialBottomTabNavigator();
@@ -31,10 +32,26 @@ const HomeStack = () => {
       initialRouteName="HomeScreen"
       independent={true}
     >
-      <Stack.Screen options={{headerShown: false, title: ""}} name="HomeScreen" component={HomeScreen} />
-      <Stack.Screen name="OrderConfirmation" component={OrderConfirmation} options={{title: "" }}/>
-      <Stack.Screen options={{headerShown: false, title: ""}} name="OrderStack" component={OrderStack} />
-      <Stack.Screen name="EditDelivery" component={EditDelivery} options={{title: "" }}/>
+      <Stack.Screen
+        options={{ headerShown: false, title: "" }}
+        name="HomeScreen"
+        component={HomeScreen}
+      />
+      <Stack.Screen
+        name="OrderConfirmation"
+        component={OrderConfirmation}
+        options={{ title: "" }}
+      />
+      <Stack.Screen
+        options={{ headerShown: false, title: "" }}
+        name="OrderStack"
+        component={OrderStack}
+      />
+      <Stack.Screen
+        name="EditDelivery"
+        component={EditDelivery}
+        options={{ title: "" }}
+      />
     </Stack.Navigator>
   );
 };
@@ -46,13 +63,41 @@ const OrderStack = () => {
       initialRouteName="OrderTab"
       independent={true}
     >
-      <Stack.Screen options={{headerShown: false, title: ""}} name="OrderTab" component={OrderTab} />
-      <Stack.Screen name="OrderStatus" component={OrderStatus} options={{title: "" }}/>
-      <Stack.Screen options={{headerShown: false, title: ""}} name="RevealConfirm" component={RevealConfirm}/>
-      <Stack.Screen name="DishDetailScreen" component={DishDetailScreen} options={{title: "" }}/>
-      <Stack.Screen name="ReviewRating" component={ReviewRating} options={{title: "" }}/>
-      <Stack.Screen options={{headerShown: false, title: ""}} name="ThanksFeedback" component={ThanksFeedback} />
-      <Stack.Screen options={{headerShown: false, title: ""}} name="HomeStack" component={HomeStack} />
+      <Stack.Screen
+        options={{ headerShown: false, title: "" }}
+        name="OrderTab"
+        component={OrderTab}
+      />
+      <Stack.Screen
+        name="OrderStatus"
+        component={OrderStatus}
+        options={{ title: "" }}
+      />
+      <Stack.Screen
+        options={{ headerShown: false, title: "" }}
+        name="RevealConfirm"
+        component={RevealConfirm}
+      />
+      <Stack.Screen
+        name="DishDetailScreen"
+        component={DishDetailScreen}
+        options={{ title: "" }}
+      />
+      <Stack.Screen
+        name="ReviewRating"
+        component={ReviewRating}
+        options={{ title: "" }}
+      />
+      <Stack.Screen
+        options={{ headerShown: false, title: "" }}
+        name="ThanksFeedback"
+        component={ThanksFeedback}
+      />
+      <Stack.Screen
+        options={{ headerShown: false, title: "" }}
+        name="HomeStack"
+        component={HomeStack}
+      />
     </Stack.Navigator>
   );
 };
@@ -64,10 +109,26 @@ const ProfileStack = () => {
       initialRouteName="ProfileTab"
       independent={true}
     >
-      <Stack.Screen options={{headerShown: false, title: ""}} name="ProfileTab" component={ProfileTab} />
-      <Stack.Screen name="EditDelivery" component={EditDelivery} options={{title: "" }}/>
-      <Stack.Screen name="EditCustomer" component={EditCustomer} options={{title: "" }} />
-      <Stack.Screen name="EditFlavourProfile" component={EditFlavourProfile} options={{title: "" }}/>
+      <Stack.Screen
+        options={{ headerShown: false, title: "" }}
+        name="ProfileTab"
+        component={ProfileTab}
+      />
+      <Stack.Screen
+        name="EditDelivery"
+        component={EditDelivery}
+        options={{ title: "" }}
+      />
+      <Stack.Screen
+        name="EditCustomer"
+        component={EditCustomer}
+        options={{ title: "" }}
+      />
+      <Stack.Screen
+        name="EditFlavourProfile"
+        component={EditFlavourProfile}
+        options={{ title: "" }}
+      />
     </Stack.Navigator>
   );
 };
@@ -76,6 +137,7 @@ const BottomTabs = () => {
   return (
     <MaterialBottomTabs.Navigator
       style={styles.footer}
+      labeled={false}
       activeColor="black"
       inactiveColor="#3e2465"
       barStyle={{ backgroundColor: "white" }}
@@ -86,25 +148,46 @@ const BottomTabs = () => {
         children={() => <HomeStack />}
         options={{
           tabBarLabel: "Home",
-          tabBarIcon: ({ tintColor }) => (
-            <Image
-              source={require("../assets/Icons/home.png")}
-              style={{ width: 26, height: 26, tintColor: tintColor }}
-            />
-          ),
+          tabBarIcon: ({ focused, tintColor }) => {
+            if (focused) {
+              return (
+                <Image
+                  source={require("../assets/Icons/homeHover.png")}
+                  style={{ width: 24, height: 26, tintColor: tintColor }}
+                />
+              );
+            } else {
+              return (
+                <Image
+                  source={require("../assets/Icons/home.png")}
+                  style={{ width: 26, height: 26, tintColor: tintColor }}
+                />
+              );
+            }
+          },
         }}
       />
       <MaterialBottomTabs.Screen
         name="Orders"
         children={() => <OrderStack />}
         options={{
-          tabBarLabel: "Orders",
-          tabBarIcon: ({ tintColor }) => (
-            <Image
-              source={require("../assets/Icons/order_history_mobile.png")}
-              style={{ width: 26, height: 26, tintColor: tintColor }}
-            />
-          ),
+          tabBarIcon: ({ focused, tintColor }) => {
+            if (focused) {
+              return (
+                <Image
+                  source={require("../assets/Icons/orderHistoryHover.png")}
+                  style={{ width: 24, height: 26, tintColor: tintColor }}
+                />
+              );
+            } else {
+              return (
+                <Image
+                  source={require("../assets/Icons/order_history_mobile.png")}
+                  style={{ width: 26, height: 26, tintColor: tintColor }}
+                />
+              );
+            }
+          },
         }}
       />
       <MaterialBottomTabs.Screen
@@ -112,12 +195,23 @@ const BottomTabs = () => {
         component={ContactTab}
         options={{
           tabBarLabel: "Contact",
-          tabBarIcon: ({ tintColor }) => (
-            <Image
-              source={require("../assets/Icons/contact.png")}
-              style={{ width: 26, height: 26, tintColor: tintColor }}
-            />
-          ),
+          tabBarIcon: ({ focused, tintColor }) => {
+            if (focused) {
+              return (
+                <Image
+                  source={require("../assets/Icons/contactHover.png")}
+                  style={{ width: 26, height: 26, tintColor: tintColor }}
+                />
+              );
+            } else {
+              return (
+                <Image
+                  source={require("../assets/Icons/contact.png")}
+                  style={{ width: 26, height: 26, tintColor: tintColor }}
+                />
+              );
+            }
+          },
         }}
       />
       <MaterialBottomTabs.Screen
@@ -125,12 +219,23 @@ const BottomTabs = () => {
         children={() => <ProfileStack />}
         options={{
           tabBarLabel: "Profile",
-          tabBarIcon: ({ tintColor }) => (
-            <Image
-              source={require("../assets/Icons/account_web.png")}
-              style={{ width: 26, height: 26, tintColor: tintColor }}
-            />
-          ),
+          tabBarIcon: ({ focused, tintColor }) => {
+            if (focused) {
+              return (
+                <Image
+                  source={require("../assets/Icons/accountHover.png")}
+                  style={{ width: 21, height: 26, tintColor: tintColor }}
+                />
+              );
+            } else {
+              return (
+                <Image
+                  source={require("../assets/Icons/account_web.png")}
+                  style={{ width: 26, height: 26, tintColor: tintColor }}
+                />
+              );
+            }
+          },
         }}
       />
     </MaterialBottomTabs.Navigator>

@@ -267,7 +267,7 @@ export default function SignUp({ navigation }) {
             </Text>
           </View>
         )}
-        <Text style={styles.text}>*Contact for your delivery</Text>
+        <Text style={styles.text1}>*Contact for your delivery</Text>
 
         <View>
           <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
@@ -347,11 +347,19 @@ const styles = StyleSheet.create({
     fontFamily: "NexaRegular",
     color: "#3e315a",
   },
+  text1: {
+    marginBottom: 10,
+    fontSize: 12,
+    fontFamily: "NexaRegular",
+    color: "#3e315a",
+  },
   textChild: {
     color: "#3E315A",
     lineHeight: 20,
     fontFamily: "NexaRegular",
     fontSize: 16,
+    marginTop: 10,
+    marginBottom: 10,
   },
   textInput: {
     height: 50,
@@ -380,7 +388,7 @@ const styles = StyleSheet.create({
     paddingBottom: 17.5,
     borderRadius: 16,
     marginBottom: 30,
-    marginTop: 50,
+    marginTop: 25,
   },
   buttonText: {
     color: "white",

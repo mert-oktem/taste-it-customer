@@ -30,7 +30,7 @@ const ProfileTab = (props) => {
     const CancelToken = axios.CancelToken;
     const source = CancelToken.source();
     const loadData = () => {
-      try{
+      try {
         getCustomerInfo(source).then(
           (res) => {
             setInfo(res);
@@ -41,19 +41,19 @@ const ProfileTab = (props) => {
             console.log(err);
           }
         );
-      }catch (error) {
+      } catch (error) {
         // if (axios.isCancel(error)) {
         //   console.log("cancelled");
         // } else {
-          throw error;
+        throw error;
         // }
       }
-    }
+    };
     loadData();
     return () => {
       source.cancel();
     };
-  }, [info,firstName]);
+  }, [info, firstName]);
 
   const handleCustomerChange = () => {
     props.navigation.navigate("EditCustomer");
@@ -67,30 +67,39 @@ const ProfileTab = (props) => {
   };
   if (isLoaded) {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          paddingTop: 60,
+        }}
+      >
         <ActivityIndicator size="large" />
       </View>
     );
-  } 
-  else if(!fontsLoaded){
+  } else if (!fontsLoaded) {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          paddingTop: 60,
+        }}
+      >
         <ActivityIndicator size="large" />
       </View>
     );
-  }
-  else {
+  } else {
     return (
-      <ScrollView style={{ backgroundColor: "white" }}>
+      <ScrollView style={{ backgroundColor: "white", paddingTop: 60 }}>
         <View style={styles.page}>
           <View>
             <Text style={styles.title}>Hi, {firstName}</Text>
             <Image />
           </View>
-          <TouchableOpacity
-            style={styles.card}
-            onPress={handleCustomerChange}
-          >
+          <TouchableOpacity style={styles.card} onPress={handleCustomerChange}>
             <View style={styles.cardInner}>
               <Image
                 style={styles.icons}
@@ -103,10 +112,7 @@ const ProfileTab = (props) => {
               source={require("../../assets/Icons/forwardArrow.png")}
             />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.card}
-            onPress={handleDeliveryChange}
-          >
+          <TouchableOpacity style={styles.card} onPress={handleDeliveryChange}>
             <View style={styles.cardInner}>
               <Image
                 style={styles.icons}
@@ -119,10 +125,7 @@ const ProfileTab = (props) => {
               source={require("../../assets/Icons/forwardArrow.png")}
             />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.card}
-            onPress={handleFlavourChange}
-          >
+          <TouchableOpacity style={styles.card} onPress={handleFlavourChange}>
             <View style={styles.cardInner}>
               <Image
                 style={styles.icons2}
@@ -169,7 +172,7 @@ export const styles = StyleSheet.create({
   page: {
     width: Dimensions.get("screen").width * 0.8,
     marginLeft: Dimensions.get("screen").width * 0.1,
-    marginTop: Dimensions.get("screen").width * 0.1,
+    marginTop: Dimensions.get("screen").width * 0.05,
     backgroundColor: "white",
   },
   card: {

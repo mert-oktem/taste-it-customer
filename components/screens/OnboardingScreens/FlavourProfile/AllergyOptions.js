@@ -36,6 +36,7 @@ export default class AllergyOptions extends Component {
                 fontFamily: "NexaXBold",
                 fontSize: 16,
                 color: "#3E315A",
+                marginTop: 4,
               }}
             >
               {item.key}
@@ -86,8 +87,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   icons: {
-    width: 21,
-    height: 20,
+    width: 25,
+    height: 24.5,
     marginRight: 20,
   },
 });

@@ -40,6 +40,7 @@ export default class SpicinessOptions extends Component {
                 fontFamily: "NexaXBold",
                 fontSize: 16,
                 color: "#3E315A",
+                marginTop: 4,
               }}
             >
               {item.key}
@@ -90,8 +91,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   icons: {
-    width: 20,
-    height: 20,
+    width: 25,
+    height: 25,
     marginRight: 20,
   },
 });

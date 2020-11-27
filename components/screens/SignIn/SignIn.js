@@ -242,10 +242,10 @@ export default function SignIn({ navigation }) {
             <Text style={styles.buttonText1}>Sign In with Google</Text>
           </TouchableOpacity>
           <View style={styles.signUpText}>
-            <Text style={styles.smallText}>Don't have an account?</Text>
+            <Text style={styles.smallText}>Don't have an account? </Text>
 
             <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
-              <Text style={styles.signUp}>Sign up now</Text>
+              <Text style={styles.signUp}> Sign up now</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   para1: {
-    marginBottom: Dimensions.get("screen").width * 0.08,
+    marginBottom: Dimensions.get("screen").width * 0.02,
     color: "#3E315A",
     fontFamily: "NexaRegular",
   },
@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
     paddingTop: 17.5,
     paddingBottom: 17.5,
     borderRadius: 16,
-    marginBottom: 25,
+    marginBottom: 30,
     marginTop: 10,
   },
   button1: {
@@ -314,7 +314,7 @@ const styles = StyleSheet.create({
     paddingBottom: 17.5,
     borderRadius: 16,
     marginBottom: 25,
-    marginTop: 30,
+    marginTop: 18,
   },
   placeholder: {
     fontFamily: "NexaRegular",
@@ -350,6 +350,7 @@ const styles = StyleSheet.create({
     marginTop: Dimensions.get("screen").width * 0.02,
     marginBottom: Dimensions.get("screen").width * 0.03,
     fontSize: 18,
+    fontFamily: "NexaRegular",
     borderColor: "#D4CDE3",
     borderWidth: 2,
     borderRadius: 16,

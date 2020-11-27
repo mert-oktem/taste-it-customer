@@ -27,6 +27,7 @@ const HomeScreen = (props) => {
   const [info, setInfo] = React.useState(null);
   const [firstName, setFirstName] = React.useState(null);
   const [address, setAddress] = React.useState(null);
+  const [city, setCity] = React.useState(null);
   const [isLoaded, setIsLoaded] = React.useState(true);
   const [fontsLoaded] = useFonts({
     NexaRegular: require("../../../assets/NexaFont/NexaRegular.otf"),
@@ -38,7 +39,7 @@ const HomeScreen = (props) => {
     const source = CancelToken.source();
 
     const loadData = () => {
-      try{
+      try {
         getCustomerInfo(source).then(
           (res) => {
             setInfo(res);
@@ -56,23 +57,22 @@ const HomeScreen = (props) => {
             console.log(err);
           }
         );
-              
-      setIsLoaded(false);
-      }catch (error) {
+
+        setIsLoaded(false);
+      } catch (error) {
         // if (axios.isCancel(error)) {
         //   console.log("cancelled");
         // } else {
-          throw error;
+        throw error;
         // }
       }
-
     };
 
     loadData();
     return () => {
       source.cancel();
     };
-  }, [info, firstName, address]);
+  }, [info, firstName, address, city]);
 
   const noOfPeopleChange = (val) => {
     setData({
@@ -117,7 +117,7 @@ const HomeScreen = (props) => {
     );
   } else {
     return (
-      <ScrollView style={{ backgroundColor: "white" }}>
+      <ScrollView style={{ backgroundColor: "white", paddingTop: 30 }}>
         <View>
           <View style={styles.center}>
             <View style={styles.deliverNow}>
@@ -135,14 +135,17 @@ const HomeScreen = (props) => {
                 alignItems: "center",
               }}
             >
-              <Text style={styles.address}>{address}</Text>
-              <TouchableOpacity onPress={() => props.navigation.navigate("EditDelivery")}>
-              <Image
-                style={{ width: 22, height: 22 }}
-                source={require("../../../assets/Icons/addressEdit.png")}
-              />
+              <Text style={styles.address}>
+                {address} {city}
+              </Text>
+              <TouchableOpacity
+                onPress={() => props.navigation.navigate("EditDelivery")}
+              >
+                <Image
+                  style={{ width: 22, height: 22 }}
+                  source={require("../../../assets/Icons/addressEdit.png")}
+                />
               </TouchableOpacity>
-              
             </View>
           </View>
           <Image />
@@ -161,6 +164,8 @@ const HomeScreen = (props) => {
                 <View style={styles.picker}>
                   <RNPickerSelect
                     onValueChange={(value) => noOfPeopleChange(value)}
+                    style={{ fontFamily: "NexaRegular" }}
+                    // textInputProps={{ fontFamily: "NexaRegular" }}
                     items={[
                       { label: "1 Meal", value: "1" },
                       { label: "2 Meals", value: "2" },
@@ -171,7 +176,7 @@ const HomeScreen = (props) => {
                   />
                 </View>
               </View>
-              <View style={styles.pickerField}>
+              <View style={styles.pickerField2}>
                 <Text style={styles.pickerText}>Budget per meal</Text>
                 <View style={styles.picker}>
                   <RNPickerSelect
@@ -214,13 +219,14 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     marginTop: Dimensions.get("screen").width * 0.05,
-    marginBottom: Dimensions.get("screen").width * 0.025,
-    // marginLeft: 0,
+    marginBottom: Dimensions.get("screen").width * 0.045,
+    marginLeft: -5,
   },
   heading: {
     fontSize: 32,
     fontFamily: "NexaXBold",
     marginTop: 20,
+    marginBottom: 10,
     width: Dimensions.get("screen").width * 0.8,
     marginLeft: Dimensions.get("screen").width * 0.1,
     color: "#3e315a",
@@ -239,7 +245,7 @@ const styles = StyleSheet.create({
     color: "#632DF1",
   },
   image: {
-    height: Dimensions.get("screen").width * 0.6,
+    height: Dimensions.get("screen").width * 0.47,
     width: "auto",
     position: "relative",
     top: 11,
@@ -263,6 +269,12 @@ const styles = StyleSheet.create({
   pickerField: {
     width: Dimensions.get("screen").width * 0.6,
     marginLeft: Dimensions.get("screen").width * 0.1,
+    marginTop: 20,
+  },
+  pickerField2: {
+    width: Dimensions.get("screen").width * 0.6,
+    marginLeft: Dimensions.get("screen").width * 0.1,
+    // marginTop: 10,
   },
   pickerText: {
     textAlign: "center",
@@ -275,11 +287,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#632DF1",
     width: Dimensions.get("screen").width * 0.6,
     marginLeft: Dimensions.get("screen").width * 0.1,
-    paddingTop: 15,
-    paddingBottom: 15,
-    borderRadius: 15,
-    marginBottom: 30,
-    marginTop: 50,
+    paddingTop: 17.5,
+    paddingBottom: 17.5,
+    borderRadius: 16,
+    marginBottom: 50,
+    marginTop: 30,
   },
   buttonText: {
     color: "white",

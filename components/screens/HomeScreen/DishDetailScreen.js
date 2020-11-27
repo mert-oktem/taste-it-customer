@@ -59,7 +59,7 @@ const DishDetailScreen = ({ route, navigation }) => {
         <Image
           style={{
             width: Dimensions.get("screen").width,
-            height: Dimensions.get("screen").width,
+            height: Dimensions.get("screen").width * 1.26,
           }}
           source={{ uri: `${imageUrl}` }}
         />

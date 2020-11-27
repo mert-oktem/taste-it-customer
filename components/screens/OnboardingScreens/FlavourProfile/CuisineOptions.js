@@ -38,6 +38,7 @@ export default class CuisineOptions extends Component {
                 fontFamily: "NexaXBold",
                 fontSize: 16,
                 color: "#3E315A",
+                marginTop: 4,
               }}
             >
               {item.key}
@@ -90,8 +91,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   icons: {
-    width: 15,
-    height: 15,
+    width: 25,
+    height: 25,
     marginRight: 20,
   },
 });

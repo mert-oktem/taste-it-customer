@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Button,
   Dimensions,
-} from "react-native"; 
+} from "react-native";
 import H1 from "../texts/H1";
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
@@ -53,14 +53,16 @@ const OrderTab = (props) => {
       if (res.length === 0) {
         setIsLoaded(true);
       } else {
-        let flag = false
+        let flag = false;
         // setOrderStatus(res[res.length - 1].orderStatusID);
-        for(let i=0; i<res.length; i++){
-          if(res[i].orderStatusID<4){
-            flag = true
+        for (let i = 0; i < res.length; i++) {
+          if (res[i].orderStatusID < 4) {
+            flag = true;
           }
         }
-        {flag === true ? (setIsOrderLoaded(true)) : (setIsOrderLoaded(false))}
+        {
+          flag === true ? setIsOrderLoaded(true) : setIsOrderLoaded(false);
+        }
         setIsLoaded(false);
       }
     }),
@@ -171,8 +173,8 @@ const OrderTab = (props) => {
               >
                 <Image
                   style={{
-                    width: 100,
-                    height: 100,
+                    width: 90,
+                    height: 90,
                     borderRadius: 15,
                     marginRight: 20,
                   }}
@@ -201,10 +203,16 @@ const OrderTab = (props) => {
                   >
                     <Image
                       style={{ width: 20, height: 20, marginRight: 7 }}
-                      source={require("../../assets/Icons/price.png")}
+                      source={require("../../assets/Icons/restaurant.png")}
                     />
-                    <Text style={{ fontFamily: "NexaRegular" }}>
-                      {item.restaurantID}
+                    <Text
+                      style={{
+                        fontFamily: "NexaRegular",
+                        color: "#3e315a",
+                        fontSize: 12,
+                      }}
+                    >
+                      {item.restaurantName}
                     </Text>
                   </View>
                   <View
@@ -216,10 +224,16 @@ const OrderTab = (props) => {
                     }}
                   >
                     <Image
-                      style={{ width: 20, height: 20, marginRight: 7 }}
+                      style={{ width: 18, height: 19, marginRight: 7 }}
                       source={require("../../assets/Icons/price.png")}
                     />
-                    <Text style={{ fontFamily: "NexaRegular" }}>
+                    <Text
+                      style={{
+                        fontFamily: "NexaRegular",
+                        color: "#3e315a",
+                        fontSize: 12,
+                      }}
+                    >
                       ${item.price}
                     </Text>
                   </View>
@@ -292,7 +306,7 @@ const OrderTab = (props) => {
   };
   if (isLoaded) {
     return (
-      <ScrollView style={{ backgroundColor: "white" }}>
+      <ScrollView style={{ backgroundColor: "white", paddingTop: 50 }}>
         <NavigationContainer independent={true}>
           {createTopTabs()}
         </NavigationContainer>
@@ -301,7 +315,7 @@ const OrderTab = (props) => {
   } else {
     if (isOrderLoaded) {
       return (
-        <ScrollView style={{ backgroundColor: "white" }}>
+        <ScrollView style={{ backgroundColor: "white", paddingTop: 50 }}>
           <NavigationContainer independent={true}>
             {createTopTabsOrderMade()}
           </NavigationContainer>
@@ -309,7 +323,7 @@ const OrderTab = (props) => {
       );
     } else {
       return (
-        <ScrollView style={{ backgroundColor: "white" }}>
+        <ScrollView style={{ backgroundColor: "white", paddingTop: 50 }}>
           <NavigationContainer independent={true}>
             {createTopTabsOnlyOrderHistory()}
           </NavigationContainer>
@@ -354,7 +368,7 @@ export const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 15,
     marginTop: 30,
-    padding: 5,
+    padding: 10,
     alignItems: "center",
     backgroundColor: "white",
   },

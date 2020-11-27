@@ -28,7 +28,7 @@ const WelcomeScreen2 = ({ navigation }) => {
     const source = CancelToken.source();
 
     const loadData = () => {
-      try{
+      try {
         getCustomerInfo(source).then(
           (res) => {
             setItems(res.firstName);
@@ -38,7 +38,7 @@ const WelcomeScreen2 = ({ navigation }) => {
             console.log(err);
           }
         );
-      }catch (error) {
+      } catch (error) {
         if (axios.isCancel(error)) {
           console.log("cancelled");
         } else {
@@ -60,7 +60,7 @@ const WelcomeScreen2 = ({ navigation }) => {
     );
   }
   return (
-    <ScrollView style={{ backgroundColor: "white" }}>
+    <ScrollView style={{ backgroundColor: "white", paddingTop: 60 }}>
       <Image
         style={styles.image}
         source={require("../../../assets/foodIllustration/customerSide/Welcome.jpg")}
@@ -97,8 +97,9 @@ export default WelcomeScreen2;
 
 const styles = StyleSheet.create({
   image: {
-    height: Dimensions.get("screen").width,
-    width: Dimensions.get("screen").width,
+    height: Dimensions.get("screen").width * 0.82,
+    width: Dimensions.get("screen").width * 0.8,
+    marginHorizontal: Dimensions.get("screen").width * 0.1,
     backgroundColor: "lightgray",
   },
   page: {

@@ -52,7 +52,7 @@ const WelcomeScreen2 = ({ navigation }) => {
     };
   }, []);
 
-  if (isLoading) {
+  if (isLoading || !fontsLoaded) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <ActivityIndicator size="large" />

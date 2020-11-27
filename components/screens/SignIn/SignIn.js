@@ -13,10 +13,7 @@ import {
   ActivityIndicator,
   TextInput,
 } from "react-native";
-import Users from "../../Users";
 import H1 from "../../texts/H1";
-import AsyncStorage from "@react-native-community/async-storage";
-import { AuthSession, WebBrowser, Linking } from "expo";
 import { postCustomerLoginInfo, postGoogleEmail } from "../../../services/api";
 import * as Google from "expo-google-app-auth";
 import { useFonts } from "expo-font";

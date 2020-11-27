@@ -81,19 +81,12 @@ const OrderTab = (props) => {
             console.log(error);
           }
         }
-      };
-  
+      }; 
       loadData();
       return () => {
-        //when the component unmounts
-      // console.log("component unmounted");
-      // cancel the request (the message parameter is optional)
       source.cancel('Operation canceled by the user.');
       };
 
-
-
-   
   }, [activeOrders, isLoaded, isOrderLoaded]);
 
   const renderOrders = () => {
@@ -203,7 +196,7 @@ const OrderTab = (props) => {
                     borderRadius: 15,
                     marginRight: 20,
                   }}
-                  source={require("../../assets/foodIllustration/customerSide/Package.png")}
+                  source={{ uri: `${url}` }}
                 />
                 <View>
                   <Text

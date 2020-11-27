@@ -15,7 +15,6 @@ import ContactTab from "../components/tabs/ContactTab";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { StyleSheet, Dimensions, Image } from "react-native";
 import ProfileTab from "../components/tabs/ProfileTab";
-import { useIsFocused } from "@react-navigation/native";
 
 const Stack = createStackNavigator();
 const MaterialBottomTabs = createMaterialBottomTabNavigator();

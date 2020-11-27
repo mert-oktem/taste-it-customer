@@ -7,7 +7,7 @@ import {
   Button,
   ScrollView,
   TouchableOpacity,
-  Dimensions,
+  Dimensions, ActivityIndicator
 } from "react-native";
 import { useFonts } from "expo-font";
 
@@ -18,7 +18,20 @@ const RevealConfirm = ({ route, navigation }) => {
     NexaXBold: require("../../assets/NexaFont/NexaXBold.otf"),
     NexaBold: require("../../assets/NexaFont/NexaBold.otf"),
   });
-
+if(!fontsLoaded){
+  return (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        paddingTop: 60,
+      }}
+    >
+      <ActivityIndicator size="large" />
+    </View>
+  );
+}else {
   return (
     <ScrollView style={{ backgroundColor: "white" }}>
       <View
@@ -79,6 +92,8 @@ const RevealConfirm = ({ route, navigation }) => {
       </View>
     </ScrollView>
   );
+}
+  
 };
 
 export default RevealConfirm;

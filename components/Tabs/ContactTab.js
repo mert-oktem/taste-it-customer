@@ -103,7 +103,7 @@ const ContactTab = ({ navigation }) => {
     );
   } else {
     return (
-      <ScrollView style={{ backgroundColor: "white", paddingTop: 60 }}>
+      <ScrollView style={{ backgroundColor: "white", paddingTop: 30 }}>
         <View
           style={{
             width: Dimensions.get("screen").width * 0.8,
@@ -118,7 +118,7 @@ const ContactTab = ({ navigation }) => {
               color: "#3e315a",
               lineHeight: 19,
               marginTop: 7,
-              marginBottom: 41,
+              marginBottom: 20,
             }}
           >
             Leave us a message, we will get in touch with you as soon as
@@ -178,6 +178,7 @@ const ContactTab = ({ navigation }) => {
               <View style={{ flexGrow: 1 }} />
             </View>
             <TextInput
+              multiline={true}
               textContentType={"none"}
               autoCapitalize="none"
               onChangeText={(val) => textInputBodyChange(val)}

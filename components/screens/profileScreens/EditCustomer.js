@@ -363,7 +363,7 @@ const styles = StyleSheet.create({
     width: Dimensions.get("screen").width * 0.8,
     // backgroundColor: "lightgreen",
     marginLeft: Dimensions.get("screen").width * 0.1,
-    marginTop: Dimensions.get("screen").width * 0.1,
+    marginTop: 20,
   },
   text: {
     marginBottom: 20,

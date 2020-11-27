@@ -18,18 +18,27 @@ export default function ActiveOrder(props) {
   });
   return (
     <ScrollView style={{ backgroundColor: "white" }}>
-      <Image />
+      <Image
+        style={{
+          width: Dimensions.get("screen").width * 0.8,
+          height: Dimensions.get("screen").width * 0.8,
+          alignSelf: "center",
+          marginTop: 40,
+          marginBottom: 40,
+        }}
+        source={require("../../assets/foodIllustration/customerSide/Empty.png")}
+      />
 
       <Text
         style={{
           color: "#632DF1",
-          fontFamily: "NexaXBold",
+          fontFamily: "NexaRegular",
           fontSize: 16,
           textAlign: "center",
           marginVertical: 50,
         }}
       >
-        No active Orders Currently
+        No active order currently
       </Text>
 
       <TouchableOpacity style={styles.button} onPress={props.onHandleOrder}>

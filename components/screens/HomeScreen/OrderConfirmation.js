@@ -118,7 +118,7 @@ const OrderConfirmation = ({ route, navigation }) => {
           style={{
             width: Dimensions.get("screen").width * 0.8,
             marginLeft: Dimensions.get("screen").width * 0.1,
-            marginTop: Dimensions.get("screen").width * 0.1,
+            marginTop: 20,
           }}
         >
           <H1 h1Text="Order Confirmation" />
@@ -329,7 +329,7 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingBottom: 15,
     borderRadius: 15,
-    marginBottom: 25,
+    marginBottom: 35,
     marginTop: 30,
   },
   buttonText: {

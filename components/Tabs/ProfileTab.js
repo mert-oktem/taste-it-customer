@@ -172,7 +172,7 @@ export const styles = StyleSheet.create({
   page: {
     width: Dimensions.get("screen").width * 0.8,
     marginLeft: Dimensions.get("screen").width * 0.1,
-    marginTop: Dimensions.get("screen").width * 0.05,
+    marginTop: Dimensions.get("screen").width * 0.01,
     backgroundColor: "white",
   },
   card: {
@@ -222,8 +222,7 @@ export const styles = StyleSheet.create({
     paddingTop: 17.5,
     paddingBottom: 17.5,
     borderRadius: 16,
-    marginBottom: 50,
-    marginTop: 25,
+    marginBottom: 80,
   },
   buttonText: {
     color: "white",

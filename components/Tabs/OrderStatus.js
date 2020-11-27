@@ -72,17 +72,20 @@ const OrderStatus = ({ route, navigation }) => {
           <View>
             <Image
               style={{
-                width: Dimensions.get("screen").width * 0.8,
-                height: Dimensions.get("screen").width * 0.7,
+                width: Dimensions.get("screen").width * 0.6,
+                height: Dimensions.get("screen").width * 0.755,
                 alignSelf: "center",
                 marginTop: 40,
                 marginBottom: 40,
               }}
-              source={require("../../assets/foodIllustration/customerSide/SignUp2.jpg")}
+              source={require("../../assets/foodIllustration/customerSide/Croissant.png")}
             />
             <Text style={styles.statusText}>
-              Confirming order with the restaurants
+              Your order is being confirmed.
             </Text>
+            <TouchableOpacity style={styles.button1}>
+              <Text style={styles.buttonText}>Order Received</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
@@ -302,7 +305,7 @@ const styles = StyleSheet.create({
     paddingBottom: 17.5,
     borderRadius: 16,
     marginBottom: 25,
-    marginTop: 30,
+    marginTop: 70,
   },
   button2: {
     backgroundColor: "#632DF1",
@@ -310,7 +313,7 @@ const styles = StyleSheet.create({
     paddingBottom: 17.5,
     borderRadius: 16,
     marginBottom: 25,
-    marginTop: 30,
+    marginTop: 70,
   },
   buttonText: {
     color: "white",

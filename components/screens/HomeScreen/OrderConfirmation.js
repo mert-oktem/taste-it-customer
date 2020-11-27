@@ -139,15 +139,19 @@ const OrderConfirmation = ({ route, navigation }) => {
                   flexDirection: "row",
                   alignItems: "center",
                   marginBottom: Dimensions.get("screen").width * 0.1,
+                  marginTop: -16,
                 }}
               >
                 <Image
                   style={styles.icons}
                   source={require("../../../assets/Icons/location.png")}
                 />
-                <Text style={styles.orderConfText}>
-                  {data.address} {data.city} {data.postcode}
-                </Text>
+                <View style={styles.orderConfText}>
+                  <Text style={styles.orderConfText1}>
+                    {data.address} {data.city}
+                  </Text>
+                  <Text style={styles.orderConfText2}>{data.postcode}</Text>
+                </View>
               </View>
             </View>
             <View>
@@ -298,6 +302,19 @@ const styles = StyleSheet.create({
   },
   orderConfText: {
     fontSize: 16,
+    marginTop: 5,
+    color: "#3e315A",
+    fontFamily: "NexaRegular",
+  },
+  orderConfText2: {
+    fontSize: 16,
+    color: "#3e315A",
+    fontFamily: "NexaRegular",
+  },
+  orderConfText1: {
+    fontSize: 16,
+    marginTop: 22,
+    marginBottom: 10,
     color: "#3e315A",
     fontFamily: "NexaRegular",
   },

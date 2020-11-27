@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import RNPickerSelect from "react-native-picker-select";
 import {
   Text,
@@ -16,6 +16,11 @@ import { putReviewOrder } from "../../../services/api";
 import { CheckBox } from "react-native-elements";
 import H1 from "../../texts/H1";
 import { useFonts } from "expo-font";
+import OneStar from "./stars/OneStar";
+import TwoStar from "./stars/TwoStar";
+import FiveStar from "./stars/FiveStar";
+import FourStar from "./stars/FourStar";
+import ThreeStar from "./stars/ThreeStars";
 
 export default function ReviewRating({ route, navigation }) {
   const [rating, setRating] = React.useState(null);
@@ -27,12 +32,21 @@ export default function ReviewRating({ route, navigation }) {
     NexaXBold: require("../../../assets/NexaFont/NexaXBold.otf"),
   });
 
+  // useEffect(() => {
+  //   const textInputRatingChange = (val) => {
+  //     setRating(val);
+  //   };
+  //   console.log("Hi");
+  // }, [rating]);
+
   const textInputCommentChange = (val) => {
     setComment(val);
   };
+
   const textInputRatingChange = (val) => {
     setRating(val);
   };
+
   const reviewHandler = () => {
     putReviewOrder(orderID, rating, comment, isOrderAgain).then(
       (res) => {
@@ -44,163 +58,1018 @@ export default function ReviewRating({ route, navigation }) {
     );
   };
 
-  return (
-    <ScrollView style={{ backgroundColor: "white" }}>
-      <View
-        style={{
-          width: Dimensions.get("screen").width * 0.8,
-          marginLeft: Dimensions.get("screen").width * 0.1,
-          marginTop: Dimensions.get("screen").width * 0.1,
-        }}
-      >
-        <View>
-          <Text
+  if (rating === "1") {
+    return (
+      <ScrollView style={{ backgroundColor: "white" }}>
+        <View
+          style={{
+            width: Dimensions.get("screen").width * 0.8,
+            marginLeft: Dimensions.get("screen").width * 0.1,
+            marginTop: Dimensions.get("screen").width * 0.1,
+          }}
+        >
+          <View>
+            <Text
+              style={{
+                fontFamily: "NexaXBold",
+                fontSize: 32,
+                color: "#632df1",
+                lineHeight: 39,
+                // fontWeight: "extraBold",
+              }}
+            >
+              Rating & Review
+            </Text>
+            <Text
+              style={{
+                fontFamily: "NexaRegular",
+                fontSize: 16,
+                color: "#3e315a",
+                lineHeight: 24,
+                marginTop: 10,
+                marginBottom: 20,
+              }}
+            >
+              Rate your experince and leave a comment to help us improve.
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={{
+                fontFamily: "NexaXBold",
+                fontSize: 16,
+                lineHeight: 19,
+                color: "#3e315a",
+                marginBottom: 20,
+              }}
+            >
+              Rate for Service
+            </Text>
+            <OneStar />
+            <View
+              style={{
+                width: Dimensions.get("screen").width * 0.8,
+                height: 50,
+                borderWidth: 2,
+                borderColor: "#D4CDE3",
+                borderRadius: 15,
+                paddingTop: 14,
+                paddingLeft: 8,
+              }}
+            >
+              <RNPickerSelect
+                placeholder={{ label: "Rating" }}
+                onValueChange={(value) => textInputRatingChange(value)}
+                items={[
+                  { label: "1 Star", value: "1" },
+                  { label: "2 Star", value: "2" },
+                  { label: "3 Star", value: "3" },
+                  { label: "4 Star", value: "4" },
+                  { label: "5 Star", value: "5" },
+                ]}
+              />
+            </View>
+          </View>
+          <View style={{ marginTop: 20, marginBottom: 20 }}>
+            <Text
+              style={{
+                fontFamily: "NexaXBold",
+                fontSize: 16,
+                lineHeight: 19,
+                color: "#3e315a",
+                marginTop: 20,
+                marginBottom: 10,
+              }}
+            >
+              Comments
+            </Text>
+            <TextInput
+              multiline={true}
+              autoCapitalize="none"
+              onChangeText={(val) => textInputCommentChange(val)}
+              numberOfLines={3}
+              style={{
+                height: 200,
+                width: Dimensions.get("screen").width * 0.8,
+                color: "#3e315a",
+                padding: 10,
+                borderWidth: 2,
+                borderColor: "#D4CDE3",
+                borderRadius: 15,
+              }}
+            ></TextInput>
+          </View>
+          <View
             style={{
-              fontFamily: "NexaXBold",
-              fontSize: 32,
-              color: "#632df1",
-              lineHeight: 39,
-              // fontWeight: "extraBold",
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 5,
             }}
           >
-            Rating & Review
-          </Text>
+            <CheckBox
+              key={orderID}
+              onPress={() => setIsOrderAgain(!isOrderAgain)}
+              checked={isOrderAgain}
+              center={true}
+              checkedColor="#3e315a"
+              uncheckedColor="#d4cde3"
+              checkedIcon="check-square"
+              uncheckedIcon="square"
+              containerStyle={[
+                {
+                  marginLeft: -Dimensions.get("screen").width * 0.001,
+                  padding: 0,
+                  borderWidth: 0,
+                  backgroundColor: "white",
+                },
+              ]}
+            />
+            <Text
+              style={{
+                fontFamily: "NexaXBold",
+                fontSize: 16,
+                color: "#3e315a",
+                marginTop: 5,
+              }}
+            >
+              Would you like to reorder this meal?
+            </Text>
+          </View>
           <Text
             style={{
               fontFamily: "NexaRegular",
-              fontSize: 16,
+              fontSize: 12,
+              lineHeight: 16.5,
               color: "#3e315a",
-              lineHeight: 24,
-              marginTop: 10,
-              marginBottom: 20,
             }}
           >
-            Rate your experince and leave a comment to help us improve.
+            By clicking the checkbox, this dish will automatically be added in
+            your next order
           </Text>
-        </View>
-        <View>
-          <Text
-            style={{
-              fontFamily: "NexaXBold",
-              fontSize: 16,
-              lineHeight: 19,
-              color: "#3e315a",
-              marginBottom: 20,
-            }}
+          <TouchableOpacity
+            style={styles.button}
+            type="submit"
+            onPress={reviewHandler}
           >
-            Rate for Service
-          </Text>
-          <View
-            style={{
-              width: Dimensions.get("screen").width * 0.8,
-              height: 50,
-              borderWidth: 2,
-              borderColor: "#D4CDE3",
-              borderRadius: 15,
-              paddingTop: 14,
-              paddingLeft: 8,
-            }}
-          >
-            <RNPickerSelect
-              placeholder={{ label: "Rating" }}
-              onValueChange={(value) => textInputRatingChange(value)}
-              items={[
-                { label: "1 Star", value: "1" },
-                { label: "2 Star", value: "2" },
-                { label: "3 Star", value: "3" },
-                { label: "4 Star", value: "4" },
-                { label: "5 Star", value: "5" },
-              ]}
-            />
-          </View>
+            <Text style={styles.buttonText}>Submit</Text>
+          </TouchableOpacity>
         </View>
-        <View style={{ marginTop: 20, marginBottom: 20 }}>
-          <Text
-            style={{
-              fontFamily: "NexaXBold",
-              fontSize: 16,
-              lineHeight: 19,
-              color: "#3e315a",
-              marginTop: 20,
-              marginBottom: 10,
-            }}
-          >
-            Comments
-          </Text>
-          <TextInput
-            multiline={true}
-            autoCapitalize="none"
-            onChangeText={(val) => textInputCommentChange(val)}
-            numberOfLines={3}
-            style={{
-              height: 200,
-              width: Dimensions.get("screen").width * 0.8,
-              color: "#3e315a",
-              padding: 10,
-              borderWidth: 2,
-              borderColor: "#D4CDE3",
-              borderRadius: 15,
-            }}
-          ></TextInput>
-        </View>
+      </ScrollView>
+    );
+  }
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  else if (rating === "2") {
+    return (
+      <ScrollView style={{ backgroundColor: "white" }}>
         <View
           style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            marginBottom: 5,
+            width: Dimensions.get("screen").width * 0.8,
+            marginLeft: Dimensions.get("screen").width * 0.1,
+            marginTop: Dimensions.get("screen").width * 0.1,
           }}
         >
-          <CheckBox
-            key={orderID}
-            onPress={() => setIsOrderAgain(!isOrderAgain)}
-            checked={isOrderAgain}
-            center={true}
-            checkedColor="#3e315a"
-            uncheckedColor="#d4cde3"
-            checkedIcon="check-square"
-            uncheckedIcon="square"
-            containerStyle={[
-              {
-                marginLeft: -Dimensions.get("screen").width * 0.001,
-                padding: 0,
-                borderWidth: 0,
-                backgroundColor: "white",
-              },
-            ]}
-          />
-          <Text
+          <View>
+            <Text
+              style={{
+                fontFamily: "NexaXBold",
+                fontSize: 32,
+                color: "#632df1",
+                lineHeight: 39,
+                // fontWeight: "extraBold",
+              }}
+            >
+              Rating & Review
+            </Text>
+            <Text
+              style={{
+                fontFamily: "NexaRegular",
+                fontSize: 16,
+                color: "#3e315a",
+                lineHeight: 24,
+                marginTop: 10,
+                marginBottom: 20,
+              }}
+            >
+              Rate your experince and leave a comment to help us improve.
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={{
+                fontFamily: "NexaXBold",
+                fontSize: 16,
+                lineHeight: 19,
+                color: "#3e315a",
+                marginBottom: 20,
+              }}
+            >
+              Rate for Service
+            </Text>
+            <TwoStar />
+            <View
+              style={{
+                width: Dimensions.get("screen").width * 0.8,
+                height: 50,
+                borderWidth: 2,
+                borderColor: "#D4CDE3",
+                borderRadius: 15,
+                paddingTop: 14,
+                paddingLeft: 8,
+              }}
+            >
+              <RNPickerSelect
+                placeholder={{ label: "Rating" }}
+                onValueChange={(value) => textInputRatingChange(value)}
+                items={[
+                  { label: "1 Star", value: "1" },
+                  { label: "2 Star", value: "2" },
+                  { label: "3 Star", value: "3" },
+                  { label: "4 Star", value: "4" },
+                  { label: "5 Star", value: "5" },
+                ]}
+              />
+            </View>
+          </View>
+          <View style={{ marginTop: 20, marginBottom: 20 }}>
+            <Text
+              style={{
+                fontFamily: "NexaXBold",
+                fontSize: 16,
+                lineHeight: 19,
+                color: "#3e315a",
+                marginTop: 20,
+                marginBottom: 10,
+              }}
+            >
+              Comments
+            </Text>
+            <TextInput
+              multiline={true}
+              autoCapitalize="none"
+              onChangeText={(val) => textInputCommentChange(val)}
+              numberOfLines={3}
+              style={{
+                height: 200,
+                width: Dimensions.get("screen").width * 0.8,
+                color: "#3e315a",
+                padding: 10,
+                borderWidth: 2,
+                borderColor: "#D4CDE3",
+                borderRadius: 15,
+              }}
+            ></TextInput>
+          </View>
+          <View
             style={{
-              fontFamily: "NexaXBold",
-              fontSize: 16,
-              color: "#3e315a",
-              marginTop: 5,
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 5,
             }}
           >
-            Would you like to reorder this meal?
+            <CheckBox
+              key={orderID}
+              onPress={() => setIsOrderAgain(!isOrderAgain)}
+              checked={isOrderAgain}
+              center={true}
+              checkedColor="#3e315a"
+              uncheckedColor="#d4cde3"
+              checkedIcon="check-square"
+              uncheckedIcon="square"
+              containerStyle={[
+                {
+                  marginLeft: -Dimensions.get("screen").width * 0.001,
+                  padding: 0,
+                  borderWidth: 0,
+                  backgroundColor: "white",
+                },
+              ]}
+            />
+            <Text
+              style={{
+                fontFamily: "NexaXBold",
+                fontSize: 16,
+                color: "#3e315a",
+                marginTop: 5,
+              }}
+            >
+              Would you like to reorder this meal?
+            </Text>
+          </View>
+          <Text
+            style={{
+              fontFamily: "NexaRegular",
+              fontSize: 12,
+              lineHeight: 16.5,
+              color: "#3e315a",
+            }}
+          >
+            By clicking the checkbox, this dish will automatically be added in
+            your next order
           </Text>
+          <TouchableOpacity
+            style={styles.button}
+            type="submit"
+            onPress={reviewHandler}
+          >
+            <Text style={styles.buttonText}>Submit</Text>
+          </TouchableOpacity>
         </View>
-        <Text
+      </ScrollView>
+    );
+  }
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  else if (rating === "3") {
+    return (
+      <ScrollView style={{ backgroundColor: "white" }}>
+        <View
           style={{
-            fontFamily: "NexaRegular",
-            fontSize: 12,
-            lineHeight: 16.5,
-            color: "#3e315a",
+            width: Dimensions.get("screen").width * 0.8,
+            marginLeft: Dimensions.get("screen").width * 0.1,
+            marginTop: Dimensions.get("screen").width * 0.1,
           }}
         >
-          By clicking the checkbox, this dish will automatically be added in
-          your next order
-        </Text>
-        <TouchableOpacity
-          style={styles.button}
-          type="submit"
-          onPress={reviewHandler}
+          <View>
+            <Text
+              style={{
+                fontFamily: "NexaXBold",
+                fontSize: 32,
+                color: "#632df1",
+                lineHeight: 39,
+                // fontWeight: "extraBold",
+              }}
+            >
+              Rating & Review
+            </Text>
+            <Text
+              style={{
+                fontFamily: "NexaRegular",
+                fontSize: 16,
+                color: "#3e315a",
+                lineHeight: 24,
+                marginTop: 10,
+                marginBottom: 20,
+              }}
+            >
+              Rate your experince and leave a comment to help us improve.
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={{
+                fontFamily: "NexaXBold",
+                fontSize: 16,
+                lineHeight: 19,
+                color: "#3e315a",
+                marginBottom: 20,
+              }}
+            >
+              Rate for Service
+            </Text>
+            <ThreeStar />
+            <View
+              style={{
+                width: Dimensions.get("screen").width * 0.8,
+                height: 50,
+                borderWidth: 2,
+                borderColor: "#D4CDE3",
+                borderRadius: 15,
+                paddingTop: 14,
+                paddingLeft: 8,
+              }}
+            >
+              <RNPickerSelect
+                placeholder={{ label: "Rating" }}
+                onValueChange={(value) => textInputRatingChange(value)}
+                items={[
+                  { label: "1 Star", value: "1" },
+                  { label: "2 Star", value: "2" },
+                  { label: "3 Star", value: "3" },
+                  { label: "4 Star", value: "4" },
+                  { label: "5 Star", value: "5" },
+                ]}
+              />
+            </View>
+          </View>
+          <View style={{ marginTop: 20, marginBottom: 20 }}>
+            <Text
+              style={{
+                fontFamily: "NexaXBold",
+                fontSize: 16,
+                lineHeight: 19,
+                color: "#3e315a",
+                marginTop: 20,
+                marginBottom: 10,
+              }}
+            >
+              Comments
+            </Text>
+            <TextInput
+              multiline={true}
+              autoCapitalize="none"
+              onChangeText={(val) => textInputCommentChange(val)}
+              numberOfLines={3}
+              style={{
+                height: 200,
+                width: Dimensions.get("screen").width * 0.8,
+                color: "#3e315a",
+                padding: 10,
+                borderWidth: 2,
+                borderColor: "#D4CDE3",
+                borderRadius: 15,
+              }}
+            ></TextInput>
+          </View>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 5,
+            }}
+          >
+            <CheckBox
+              key={orderID}
+              onPress={() => setIsOrderAgain(!isOrderAgain)}
+              checked={isOrderAgain}
+              center={true}
+              checkedColor="#3e315a"
+              uncheckedColor="#d4cde3"
+              checkedIcon="check-square"
+              uncheckedIcon="square"
+              containerStyle={[
+                {
+                  marginLeft: -Dimensions.get("screen").width * 0.001,
+                  padding: 0,
+                  borderWidth: 0,
+                  backgroundColor: "white",
+                },
+              ]}
+            />
+            <Text
+              style={{
+                fontFamily: "NexaXBold",
+                fontSize: 16,
+                color: "#3e315a",
+                marginTop: 5,
+              }}
+            >
+              Would you like to reorder this meal?
+            </Text>
+          </View>
+          <Text
+            style={{
+              fontFamily: "NexaRegular",
+              fontSize: 12,
+              lineHeight: 16.5,
+              color: "#3e315a",
+            }}
+          >
+            By clicking the checkbox, this dish will automatically be added in
+            your next order
+          </Text>
+          <TouchableOpacity
+            style={styles.button}
+            type="submit"
+            onPress={reviewHandler}
+          >
+            <Text style={styles.buttonText}>Submit</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    );
+  }
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  else if (rating === "4") {
+    return (
+      <ScrollView style={{ backgroundColor: "white" }}>
+        <View
+          style={{
+            width: Dimensions.get("screen").width * 0.8,
+            marginLeft: Dimensions.get("screen").width * 0.1,
+            marginTop: Dimensions.get("screen").width * 0.1,
+          }}
         >
-          <Text style={styles.buttonText}>Submit</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
-  );
+          <View>
+            <Text
+              style={{
+                fontFamily: "NexaXBold",
+                fontSize: 32,
+                color: "#632df1",
+                lineHeight: 39,
+                // fontWeight: "extraBold",
+              }}
+            >
+              Rating & Review
+            </Text>
+            <Text
+              style={{
+                fontFamily: "NexaRegular",
+                fontSize: 16,
+                color: "#3e315a",
+                lineHeight: 24,
+                marginTop: 10,
+                marginBottom: 20,
+              }}
+            >
+              Rate your experince and leave a comment to help us improve.
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={{
+                fontFamily: "NexaXBold",
+                fontSize: 16,
+                lineHeight: 19,
+                color: "#3e315a",
+                marginBottom: 20,
+              }}
+            >
+              Rate for Service
+            </Text>
+            <FourStar />
+            <View
+              style={{
+                width: Dimensions.get("screen").width * 0.8,
+                height: 50,
+                borderWidth: 2,
+                borderColor: "#D4CDE3",
+                borderRadius: 15,
+                paddingTop: 14,
+                paddingLeft: 8,
+              }}
+            >
+              <RNPickerSelect
+                placeholder={{ label: "Rating" }}
+                onValueChange={(value) => textInputRatingChange(value)}
+                items={[
+                  { label: "1 Star", value: "1" },
+                  { label: "2 Star", value: "2" },
+                  { label: "3 Star", value: "3" },
+                  { label: "4 Star", value: "4" },
+                  { label: "5 Star", value: "5" },
+                ]}
+              />
+            </View>
+          </View>
+          <View style={{ marginTop: 20, marginBottom: 20 }}>
+            <Text
+              style={{
+                fontFamily: "NexaXBold",
+                fontSize: 16,
+                lineHeight: 19,
+                color: "#3e315a",
+                marginTop: 20,
+                marginBottom: 10,
+              }}
+            >
+              Comments
+            </Text>
+            <TextInput
+              multiline={true}
+              autoCapitalize="none"
+              onChangeText={(val) => textInputCommentChange(val)}
+              numberOfLines={3}
+              style={{
+                height: 200,
+                width: Dimensions.get("screen").width * 0.8,
+                color: "#3e315a",
+                padding: 10,
+                borderWidth: 2,
+                borderColor: "#D4CDE3",
+                borderRadius: 15,
+              }}
+            ></TextInput>
+          </View>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 5,
+            }}
+          >
+            <CheckBox
+              key={orderID}
+              onPress={() => setIsOrderAgain(!isOrderAgain)}
+              checked={isOrderAgain}
+              center={true}
+              checkedColor="#3e315a"
+              uncheckedColor="#d4cde3"
+              checkedIcon="check-square"
+              uncheckedIcon="square"
+              containerStyle={[
+                {
+                  marginLeft: -Dimensions.get("screen").width * 0.001,
+                  padding: 0,
+                  borderWidth: 0,
+                  backgroundColor: "white",
+                },
+              ]}
+            />
+            <Text
+              style={{
+                fontFamily: "NexaXBold",
+                fontSize: 16,
+                color: "#3e315a",
+                marginTop: 5,
+              }}
+            >
+              Would you like to reorder this meal?
+            </Text>
+          </View>
+          <Text
+            style={{
+              fontFamily: "NexaRegular",
+              fontSize: 12,
+              lineHeight: 16.5,
+              color: "#3e315a",
+            }}
+          >
+            By clicking the checkbox, this dish will automatically be added in
+            your next order
+          </Text>
+          <TouchableOpacity
+            style={styles.button}
+            type="submit"
+            onPress={reviewHandler}
+          >
+            <Text style={styles.buttonText}>Submit</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    );
+  }
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  else if (rating === "5") {
+    return (
+      <ScrollView style={{ backgroundColor: "white" }}>
+        <View
+          style={{
+            width: Dimensions.get("screen").width * 0.8,
+            marginLeft: Dimensions.get("screen").width * 0.1,
+            marginTop: Dimensions.get("screen").width * 0.1,
+          }}
+        >
+          <View>
+            <Text
+              style={{
+                fontFamily: "NexaXBold",
+                fontSize: 32,
+                color: "#632df1",
+                lineHeight: 39,
+                // fontWeight: "extraBold",
+              }}
+            >
+              Rating & Review
+            </Text>
+            <Text
+              style={{
+                fontFamily: "NexaRegular",
+                fontSize: 16,
+                color: "#3e315a",
+                lineHeight: 24,
+                marginTop: 10,
+                marginBottom: 20,
+              }}
+            >
+              Rate your experince and leave a comment to help us improve.
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={{
+                fontFamily: "NexaXBold",
+                fontSize: 16,
+                lineHeight: 19,
+                color: "#3e315a",
+                marginBottom: 20,
+              }}
+            >
+              Rate for Service
+            </Text>
+            <FiveStar />
+            <View
+              style={{
+                width: Dimensions.get("screen").width * 0.8,
+                height: 50,
+                borderWidth: 2,
+                borderColor: "#D4CDE3",
+                borderRadius: 15,
+                paddingTop: 14,
+                paddingLeft: 8,
+              }}
+            >
+              <RNPickerSelect
+                placeholder={{ label: "Rating" }}
+                onValueChange={(value) => textInputRatingChange(value)}
+                items={[
+                  { label: "1 Star", value: "1" },
+                  { label: "2 Star", value: "2" },
+                  { label: "3 Star", value: "3" },
+                  { label: "4 Star", value: "4" },
+                  { label: "5 Star", value: "5" },
+                ]}
+              />
+            </View>
+          </View>
+          <View style={{ marginTop: 20, marginBottom: 20 }}>
+            <Text
+              style={{
+                fontFamily: "NexaXBold",
+                fontSize: 16,
+                lineHeight: 19,
+                color: "#3e315a",
+                marginTop: 20,
+                marginBottom: 10,
+              }}
+            >
+              Comments
+            </Text>
+            <TextInput
+              multiline={true}
+              autoCapitalize="none"
+              onChangeText={(val) => textInputCommentChange(val)}
+              numberOfLines={3}
+              style={{
+                height: 200,
+                width: Dimensions.get("screen").width * 0.8,
+                color: "#3e315a",
+                padding: 10,
+                borderWidth: 2,
+                borderColor: "#D4CDE3",
+                borderRadius: 15,
+              }}
+            ></TextInput>
+          </View>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 5,
+            }}
+          >
+            <CheckBox
+              key={orderID}
+              onPress={() => setIsOrderAgain(!isOrderAgain)}
+              checked={isOrderAgain}
+              center={true}
+              checkedColor="#3e315a"
+              uncheckedColor="#d4cde3"
+              checkedIcon="check-square"
+              uncheckedIcon="square"
+              containerStyle={[
+                {
+                  marginLeft: -Dimensions.get("screen").width * 0.001,
+                  padding: 0,
+                  borderWidth: 0,
+                  backgroundColor: "white",
+                },
+              ]}
+            />
+            <Text
+              style={{
+                fontFamily: "NexaXBold",
+                fontSize: 16,
+                color: "#3e315a",
+                marginTop: 5,
+              }}
+            >
+              Would you like to reorder this meal?
+            </Text>
+          </View>
+          <Text
+            style={{
+              fontFamily: "NexaRegular",
+              fontSize: 12,
+              lineHeight: 16.5,
+              color: "#3e315a",
+            }}
+          >
+            By clicking the checkbox, this dish will automatically be added in
+            your next order
+          </Text>
+          <TouchableOpacity
+            style={styles.button}
+            type="submit"
+            onPress={reviewHandler}
+          >
+            <Text style={styles.buttonText}>Submit</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    );
+  }
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  else {
+    return (
+      <ScrollView style={{ backgroundColor: "white" }}>
+        <View
+          style={{
+            width: Dimensions.get("screen").width * 0.8,
+            marginLeft: Dimensions.get("screen").width * 0.1,
+            marginTop: Dimensions.get("screen").width * 0.1,
+          }}
+        >
+          <View>
+            <Text
+              style={{
+                fontFamily: "NexaXBold",
+                fontSize: 32,
+                color: "#632df1",
+                lineHeight: 39,
+                // fontWeight: "extraBold",
+              }}
+            >
+              Rating & Review
+            </Text>
+            <Text
+              style={{
+                fontFamily: "NexaRegular",
+                fontSize: 16,
+                color: "#3e315a",
+                lineHeight: 24,
+                marginTop: 10,
+                marginBottom: 20,
+              }}
+            >
+              Rate your experince and leave a comment to help us improve.
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={{
+                fontFamily: "NexaXBold",
+                fontSize: 16,
+                lineHeight: 19,
+                color: "#3e315a",
+                marginBottom: 20,
+              }}
+            >
+              Rate for Service
+            </Text>
+            <View
+              style={{
+                width: Dimensions.get("screen").width * 0.8,
+                height: 50,
+                borderWidth: 2,
+                borderColor: "#D4CDE3",
+                borderRadius: 15,
+                paddingTop: 14,
+                paddingLeft: 8,
+              }}
+            >
+              <RNPickerSelect
+                placeholder={{ label: "Rating" }}
+                onValueChange={(value) => textInputRatingChange(value)}
+                items={[
+                  { label: "1 Star", value: "1" },
+                  { label: "2 Star", value: "2" },
+                  { label: "3 Star", value: "3" },
+                  { label: "4 Star", value: "4" },
+                  { label: "5 Star", value: "5" },
+                ]}
+              />
+            </View>
+          </View>
+          <View style={{ marginTop: 20, marginBottom: 20 }}>
+            <Text
+              style={{
+                fontFamily: "NexaXBold",
+                fontSize: 16,
+                lineHeight: 19,
+                color: "#3e315a",
+                marginTop: 20,
+                marginBottom: 10,
+              }}
+            >
+              Comments
+            </Text>
+            <TextInput
+              multiline={true}
+              autoCapitalize="none"
+              onChangeText={(val) => textInputCommentChange(val)}
+              numberOfLines={3}
+              style={{
+                height: 200,
+                width: Dimensions.get("screen").width * 0.8,
+                color: "#3e315a",
+                padding: 10,
+                borderWidth: 2,
+                borderColor: "#D4CDE3",
+                borderRadius: 15,
+              }}
+            ></TextInput>
+          </View>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 5,
+            }}
+          >
+            <CheckBox
+              key={orderID}
+              onPress={() => setIsOrderAgain(!isOrderAgain)}
+              checked={isOrderAgain}
+              center={true}
+              checkedColor="#3e315a"
+              uncheckedColor="#d4cde3"
+              checkedIcon="check-square"
+              uncheckedIcon="square"
+              containerStyle={[
+                {
+                  marginLeft: -Dimensions.get("screen").width * 0.001,
+                  padding: 0,
+                  borderWidth: 0,
+                  backgroundColor: "white",
+                },
+              ]}
+            />
+            <Text
+              style={{
+                fontFamily: "NexaXBold",
+                fontSize: 16,
+                color: "#3e315a",
+                marginTop: 5,
+              }}
+            >
+              Would you like to reorder this meal?
+            </Text>
+          </View>
+          <Text
+            style={{
+              fontFamily: "NexaRegular",
+              fontSize: 12,
+              lineHeight: 16.5,
+              color: "#3e315a",
+            }}
+          >
+            By clicking the checkbox, this dish will automatically be added in
+            your next order
+          </Text>
+          <TouchableOpacity
+            style={styles.button}
+            type="submit"
+            onPress={reviewHandler}
+          >
+            <Text style={styles.buttonText}>Submit</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    );
+  }
 }
 
 const styles = StyleSheet.create({

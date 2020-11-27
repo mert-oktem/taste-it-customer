@@ -12,7 +12,6 @@ import {
 } from "react-native";
 import H1 from "../../texts/H1";
 import { getCustomerActiveOrders } from "../../../services/api";
-import Footer from "../../footer/Footer";
 import { useFonts } from "expo-font";
 
 const DishDetailScreen = ({ route, navigation }) => {
@@ -165,7 +164,6 @@ const DishDetailScreen = ({ route, navigation }) => {
             <Text style={styles.buttonText}>Review & Feedback</Text>
           </TouchableOpacity>
         </View>
-        {/* <Footer /> */}
       </ScrollView>
     );
   }

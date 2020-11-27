@@ -13,8 +13,8 @@ const Stack = createStackNavigator();
 const RootGoogle = () => {
     return (
         <Stack.Navigator style={styles.container} initialRouteName="LoggedInGoogle" independent={true}>
-          <Stack.Screen name="LoggedInGoogle" component={LoggedInGoogle} />
-          <Stack.Screen name="RootSignUp" component={RootSignUp} />
+          <Stack.Screen name="LoggedInGoogle" component={LoggedInGoogle} options={{headerShown: false, title: ""}}/>
+          <Stack.Screen name="RootSignUp" component={RootSignUp} options={{headerShown: false, title: ""}}/>
         </Stack.Navigator>
       );
 }

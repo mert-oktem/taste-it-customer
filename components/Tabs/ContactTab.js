@@ -16,7 +16,7 @@ import H1 from "../texts/H1";
 import { postCustomerInquiry } from "../../services/api";
 import { useFonts } from "expo-font";
 import { useIsFocused } from "@react-navigation/native";
-import Footer from "../footer/Footer";
+import RootSignIn from "../../stacks/RootSignIn"
 
 const ContactTab = ({ navigation }) => {
   const isFocused = useIsFocused();
@@ -194,7 +194,7 @@ const ContactTab = ({ navigation }) => {
       </ScrollView>
     );
   } else {
-    return <Footer />;
+    return <RootSignIn />;
   }
 };
 

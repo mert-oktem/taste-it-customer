@@ -18,7 +18,6 @@ import {
   getCustomerAddress,
   getDeliveryTime,
 } from "../../../services/api";
-import Footer from "../../footer/Footer";
 
 const OrderConfirmation = ({ route, navigation }) => {
   const [fontsLoaded] = useFonts({

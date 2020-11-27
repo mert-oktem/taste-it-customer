@@ -46,7 +46,7 @@ const OrderStack = () => {
       initialRouteName="OrderTab"
       independent={true}
     >
-      <Stack.Screen options={{headerShown: false, title: ""}} name="OrderTab" component={OrderTab} />
+      <Stack.Screen options={{title: ""}} name="OrderTab" component={OrderTab} />
       <Stack.Screen name="OrderStatus" component={OrderStatus} options={{title: "" }}/>
       <Stack.Screen options={{headerShown: false, title: ""}} name="RevealConfirm" component={RevealConfirm}/>
       <Stack.Screen name="DishDetailScreen" component={DishDetailScreen} options={{title: "" }}/>

@@ -75,8 +75,8 @@ const styles = StyleSheet.create({
   options: {
     // marginTop: 50,
     // width: Dimensions.get("screen").width * 0.8,
-    paddingLeft: Dimensions.get("screen").width * 0.075,
-    paddingRight: Dimensions.get("screen").width * 0.025,
+    paddingLeft: Dimensions.get("screen").width * 0.065,
+    paddingRight: Dimensions.get("screen").width * 0.015,
     paddingTop: Dimensions.get("screen").width * 0.05,
     backgroundColor: "white",
   },

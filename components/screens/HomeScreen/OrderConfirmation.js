@@ -18,6 +18,7 @@ import {
   getCustomerAddress,
   getDeliveryTime,
 } from "../../../services/api";
+import axios from "axios";
 
 const OrderConfirmation = ({ route, navigation }) => {
   const [fontsLoaded] = useFonts({
@@ -44,35 +45,53 @@ const OrderConfirmation = ({ route, navigation }) => {
   });
 
   useEffect(() => {
-    let addressTest = "";
-    let cityTest = "";
-    let postcodeTest = "";
-    getCustomerAddress().then(
-      (res) => {
-        addressTest = res.address;
-        cityTest = res.cityDescription;
-        postcodeTest = res.postcode;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
 
-    getDeliveryTime(restaurantID).then(
-      (res) => {
-        setData({
-          ...data,
-          postcode: postcodeTest,
-          city: cityTest,
-          address: addressTest,
-          time: res,
-          isLoaded: false,
-        });
-      },
-      (err) => {
-        console.log(err);
+    const loadData = () => {
+      try {
+        let addressTest = "";
+        let cityTest = "";
+        let postcodeTest = "";
+        getCustomerAddress().then(
+          (res) => {
+            addressTest = res.address;
+            cityTest = res.cityDescription;
+            postcodeTest = res.postcode;
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+
+        getDeliveryTime(restaurantID, source).then(
+          (res) => {
+            setData({
+              ...data,
+              postcode: postcodeTest,
+              city: cityTest,
+              address: addressTest,
+              time: res,
+              isLoaded: false,
+            });
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+      } catch (error) {
+        if (axios.isCancel(error)) {
+          console.log("cancelled");
+        } else {
+          throw error;
+        }
       }
-    );
+    };
+
+    loadData();
+    return () => {
+      source.cancel();
+    };
   }, []);
 
   const orderSubmitHandle = () => {

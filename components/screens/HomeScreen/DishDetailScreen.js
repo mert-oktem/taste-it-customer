@@ -13,40 +13,56 @@ import {
 import H1 from "../../texts/H1";
 import { getCustomerActiveOrders } from "../../../services/api";
 import { useFonts } from "expo-font";
+import axios from "axios";
 
 const DishDetailScreen = ({ route, navigation }) => {
   const [orderSelected, setOrderSelected] = React.useState(null);
   const [isLoaded, setIsLoaded] = React.useState(true);
   const { orderID } = route.params;
   const [imageUrl, setImageUrl] = React.useState(null);
-  const [menuID, setMenuID] = React.useState(null);
   const [fontsLoaded] = useFonts({
     NexaRegular: require("../../../assets/NexaFont/NexaRegular.otf"),
     NexaXBold: require("../../../assets/NexaFont/NexaXBold.otf"),
   });
-  // console.log(navigation)
 
   useEffect(() => {
-    getCustomerActiveOrders().then((res) => {
-      for (let i = 0; i < res.length; i++) {
-        if (res[i].orderID === orderID) {
-          setOrderSelected(res[i]);
-          setMenuID(res[i].menuID);
-          let newMenuID = res[i].menuID;
-          if (res[i].menuID > 20) {
-            newMenuID = 20;
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();  
+      const loadData = () => {
+        try{
+          getCustomerActiveOrders(source).then((res) => {
+            for (let i = 0; i < res.length; i++) {
+              if (res[i].orderID === orderID) {
+                setOrderSelected(res[i]);
+                let newMenuID = res[i].menuID;
+                if (res[i].menuID > 20) {
+                  newMenuID = 20;
+                }
+                let url = `https://taste-it.ca/api/menus/image/${newMenuID}`;
+                setImageUrl(url);
+                setIsLoaded(false);
+              }
+            }
+          }),
+            (err) => {
+              console.log(err);
+            };
+        }catch (error) {
+          if (axios.isCancel(error)) {
+            console.log("cancelled");
+          } else {
+            throw error;
           }
-          let url = `https://taste-it.ca/api/menus/image/${newMenuID}`;
-          setImageUrl(url);
-          setIsLoaded(false);
         }
-      }
-    }),
-      (err) => {
-        console.log(err);
       };
+  
+      loadData();
+      return () => {
+        source.cancel();
+      };
+
   }, []);
-  if (isLoaded) {
+  if (isLoaded || !fontsLoaded) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <ActivityIndicator size="large" />

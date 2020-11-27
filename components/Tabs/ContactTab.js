@@ -15,11 +15,8 @@ import {
 import H1 from "../texts/H1";
 import { postCustomerInquiry } from "../../services/api";
 import { useFonts } from "expo-font";
-import { useIsFocused } from "@react-navigation/native";
-import RootSignIn from "../../stacks/RootSignIn"
 
 const ContactTab = ({ navigation }) => {
-  const isFocused = useIsFocused();
   const [fontsLoaded] = useFonts({
     NexaRegular: require("../../assets/NexaFont/NexaRegular.otf"),
     NexaXBold: require("../../assets/NexaFont/NexaXBold.otf"),
@@ -98,7 +95,13 @@ const ContactTab = ({ navigation }) => {
       }
     );
   };
-  if (isFocused) {
+  if (!fontsLoaded) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  } else {
     return (
       <ScrollView style={{ backgroundColor: "white" }}>
         <View
@@ -193,8 +196,6 @@ const ContactTab = ({ navigation }) => {
         </View>
       </ScrollView>
     );
-  } else {
-    return <RootSignIn />;
   }
 };
 

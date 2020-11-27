@@ -51,11 +51,11 @@ export default function EditCustomer({ navigation }) {
         }
       );
     } catch (error) {
-      // if (axios.isCancel(error)) {
-      //   console.log("cancelled");
-      // } else {
+      if (axios.isCancel(error)) {
+        console.log("cancelled");
+      } else {
       throw error;
-      // }
+      }
     }
     return () => {
       source.cancel();

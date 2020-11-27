@@ -149,12 +149,13 @@ export const getCustomerChoices = async () => {
   }
 };
 
-export const getCustomerActiveOrders = async () => {
+export const getCustomerActiveOrders = async (source) => {
   const url = `${BASE_URL}/orders/customer`;
   let token = null;
   token = await AsyncStorage.getItem("userToken");
   try {
     const res = await axios.get(url, {
+      cancelToken: source.token,
       headers: {
         Authorization: `${token}`,
       },
@@ -252,7 +253,7 @@ export const postGoogleEmail = async (email) => {
   }
 };
 
-export const getDeliveryTime = async (restaurantID) => {
+export const getDeliveryTime = async (restaurantID, source) => {
   const url = `${BASE_URL}/orders/deliveryTime`;
   let token = null;
   token = await AsyncStorage.getItem("userToken");
@@ -261,6 +262,7 @@ export const getDeliveryTime = async (restaurantID) => {
       url,
       { restaurantID: `${restaurantID}` },
       {
+        cancelToken: source.token,
         headers: {
           Authorization: `${token}`,
         },

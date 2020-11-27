@@ -20,6 +20,10 @@ import { getCustomerActiveOrders } from "../../services/api";
 import { set } from "react-native-reanimated";
 import moment from "moment";
 import { useFonts } from "expo-font";
+import axios from "axios"
+import { LogBox } from 'react-native';
+
+LogBox.ignoreAllLogs();
 
 const MaterialTopTabs = createMaterialTopTabNavigator();
 
@@ -46,27 +50,50 @@ const OrderTab = (props) => {
   };
 
   useEffect(() => {
-    getCustomerActiveOrders().then((res) => {
-      // console.log(res)
-      setActiveOrders(res);
 
-      if (res.length === 0) {
-        setIsLoaded(true);
-      } else {
-        let flag = false
-        // setOrderStatus(res[res.length - 1].orderStatusID);
-        for(let i=0; i<res.length; i++){
-          if(res[i].orderStatusID<4){
-            flag = true
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();  
+      const loadData = () => {
+        try{
+          getCustomerActiveOrders(source).then((res) => {
+            setActiveOrders(res);
+      
+            if (res.length === 0) {
+              setIsLoaded(true);
+            } else {
+              let flag = false
+              for(let i=0; i<res.length; i++){
+                if(res[i].orderStatusID<4){
+                  flag = true
+                }
+              }
+              {flag === true ? (setIsOrderLoaded(true)) : (setIsOrderLoaded(false))}
+              setIsLoaded(false);
+            }
+          }),
+            (err) => {
+              console.log(err);
+            };
+        }catch (error) {
+          if (axios.isCancel(error)) {
+            console.log('Request canceled', error.message);
+          } else {
+            console.log(error);
           }
         }
-        {flag === true ? (setIsOrderLoaded(true)) : (setIsOrderLoaded(false))}
-        setIsLoaded(false);
-      }
-    }),
-      (err) => {
-        console.log(err);
       };
+  
+      loadData();
+      return () => {
+        //when the component unmounts
+      // console.log("component unmounted");
+      // cancel the request (the message parameter is optional)
+      source.cancel('Operation canceled by the user.');
+      };
+
+
+
+   
   }, [activeOrders, isLoaded, isOrderLoaded]);
 
   const renderOrders = () => {

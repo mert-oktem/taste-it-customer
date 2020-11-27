@@ -38,7 +38,15 @@ const HomeScreen = (props) => {
     const source = CancelToken.source();
 
     const loadData = () => {
-      try{
+      try {
+        getCustomerAddress().then(
+          (res) => {
+            setAddress(res.address);
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
         getCustomerInfo(source).then(
           (res) => {
             setInfo(res);
@@ -48,26 +56,15 @@ const HomeScreen = (props) => {
             console.log(err);
           }
         );
-        getCustomerAddress().then(
-          (res) => {
-            setAddress(res.address);
-          },
-          (err) => {
-            console.log(err);
-          }
-        );
-              
-      setIsLoaded(false);
-      }catch (error) {
-        // if (axios.isCancel(error)) {
-        //   console.log("cancelled");
-        // } else {
+        setIsLoaded(false);
+      } catch (error) {
+        if (axios.isCancel(error)) {
+          console.log("cancelled");
+        } else {
           throw error;
-        // }
+        }
       }
-
     };
-
     loadData();
     return () => {
       source.cancel();
@@ -101,7 +98,11 @@ const HomeScreen = (props) => {
   const orderHandle = () => {
     getSuitableMenu(data.numberOfPeople, data.budget).then(
       (res) => {
-        handleHomeChange(res, data.numberOfPeople);
+        if (res.length === 0) {
+          Alert.alert("Oops..", `Please choose different flavour options. Thank You`);
+        } else {
+          handleHomeChange(res, data.numberOfPeople);
+        }
       },
       (err) => {
         console.log(err);
@@ -136,13 +137,14 @@ const HomeScreen = (props) => {
               }}
             >
               <Text style={styles.address}>{address}</Text>
-              <TouchableOpacity onPress={() => props.navigation.navigate("EditDelivery")}>
-              <Image
-                style={{ width: 22, height: 22 }}
-                source={require("../../../assets/Icons/addressEdit.png")}
-              />
+              <TouchableOpacity
+                onPress={() => props.navigation.navigate("EditDelivery")}
+              >
+                <Image
+                  style={{ width: 22, height: 22 }}
+                  source={require("../../../assets/Icons/addressEdit.png")}
+                />
               </TouchableOpacity>
-              
             </View>
           </View>
           <Image />

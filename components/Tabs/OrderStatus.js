@@ -12,6 +12,7 @@ import {
 import H1 from "../texts/H1";
 import { getCustomerActiveOrders } from "../../services/api";
 import { useFonts } from "expo-font";
+import axios from "axios";
 
 const OrderStatus = ({ route, navigation }) => {
   // const { orderStatusID } = route.params;
@@ -23,23 +24,37 @@ const OrderStatus = ({ route, navigation }) => {
     NexaRegular: require("../../assets/NexaFont/NexaRegular.otf"),
     NexaXBold: require("../../assets/NexaFont/NexaXBold.otf"),
   });
-  // console.log(orderStatusID);
-  // console.log(orderID);
 
   useEffect(() => {
-    getCustomerActiveOrders().then((res) => {
-      // console.log(res)
-      for (let i = 0; i < res.length; i++) {
-        if (res[i].orderID === orderID) {
-          setOrderSelected(res[i]);
-          setOrderStatusID(res[i].orderStatusID);
-          setIsLoaded(false);
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+    const loadData = () => {
+      try {
+        getCustomerActiveOrders(source).then((res) => {
+          for (let i = 0; i < res.length; i++) {
+            if (res[i].orderID === orderID) {
+              setOrderSelected(res[i]);
+              setOrderStatusID(res[i].orderStatusID);
+              setIsLoaded(false);
+            }
+          }
+        }),
+          (err) => {
+            console.log(err);
+          };
+      } catch (error) {
+        if (axios.isCancel(error)) {
+          console.log("error");
+        } else {
+          throw error;
         }
       }
-    }),
-      (err) => {
-        console.log(err);
-      };
+    };
+
+    loadData();
+    return () => {
+      source.cancel();
+    };
   }, [orderSelected, orderStatusID]);
   if (isLoaded) {
     return (

@@ -15,6 +15,9 @@ import RootGoogle from "./stacks/RootGoogle"
 import RootSignIn from "./stacks/RootSignIn"
 import RootSignUp from "./stacks/RootSignUp"
 import Root from "./stacks/Root"
+import { LogBox } from 'react-native';
+
+LogBox.ignoreAllLogs();
 
 const Stack = createStackNavigator();
 
@@ -106,7 +109,6 @@ const App = () => {
       },
       signOut: async () => {
         try {
-          // await AsyncStorage.removeItem("userToken");
           await AsyncStorage.clear();
           setIsExistingUser(false);
           setIsGoogleLogin(false);
@@ -121,7 +123,6 @@ const App = () => {
           await AsyncStorage.setItem("userToken", userToken);
           setIsUserLoading(false);
           setIsExistingUser(false);
-          // existedUserHandler()
         } catch (e) {
           console.log(e);
         }

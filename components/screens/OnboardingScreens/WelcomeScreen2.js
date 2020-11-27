@@ -39,11 +39,11 @@ const WelcomeScreen2 = ({ navigation }) => {
           }
         );
       }catch (error) {
-        // if (axios.isCancel(error)) {
-        //   console.log("cancelled");
-        // } else {
+        if (axios.isCancel(error)) {
+          console.log("cancelled");
+        } else {
           throw error;
-        // }
+        }
       }
     };
     loadData();

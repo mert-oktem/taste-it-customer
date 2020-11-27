@@ -144,7 +144,7 @@ export default function SignIn({ navigation }) {
     );
   } else {
     return (
-      <ScrollView style={{ backgroundColor: "white" }}>
+      <ScrollView style={{ backgroundColor: "white", paddingTop: 30 }}>
         <Image
           style={styles.image}
           source={require("../../../assets/foodIllustration/customerSide/SignIn.jpg")}
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
   signUp: {
     fontSize: 10,
     textDecorationLine: "underline",
-    marginBottom: Dimensions.get("screen").width * 0.08,
+    marginBottom: Dimensions.get("screen").width * 0.25,
     color: "#632DF1",
     fontFamily: "NexaRegular",
   },

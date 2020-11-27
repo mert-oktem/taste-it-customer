@@ -355,7 +355,7 @@ export default class FlavourProfile extends Component {
 
 const styles = StyleSheet.create({
   page: {
-    marginTop: 50,
+    marginTop: 20,
   },
   navContainer: {
     backgroundColor: "white",

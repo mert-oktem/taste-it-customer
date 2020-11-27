@@ -65,7 +65,7 @@ export default function ReviewRating({ route, navigation }) {
           style={{
             width: Dimensions.get("screen").width * 0.8,
             marginLeft: Dimensions.get("screen").width * 0.1,
-            marginTop: Dimensions.get("screen").width * 0.1,
+            marginTop: 20,
           }}
         >
           <View>

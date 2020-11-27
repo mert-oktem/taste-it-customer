@@ -297,7 +297,7 @@ const styles = StyleSheet.create({
   content: {
     width: Dimensions.get("screen").width * 0.8,
     marginLeft: Dimensions.get("screen").width * 0.1,
-    marginTop: Dimensions.get("screen").width * 0.1,
+    marginTop: 20,
   },
   button1: {
     backgroundColor: "#d4cde3",
@@ -305,7 +305,7 @@ const styles = StyleSheet.create({
     paddingBottom: 17.5,
     borderRadius: 16,
     marginBottom: 25,
-    marginTop: 70,
+    marginTop: 30,
   },
   button2: {
     backgroundColor: "#632DF1",
@@ -313,7 +313,7 @@ const styles = StyleSheet.create({
     paddingBottom: 17.5,
     borderRadius: 16,
     marginBottom: 25,
-    marginTop: 70,
+    marginTop: 30,
   },
   buttonText: {
     color: "white",

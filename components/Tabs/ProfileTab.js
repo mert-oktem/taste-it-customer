@@ -41,7 +41,7 @@ const ProfileTab = (props) => {
             console.log(err);
           }
         );
-      }catch (error) {
+      } catch (error) {
         if (axios.isCancel(error)) {
           console.log("cancelled");
         } else {
@@ -222,8 +222,8 @@ export const styles = StyleSheet.create({
     paddingTop: 17.5,
     paddingBottom: 17.5,
     borderRadius: 16,
-    marginBottom: 30,
-    marginTop: 50,
+    marginBottom: 50,
+    marginTop: 25,
   },
   buttonText: {
     color: "white",

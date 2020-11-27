@@ -28,7 +28,7 @@ const WelcomeScreen = ({ navigation }) => {
 
   if (isLoading) {
     return (
-      <ScrollView backgroundColor="white">
+      <ScrollView style={{ backgroundColor: "white", paddingTop: 30 }}>
         <Image
           style={styles.image}
           source={require("../../../assets/foodIllustration/customerSide/Banner.jpg")}
@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: "#632DF1",
     paddingTop: 17.5,
+    marginBottom: 30,
     paddingBottom: 17.5,
     borderRadius: 16,
   },

@@ -145,15 +145,20 @@ const LoggedInGoogle = ({ navigation }) => {
           <H1 h1Text="Set Up Your Profile." />
           <Text style={styles.textChild}>Let's get to know each other.</Text>
         </View>
-        <TextInput
-          placeholder={"First Name"}
-          textContentType={"name"}
-          autoCapitalize="none"
-          value={data.firstName}
-          onChangeText={(val) => textInputFirstChange(val)}
-          onEndEditing={(e) => handleValidFirst(e.nativeEvent.text)}
-          style={styles.textInput}
-        />
+        <View>
+          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+            <Text style={styles.placeholder}>First Name</Text>
+            <View style={{ flexGrow: 1 }} />
+          </View>
+          <TextInput
+            textContentType={"name"}
+            autoCapitalize="none"
+            value={data.firstName}
+            onChangeText={(val) => textInputFirstChange(val)}
+            onEndEditing={(e) => handleValidFirst(e.nativeEvent.text)}
+            style={styles.textInput}
+          />
+        </View>
         {data.isValidFirst ? null : (
           <View duration={500}>
             <Text style={styles.errorMsg}>
@@ -161,15 +166,20 @@ const LoggedInGoogle = ({ navigation }) => {
             </Text>
           </View>
         )}
-        <TextInput
-          placeholder={"Last Name"}
-          textContentType={"name"}
-          autoCapitalize="none"
-          value={data.lastName}
-          onChangeText={(val) => textInputLastChange(val)}
-          onEndEditing={(e) => handleValidLast(e.nativeEvent.text)}
-          style={styles.textInput}
-        />
+        <View>
+          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+            <Text style={styles.placeholder}>Last Name</Text>
+            <View style={{ flexGrow: 1 }} />
+          </View>
+          <TextInput
+            textContentType={"name"}
+            autoCapitalize="none"
+            value={data.lastName}
+            onChangeText={(val) => textInputLastChange(val)}
+            onEndEditing={(e) => handleValidLast(e.nativeEvent.text)}
+            style={styles.textInput}
+          />
+        </View>
         {data.isValidLast ? null : (
           <View duration={500}>
             <Text style={styles.errorMsg}>
@@ -177,15 +187,20 @@ const LoggedInGoogle = ({ navigation }) => {
             </Text>
           </View>
         )}
-        <TextInput
-          placeholder={"Phone Number"}
-          textContentType={"name"}
-          autoCapitalize="none"
-          value={data.phoneNumber}
-          onChangeText={(val) => textInputPhoneChange(val)}
-          onEndEditing={(e) => handleValidPhone(e.nativeEvent.text)}
-          style={styles.textInput}
-        />
+        <View>
+          <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
+            <Text style={styles.placeholder}>Phone Number</Text>
+            <View style={{ flexGrow: 1 }} />
+          </View>
+          <TextInput
+            textContentType={"name"}
+            autoCapitalize="none"
+            value={data.phoneNumber}
+            onChangeText={(val) => textInputPhoneChange(val)}
+            onEndEditing={(e) => handleValidPhone(e.nativeEvent.text)}
+            style={styles.textInput}
+          />
+        </View>
 
         {data.isValidPhone ? null : (
           <View duration={500}>
@@ -194,7 +209,7 @@ const LoggedInGoogle = ({ navigation }) => {
             </Text>
           </View>
         )}
-        <Text style={styles.text}>*Contact for your delivery</Text>
+        <Text style={styles.text1}>*Contact for your delivery</Text>
         <TouchableOpacity
           style={styles.button}
           type="submit"
@@ -215,6 +230,7 @@ export default LoggedInGoogle;
 const styles = StyleSheet.create({
   image: {
     height: Dimensions.get("screen").width * 0.7,
+    marginTop: 22,
     width: Dimensions.get("screen").width,
     backgroundColor: "lightgray",
   },
@@ -227,6 +243,12 @@ const styles = StyleSheet.create({
   text: {
     marginBottom: 20,
   },
+  text1: {
+    marginBottom: 10,
+    fontSize: 12,
+    fontFamily: "NexaRegular",
+    color: "#3e315a",
+  },
   textChild: {
     color: "#3E315A",
     lineHeight: 20,
@@ -234,26 +256,44 @@ const styles = StyleSheet.create({
   textInput: {
     height: 50,
     width: Dimensions.get("screen").width * 0.8,
-    borderColor: "#D4CDE3",
-    borderWidth: 2,
     backgroundColor: "white",
     // marginLeft: Dimensions.get("screen").width * 0.01,
     marginRight: Dimensions.get("screen").width * 0.01,
     marginTop: Dimensions.get("screen").width * 0.02,
     marginBottom: Dimensions.get("screen").width * 0.03,
     fontSize: 18,
-    borderRadius: 15,
+    borderColor: "#D4CDE3",
+    borderWidth: 2,
+    borderRadius: 16,
     paddingLeft: 15,
     paddingTop: 15,
     paddingBottom: 15,
+  },
+  errorMsg: {
+    fontFamily: "NexaRegular",
+    fontSize: 12,
+    color: "#3e315a",
+  },
+  placeholder: {
+    fontFamily: "NexaRegular",
+    fontSize: 12,
+    color: "#3e315a",
+    backgroundColor: "white",
+    position: "relative",
+    top: 17,
+    left: 19,
+    lineHeight: 15,
+    zIndex: 1,
+    paddingHorizontal: 5,
+    // paddingVertical: 10,
   },
   button: {
     backgroundColor: "#632DF1",
     paddingTop: 15,
     paddingBottom: 15,
     borderRadius: 15,
-    marginBottom: 30,
-    marginTop: 50,
+    marginBottom: 50,
+    marginTop: 30,
   },
   buttonText: {
     color: "white",

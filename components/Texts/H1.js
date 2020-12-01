@@ -26,7 +26,7 @@ export default H1;
 
 const styles = StyleSheet.create({
   h1Text: {
-    fontSize: 32,
+    fontSize: 30,
     lineHeight: 39,
     fontWeight: "bold",
     color: "#632DF1",

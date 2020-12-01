@@ -101,7 +101,10 @@ const HomeScreen = (props) => {
     getSuitableMenu(data.numberOfPeople, data.budget).then(
       (res) => {
         if (res.length === 0) {
-          Alert.alert("Oops..", `Please choose different flavour options. Thank You`);
+          Alert.alert(
+            "Oops..",
+            `Please choose different flavour options. Thank You`
+          );
         } else {
           handleHomeChange(res, data.numberOfPeople);
         }
@@ -145,7 +148,7 @@ const HomeScreen = (props) => {
                 onPress={() => props.navigation.navigate("EditDelivery")}
               >
                 <Image
-                  style={{ width: 22, height: 22 }}
+                  style={{ width: 22, height: 22, marginBottom: 5 }}
                   source={require("../../../assets/Icons/addressEdit.png")}
                 />
               </TouchableOpacity>

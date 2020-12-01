@@ -20,8 +20,8 @@ import { getCustomerActiveOrders } from "../../services/api";
 import { set } from "react-native-reanimated";
 import moment from "moment";
 import { useFonts } from "expo-font";
-import axios from "axios"
-import { LogBox } from 'react-native';
+import axios from "axios";
+import { LogBox } from "react-native";
 
 LogBox.ignoreAllLogs();
 
@@ -50,43 +50,43 @@ const OrderTab = (props) => {
   };
 
   useEffect(() => {
-
     const CancelToken = axios.CancelToken;
-    const source = CancelToken.source();  
-      const loadData = () => {
-        try{
-          getCustomerActiveOrders(source).then((res) => {
-            setActiveOrders(res);
-      
-            if (res.length === 0) {
-              setIsLoaded(true);
-            } else {
-              let flag = false
-              for(let i=0; i<res.length; i++){
-                if(res[i].orderStatusID<4){
-                  flag = true
-                }
-              }
-              {flag === true ? (setIsOrderLoaded(true)) : (setIsOrderLoaded(false))}
-              setIsLoaded(false);
-            }
-          }),
-            (err) => {
-              console.log(err);
-            };
-        }catch (error) {
-          if (axios.isCancel(error)) {
-            console.log('Request canceled', error.message);
-          } else {
-            console.log(error);
-          }
-        }
-      }; 
-      loadData();
-      return () => {
-      source.cancel('Operation canceled by the user.');
-      };
+    const source = CancelToken.source();
+    const loadData = () => {
+      try {
+        getCustomerActiveOrders(source).then((res) => {
+          setActiveOrders(res);
 
+          if (res.length === 0) {
+            setIsLoaded(true);
+          } else {
+            let flag = false;
+            for (let i = 0; i < res.length; i++) {
+              if (res[i].orderStatusID < 4) {
+                flag = true;
+              }
+            }
+            {
+              flag === true ? setIsOrderLoaded(true) : setIsOrderLoaded(false);
+            }
+            setIsLoaded(false);
+          }
+        }),
+          (err) => {
+            console.log(err);
+          };
+      } catch (error) {
+        if (axios.isCancel(error)) {
+          console.log("Request canceled", error.message);
+        } else {
+          console.log(error);
+        }
+      }
+    };
+    loadData();
+    return () => {
+      source.cancel("Operation canceled by the user.");
+    };
   }, [activeOrders, isLoaded, isOrderLoaded]);
 
   const renderOrders = () => {
@@ -149,7 +149,7 @@ const OrderTab = (props) => {
                       View Details
                     </Text>
                     <Image
-                      style={{ width: 20, height: 20 }}
+                      style={{ width: 15, height: 15, marginBottom: 5 }}
                       source={require("../../assets/Icons/forwardArrow.png")}
                     />
                   </View>
@@ -193,7 +193,7 @@ const OrderTab = (props) => {
                   style={{
                     width: 90,
                     height: 90,
-                    borderRadius: 15,
+                    borderRadius: 10,
                     marginRight: 20,
                   }}
                   source={{ uri: `${url}` }}
@@ -220,7 +220,7 @@ const OrderTab = (props) => {
                     }}
                   >
                     <Image
-                      style={{ width: 20, height: 20, marginRight: 7 }}
+                      style={{ width: 15, height: 15, marginRight: 7 }}
                       source={require("../../assets/Icons/restaurant.png")}
                     />
                     <Text
@@ -228,6 +228,7 @@ const OrderTab = (props) => {
                         fontFamily: "NexaRegular",
                         color: "#3e315a",
                         fontSize: 12,
+                        marginBottom: -5,
                       }}
                     >
                       {item.restaurantName}
@@ -242,7 +243,7 @@ const OrderTab = (props) => {
                     }}
                   >
                     <Image
-                      style={{ width: 18, height: 19, marginRight: 7 }}
+                      style={{ width: 14, height: 15, marginRight: 7 }}
                       source={require("../../assets/Icons/price.png")}
                     />
                     <Text
@@ -250,6 +251,7 @@ const OrderTab = (props) => {
                         fontFamily: "NexaRegular",
                         color: "#3e315a",
                         fontSize: 12,
+                        marginBottom: -5,
                       }}
                     >
                       ${item.price}
@@ -266,7 +268,18 @@ const OrderTab = (props) => {
 
   const createTopTabs = () => {
     return (
-      <MaterialTopTabs.Navigator>
+      <MaterialTopTabs.Navigator
+        tabBarOptions={{
+          activeTintColor: "#3E315A",
+          indicatorStyle: { backgroundColor: "#632DF1" },
+          labelStyle: {
+            fontFamily: "NexaXBold",
+            fontSize: 16,
+            textTransform: "capitalize",
+            // fontSize: 10,
+          },
+        }}
+      >
         <MaterialTopTabs.Screen
           name="Active Orders"
           children={() => <ActiveOrder onHandleOrder={handleOrderNow} />}
@@ -283,7 +296,18 @@ const OrderTab = (props) => {
     // console.log("i m here")
     // console.log(activeOrders)
     return (
-      <MaterialTopTabs.Navigator>
+      <MaterialTopTabs.Navigator
+        tabBarOptions={{
+          activeTintColor: "#3E315A",
+          indicatorStyle: { backgroundColor: "#632DF1" },
+          labelStyle: {
+            fontFamily: "NexaXBold",
+            fontSize: 16,
+            textTransform: "capitalize",
+            // fontSize: 10,
+          },
+        }}
+      >
         <MaterialTopTabs.Screen
           name="Active Orders"
           children={() => (
@@ -306,7 +330,18 @@ const OrderTab = (props) => {
   };
   const createTopTabsOnlyOrderHistory = () => {
     return (
-      <MaterialTopTabs.Navigator style={{ backgroundColor: "white" }}>
+      <MaterialTopTabs.Navigator
+        style={{ backgroundColor: "white" }}
+        tabBarOptions={{
+          activeTintColor: "#3E315A",
+          indicatorStyle: { backgroundColor: "#632DF1" },
+          labelStyle: {
+            fontFamily: "NexaXBold",
+            textTransform: "capitalize",
+            fontSize: 16,
+          },
+        }}
+      >
         <MaterialTopTabs.Screen
           style={{ backgroundColor: "white" }}
           name="Active Orders"

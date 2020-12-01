@@ -144,7 +144,7 @@ export default function SignIn({ navigation }) {
     );
   } else {
     return (
-      <ScrollView style={{ backgroundColor: "white", paddingTop: 30 }}>
+      <ScrollView style={{ backgroundColor: "white", paddingTop: 22 }}>
         <Image
           style={styles.image}
           source={require("../../../assets/foodIllustration/customerSide/SignIn.jpg")}

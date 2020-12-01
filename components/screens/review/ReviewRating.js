@@ -105,7 +105,9 @@ export default function ReviewRating({ route, navigation }) {
             >
               Rate for Service
             </Text>
-            <Stars rating={rating} />
+            <View style={{ marginLeft: Dimensions.get("screen").width * 0.05 }}>
+              <Stars rating={rating} />
+            </View>
             <View
               style={{
                 width: Dimensions.get("screen").width * 0.8,
@@ -188,7 +190,7 @@ export default function ReviewRating({ route, navigation }) {
             <Text
               style={{
                 fontFamily: "NexaXBold",
-                fontSize: 16,
+                fontSize: 15.5,
                 color: "#3e315a",
                 marginTop: 5,
               }}

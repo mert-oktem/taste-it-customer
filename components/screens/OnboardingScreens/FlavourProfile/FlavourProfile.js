@@ -249,6 +249,8 @@ export default class FlavourProfile extends Component {
           indicatorStyle: { backgroundColor: "#632DF1" },
           labelStyle: {
             fontFamily: "NexaXBold",
+            fontSize: 14,
+            textTransform: "capitalize",
           },
         }}
         sceneContainerStyle={[

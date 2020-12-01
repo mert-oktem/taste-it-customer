@@ -34,13 +34,13 @@ const styles = StyleSheet.create({
   starsRow: {
     display: "flex",
     flexDirection: "row",
-    width: Dimensions.get("screen").width * 0.7,
-    marginLeft: Dimensions.get("screen").width * 0.05,
+    maxWidth: Dimensions.get("screen").width * 0.7,
+    // marginLeft: Dimensions.get("screen").width * 0.05,
     marginBottom: 30,
     justifyContent: "space-around",
   },
   starImg: {
-    width: 32,
-    height: 30,
+    maxWidth: 28,
+    maxHeight: 26,
   },
 });

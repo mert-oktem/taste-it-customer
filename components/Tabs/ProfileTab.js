@@ -197,7 +197,8 @@ export const styles = StyleSheet.create({
     alignSelf: "center",
     fontFamily: "NexaBold",
     marginLeft: 20,
-    fontSize: 16,
+    marginTop: 5,
+    fontSize: 14,
   },
   icons: {
     width: 42,
@@ -210,8 +211,8 @@ export const styles = StyleSheet.create({
     marginLeft: 20,
   },
   arrow: {
-    width: 20,
-    height: 20,
+    width: 15,
+    height: 15,
     marginRight: 20,
     alignSelf: "center",
   },
@@ -222,7 +223,8 @@ export const styles = StyleSheet.create({
     paddingTop: 17.5,
     paddingBottom: 17.5,
     borderRadius: 16,
-    marginBottom: 80,
+    marginBottom: 100,
+    marginTop: 25,
   },
   buttonText: {
     color: "white",

@@ -20,22 +20,22 @@ export default function ActiveOrder(props) {
     <ScrollView style={{ backgroundColor: "white" }}>
       <Image
         style={{
-          width: Dimensions.get("screen").width * 0.8,
-          height: Dimensions.get("screen").width * 0.8,
+          width: Dimensions.get("screen").width * 0.7,
+          height: Dimensions.get("screen").width * 0.7,
           alignSelf: "center",
           marginTop: 40,
-          marginBottom: 40,
+          marginBottom: 20,
         }}
         source={require("../../assets/foodIllustration/customerSide/Empty.png")}
       />
 
       <Text
         style={{
-          color: "#632DF1",
+          color: "#3e315a",
           fontFamily: "NexaRegular",
           fontSize: 16,
           textAlign: "center",
-          marginVertical: 50,
+          marginVertical: 30,
         }}
       >
         No active order currently
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#632DF1",
     width: Dimensions.get("screen").width * 0.8,
     marginHorizontal: Dimensions.get("screen").width * 0.1,
-
+    marginBottom: 70,
     paddingTop: 17.5,
     paddingBottom: 17.5,
     borderRadius: 16,

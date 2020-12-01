@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 32,
     fontFamily: "NexaXBold",
-    marginTop: 5,
+    marginTop: 10,
     marginBottom: 15,
     lineHeight: 40,
     color: "#632df1",
@@ -134,8 +134,8 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingBottom: 15,
     borderRadius: 15,
-    marginBottom: 30,
-    marginTop: 30,
+    marginBottom: 70,
+    marginTop: 20,
   },
   buttonText: {
     color: "white",

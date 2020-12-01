@@ -205,37 +205,48 @@ const DishDetailAfterReview = ({ route, navigation }) => {
           }}
         >
           <View style={{ marginBottom: Dimensions.get("screen").width * 0.1 }}>
-            <Text
+            <View
               style={{
-                fontWeight: "bold",
-                fontFamily: "NexaXBold",
-                color: "#3e315a",
-                marginBottom: 10,
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
               }}
             >
-              Your Rating
-            </Text>
-            <Stars rating={orderSelected.rate} />
-            <Text
-              style={{
-                fontWeight: "bold",
-                fontFamily: "NexaXBold",
-                color: "#3e315a",
-                marginBottom: 10,
-              }}
-            >
-              Price
-            </Text>
-            <Text
-              style={{
-                fontWeight: "bold",
-                fontFamily: "NexaXBold",
-                color: "#3e315a",
-                marginBottom: 10,
-              }}
-            >
-              ${orderSelected.price}
-            </Text>
+              <View style={{ width: Dimensions.get("screen").width * 0.4 }}>
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    fontFamily: "NexaXBold",
+                    color: "#3e315a",
+                    marginBottom: 10,
+                  }}
+                >
+                  Your Rating
+                </Text>
+                <Stars rating={orderSelected.rate} />
+              </View>
+              <View>
+                <Text
+                  style={{
+                    fontFamily: "NexaXBold",
+                    color: "#3e315a",
+                    marginBottom: 10,
+                  }}
+                >
+                  Price
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: "NexaXBold",
+                    color: "#632DF1",
+                    marginVertical: 5,
+                    fontSize: 24,
+                  }}
+                >
+                  ${orderSelected.price}
+                </Text>
+              </View>
+            </View>
           </View>
           <View style={{ marginBottom: Dimensions.get("screen").width * 0.1 }}>
             <Text
@@ -277,6 +288,8 @@ const DishDetailAfterReview = ({ route, navigation }) => {
               style={{
                 fontFamily: "NexaRegular",
                 marginTop: 15,
+                marginBottom: 25,
+                // maxHeight: 100,
                 lineHeight: 24,
                 fontSize: 16,
                 color: "#3e315a",
@@ -285,37 +298,36 @@ const DishDetailAfterReview = ({ route, navigation }) => {
               {orderSelected.restaurantDescription}
             </Text>
           </View>
-          <View style={{ marginTop: 20 }}>
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <Image
-                style={{ width: 30, height: 32, marginRight: 10 }}
-                source={require("../../../assets/Icons/location.png")}
-              />
-              <Text style={styles.restaurantAddress}>
-                {orderSelected.address}
-              </Text>
-            </View>
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <Image
-                style={{ width: 30, height: 32, marginRight: 10 }}
-                source={require("../../../assets/Icons/phone.png")}
-              />
-              <Text style={styles.restaurantAddress}>
-                {orderSelected.phoneNumber}
-              </Text>
-            </View>
+
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <Image
+              style={{ width: 30, height: 32, marginRight: 10 }}
+              source={require("../../../assets/Icons/location.png")}
+            />
+            <Text style={styles.restaurantAddress}>
+              {orderSelected.address}
+            </Text>
+          </View>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <Image
+              style={{ width: 30, height: 32, marginRight: 10 }}
+              source={require("../../../assets/Icons/phone.png")}
+            />
+            <Text style={styles.restaurantAddress}>
+              {orderSelected.phoneNumber}
+            </Text>
           </View>
         </View>
       </ScrollView>

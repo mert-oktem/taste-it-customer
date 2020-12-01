@@ -24,14 +24,14 @@ export default function OrderHistory(props) {
           height: Dimensions.get("screen").width * 0.8,
           alignSelf: "center",
           marginTop: 40,
-          marginBottom: 40,
+          marginBottom: 20,
         }}
         source={require("../../assets/foodIllustration/customerSide/Empty.png")}
       />
 
       <Text
         style={{
-          color: "#632DF1",
+          color: "#3e315a",
           fontFamily: "NexaRegular",
           fontSize: 16,
           textAlign: "center",
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#632DF1",
     width: Dimensions.get("screen").width * 0.8,
     marginHorizontal: Dimensions.get("screen").width * 0.1,
-
+    marginBottom: 70,
     paddingTop: 17.5,
     paddingBottom: 17.5,
     borderRadius: 16,

@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     // width: Dimensions.get("screen").width * 0.8,
     paddingLeft: Dimensions.get("screen").width * 0.065,
     paddingRight: Dimensions.get("screen").width * 0.015,
-    paddingBottom: Dimensions.get("screen").width * 0.13,
+    paddingBottom: Dimensions.get("screen").width * 0.194,
     paddingTop: Dimensions.get("screen").width * 0.05,
     backgroundColor: "white",
   },

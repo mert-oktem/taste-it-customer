@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#3e315a",
     fontFamily: "NexaRegular",
+    textTransform: "capitalize",
   },
   text2: {
     marginBottom: 15,

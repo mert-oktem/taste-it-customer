@@ -270,12 +270,13 @@ const OrderTab = (props) => {
     return (
       <MaterialTopTabs.Navigator
         tabBarOptions={{
-          activeTintColor: "#3E315A",
+          activeTintColor: "#632DF1",
           indicatorStyle: { backgroundColor: "#632DF1" },
           labelStyle: {
             fontFamily: "NexaXBold",
             fontSize: 16,
             textTransform: "capitalize",
+            color: "#632DF1",
             // fontSize: 10,
           },
         }}

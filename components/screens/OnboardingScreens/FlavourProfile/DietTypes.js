@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     paddingLeft: Dimensions.get("screen").width * 0.065,
     paddingRight: Dimensions.get("screen").width * 0.015,
     paddingTop: Dimensions.get("screen").width * 0.05,
-    paddingBottom: Dimensions.get("screen").width * 0.13,
+    paddingBottom: Dimensions.get("screen").width * 0.194,
     backgroundColor: "white",
   },
   optionsList: {

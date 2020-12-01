@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
     paddingLeft: Dimensions.get("screen").width * 0.065,
     paddingRight: Dimensions.get("screen").width * 0.015,
     paddingTop: Dimensions.get("screen").width * 0.05,
+    paddingBottom: Dimensions.get("screen").width * 0.05,
     backgroundColor: "white",
   },
   optionsList: {

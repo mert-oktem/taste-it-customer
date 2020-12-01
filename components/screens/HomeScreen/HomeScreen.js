@@ -235,6 +235,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     width: Dimensions.get("screen").width * 0.8,
     marginLeft: Dimensions.get("screen").width * 0.1,
+    textTransform: "capitalize",
     color: "#3e315a",
   },
   title: {
@@ -249,6 +250,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "NexaXBold",
     color: "#632DF1",
+    textTransform: "capitalize",
   },
   image: {
     height: Dimensions.get("screen").width * 0.47,

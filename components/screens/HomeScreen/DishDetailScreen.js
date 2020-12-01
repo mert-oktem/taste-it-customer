@@ -192,11 +192,68 @@ const DishDetailAfterReview = ({ route, navigation }) => {
           }}
           source={{ uri: `${imageUrl}` }}
         />
+
+        <View
+          style={{
+            marginBottom: Dimensions.get("screen").width * 0.1,
+            backgroundColor: "#FFFCF5",
+            paddingLeft: Dimensions.get("screen").width * 0.1,
+            paddingRight: Dimensions.get("screen").width * 0.1,
+            paddingTop: Dimensions.get("screen").width * 0.1,
+            borderTopLeftRadius: 25,
+            borderTopRightRadius: 25,
+            position: "relative",
+            top: -25,
+          }}
+        >
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <View style={{ width: Dimensions.get("screen").width * 0.45 }}>
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  fontFamily: "NexaXBold",
+                  color: "#3e315a",
+                  marginBottom: 10,
+                }}
+              >
+                Your Rating
+              </Text>
+              <Stars rating={orderSelected.rate} />
+            </View>
+            <View>
+              <Text
+                style={{
+                  fontFamily: "NexaXBold",
+                  color: "#3e315a",
+                  marginBottom: 10,
+                }}
+              >
+                Price
+              </Text>
+              <Text
+                style={{
+                  fontFamily: "NexaXBold",
+                  color: "#632DF1",
+                  marginVertical: 5,
+                  fontSize: 24,
+                }}
+              >
+                ${orderSelected.price}
+              </Text>
+            </View>
+          </View>
+        </View>
         <View
           style={{
             paddingLeft: Dimensions.get("screen").width * 0.1,
             paddingRight: Dimensions.get("screen").width * 0.1,
-            paddingTop: Dimensions.get("screen").width * 0.1,
+            // paddingTop: Dimensions.get("screen").width * 0.1,
             position: "relative",
             backgroundColor: "white",
             top: -25,
@@ -204,50 +261,6 @@ const DishDetailAfterReview = ({ route, navigation }) => {
             borderTopRightRadius: 25,
           }}
         >
-          <View style={{ marginBottom: Dimensions.get("screen").width * 0.1 }}>
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-            >
-              <View style={{ width: Dimensions.get("screen").width * 0.4 }}>
-                <Text
-                  style={{
-                    fontWeight: "bold",
-                    fontFamily: "NexaXBold",
-                    color: "#3e315a",
-                    marginBottom: 10,
-                  }}
-                >
-                  Your Rating
-                </Text>
-                <Stars rating={orderSelected.rate} />
-              </View>
-              <View>
-                <Text
-                  style={{
-                    fontFamily: "NexaXBold",
-                    color: "#3e315a",
-                    marginBottom: 10,
-                  }}
-                >
-                  Price
-                </Text>
-                <Text
-                  style={{
-                    fontFamily: "NexaXBold",
-                    color: "#632DF1",
-                    marginVertical: 5,
-                    fontSize: 24,
-                  }}
-                >
-                  ${orderSelected.price}
-                </Text>
-              </View>
-            </View>
-          </View>
           <View style={{ marginBottom: Dimensions.get("screen").width * 0.1 }}>
             <Text
               style={{

@@ -168,6 +168,7 @@ export const styles = StyleSheet.create({
     color: "#632df1",
     fontFamily: "NexaXBold",
     marginBottom: Dimensions.get("screen").width * 0.1,
+    textTransform: "capitalize",
   },
   page: {
     width: Dimensions.get("screen").width * 0.8,

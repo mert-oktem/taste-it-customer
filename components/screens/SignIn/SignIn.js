@@ -236,7 +236,11 @@ export default function SignIn({ navigation }) {
               loginGoogleHandle();
             }}
           >
-            <Text style={styles.buttonText1}>Sign In with Google</Text>
+            <Text style={styles.buttonText1}>Sign In with Google </Text>
+            <Image
+              style={{ height: 17, width: 17 }}
+              source={require("../../../assets/Icons/g-logo.png")}
+            />
           </TouchableOpacity>
           <View style={styles.signUpText}>
             <Text style={styles.smallText}>Don't have an account? </Text>
@@ -307,11 +311,14 @@ const styles = StyleSheet.create({
     borderColor: "#632DF1",
     backgroundColor: "white",
     borderWidth: 2,
-    paddingTop: 17.5,
-    paddingBottom: 17.5,
+    paddingTop: 16,
+    paddingBottom: 16,
     borderRadius: 16,
     marginBottom: 25,
     marginTop: 18,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
   },
   placeholder: {
     fontFamily: "NexaRegular",
@@ -337,6 +344,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: "NexaXBold",
     fontSize: 16,
+    marginTop: 3,
+    marginRight: 5,
   },
   textInput: {
     height: 50,

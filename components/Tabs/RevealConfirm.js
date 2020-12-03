@@ -44,10 +44,10 @@ const RevealConfirm = ({ route, navigation }) => {
         >
           <Image
             style={{
-              width: Dimensions.get("screen").width * 0.6,
-              height: Dimensions.get("screen").width * 0.6,
+              width: Dimensions.get("screen").width * 0.5,
+              height: Dimensions.get("screen").width * 0.5,
               marginTop: 85,
-              marginLeft: Dimensions.get("screen").width * 0.1,
+              marginLeft: Dimensions.get("screen").width * 0.15,
               marginBottom: 30,
             }}
             source={require("../../assets/foodIllustration/customerSide/OpenBox.png")}
@@ -104,7 +104,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "NexaBold",
     color: "#3e315a",
-    marginTop: 15,
+    marginTop: 5,
+    marginBottom: 10,
+    marginHorizontal: 10,
     lineHeight: 24,
   },
   button1: {
@@ -112,7 +114,7 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingBottom: 15,
     borderRadius: 15,
-    marginBottom: 25,
+    marginBottom: 5,
     marginTop: 30,
   },
   button2: {

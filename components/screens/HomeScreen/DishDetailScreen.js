@@ -130,6 +130,7 @@ const DishDetailAfterReview = ({ route, navigation }) => {
               style={{
                 fontFamily: "NexaRegular",
                 marginTop: 15,
+                marginBottom: -70,
                 lineHeight: 24,
                 fontSize: 16,
                 color: "#3e315a",
@@ -301,7 +302,7 @@ const DishDetailAfterReview = ({ route, navigation }) => {
               style={{
                 fontFamily: "NexaRegular",
                 marginTop: 15,
-                marginBottom: 25,
+                marginBottom: -70,
                 // maxHeight: 100,
                 lineHeight: 24,
                 fontSize: 16,

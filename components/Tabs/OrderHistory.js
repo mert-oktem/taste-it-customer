@@ -20,8 +20,8 @@ export default function OrderHistory(props) {
     <ScrollView style={{ backgroundColor: "white" }}>
       <Image
         style={{
-          width: Dimensions.get("screen").width * 0.8,
-          height: Dimensions.get("screen").width * 0.8,
+          width: Dimensions.get("screen").width * 0.7,
+          height: Dimensions.get("screen").width * 0.7,
           alignSelf: "center",
           marginTop: 40,
           marginBottom: 20,
@@ -35,7 +35,7 @@ export default function OrderHistory(props) {
           fontFamily: "NexaRegular",
           fontSize: 16,
           textAlign: "center",
-          marginVertical: 50,
+          marginVertical: 30,
         }}
       >
         No active order currently

@@ -234,7 +234,7 @@ export default function DeliveryInfo({ navigation }) {
 
           <View>
             <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
-              <Text style={styles.placeholder}>Postcode</Text>
+              <Text style={styles.placeholder}>Postal Code</Text>
               <View style={{ flexGrow: 1 }} />
             </View>
 

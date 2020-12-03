@@ -168,7 +168,7 @@ export default function SignIn({ navigation }) {
           {data.isValidUser ? null : (
             <View duration={500}>
               <Text style={styles.errorMsg}>
-                email must be 4 characters long.
+              At least 4 characters
               </Text>
             </View>
           )}
@@ -188,7 +188,7 @@ export default function SignIn({ navigation }) {
           {data.isValidPassword ? null : (
             <View duration={500}>
               <Text style={styles.errorMsg}>
-                Password must be 8 characters long.
+              At least 8 characters
               </Text>
             </View>
           )}
@@ -236,11 +236,11 @@ export default function SignIn({ navigation }) {
               loginGoogleHandle();
             }}
           >
-            <Text style={styles.buttonText1}>Sign In with Google </Text>
             <Image
-              style={{ height: 17, width: 17 }}
+              style={{ height: 25, width: 25 }}
               source={require("../../../assets/Icons/g-logo.png")}
             />
+            <Text style={styles.buttonText1}>Sign In with Google </Text>
           </TouchableOpacity>
           <View style={styles.signUpText}>
             <Text style={styles.smallText}>Don't have an account? </Text>
@@ -311,8 +311,8 @@ const styles = StyleSheet.create({
     borderColor: "#632DF1",
     backgroundColor: "white",
     borderWidth: 2,
-    paddingTop: 16,
-    paddingBottom: 16,
+    paddingTop: 9.5,
+    paddingBottom: 9.5,
     borderRadius: 16,
     marginBottom: 25,
     marginTop: 18,
@@ -340,12 +340,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   buttonText1: {
-    color: "#632DF1",
+    color: "#3e315a",
     textAlign: "center",
     fontFamily: "NexaXBold",
     fontSize: 16,
-    marginTop: 3,
-    marginRight: 5,
+    marginTop: 5,
+    marginLeft: 15,
   },
   textInput: {
     height: 50,

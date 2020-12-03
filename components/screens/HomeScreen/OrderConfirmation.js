@@ -189,7 +189,7 @@ const OrderConfirmation = ({ route, navigation }) => {
                     fontFamily: "NexaXBold",
                   }}
                 >
-                  Sub Total
+                  Subtotal
                 </Text>
                 <Text
                   style={{

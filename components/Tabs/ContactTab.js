@@ -121,7 +121,7 @@ const ContactTab = ({ navigation }) => {
               marginBottom: 20,
             }}
           >
-            Leave us a message, we will get in touch with you as soon as
+            Leave us a message. We will get in touch with you as soon as
             possible.
           </Text>
           <View>

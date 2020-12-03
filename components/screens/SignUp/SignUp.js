@@ -220,7 +220,7 @@ export default function SignUp({ navigation }) {
         {data.isValidFirst ? null : (
           <View duration={500}>
             <Text style={styles.errorMsg}>
-              First Name must be 4 characters long.
+            At least 4 characters
             </Text>
           </View>
         )}
@@ -241,13 +241,13 @@ export default function SignUp({ navigation }) {
         {data.isValidLast ? null : (
           <View duration={500}>
             <Text style={styles.errorMsg}>
-              Last Name must be 4 characters long.
+            At least 4 characters
             </Text>
           </View>
         )}
         <View>
           <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
-            <Text style={styles.placeholder}>Phone Number</Text>
+            <Text style={styles.placeholder}>Phone Number*</Text>
             <View style={{ flexGrow: 1 }} />
           </View>
           <TextInput
@@ -263,11 +263,11 @@ export default function SignUp({ navigation }) {
         {data.isValidPhone ? null : (
           <View duration={500}>
             <Text style={styles.errorMsg}>
-              Phone Number should be more than 6 digits.
+            At least 6 characters
             </Text>
           </View>
         )}
-        <Text style={styles.text1}>*Contact for your delivery</Text>
+        <Text style={styles.text1}>*Contact Info for Delivery</Text>
 
         <View>
           <View style={{ display: "flex", zIndex: 1, flexDirection: "row" }}>
@@ -287,7 +287,7 @@ export default function SignUp({ navigation }) {
         {data.isValidUser ? null : (
           <View duration={500}>
             <Text style={styles.errorMsg}>
-              email must be 4 characters long.
+            At least 4 characters
             </Text>
           </View>
         )}
@@ -309,7 +309,7 @@ export default function SignUp({ navigation }) {
         {data.isValidPassword ? null : (
           <View duration={500}>
             <Text style={styles.errorMsg}>
-              Password must be 8 characters long.
+            At least 8 characters
             </Text>
           </View>
         )}

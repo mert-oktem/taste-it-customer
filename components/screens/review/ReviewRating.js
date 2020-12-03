@@ -206,8 +206,7 @@ export default function ReviewRating({ route, navigation }) {
               color: "#3e315a",
             }}
           >
-            By clicking the checkbox, this dish will automatically be added in
-            your next order
+            By clicking the checkbox, this dish will automatically added to your next order
           </Text>
           <TouchableOpacity
             style={styles.button}

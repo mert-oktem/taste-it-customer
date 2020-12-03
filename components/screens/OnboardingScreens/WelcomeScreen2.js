@@ -66,7 +66,7 @@ const WelcomeScreen2 = ({ navigation }) => {
         source={require("../../../assets/foodIllustration/customerSide/Welcome.jpg")}
       />
       <View style={styles.page}>
-        <Text style={styles.text1}>Hi {items}</Text>
+        <Text style={styles.text1}>Hi, {items}</Text>
         <Text style={styles.heading}>Welcome Aboard!</Text>
         <Text style={styles.text2}>
           Ready for your new food experiences? Discover your next favourite food

@@ -131,7 +131,7 @@ const HomeScreen = (props) => {
                 style={{ width: 30, height: "auto" }}
                 source={require("../../../assets/Icons/location.png")}
               />
-              <Text style={styles.title}>Deliver now</Text>
+              <Text style={styles.title}>Delivery Address</Text>
             </View>
             <View
               style={{
@@ -157,8 +157,8 @@ const HomeScreen = (props) => {
           <Image />
         </View>
         <View>
-          <Text style={styles.heading}>Hello {firstName}</Text>
-          <Text style={styles.box}>Explore your surprise food today.</Text>
+          <Text style={styles.heading}>Hi, {firstName}</Text>
+          <Text style={styles.box}>Let your next meal pleasantly surprise you!</Text>
           <View style={styles.box}>
             <Image
               style={styles.image}
@@ -183,7 +183,7 @@ const HomeScreen = (props) => {
                 </View>
               </View>
               <View style={styles.pickerField2}>
-                <Text style={styles.pickerText}>Budget per meal</Text>
+                <Text style={styles.pickerText}>Budget per Meal</Text>
                 <View style={styles.picker}>
                   <RNPickerSelect
                     onValueChange={(value) => budgetChange(value)}

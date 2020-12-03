@@ -271,6 +271,7 @@ const OrderTab = (props) => {
       <MaterialTopTabs.Navigator
         tabBarOptions={{
           activeTintColor: "#632DF1",
+          inactiveTintColor: "#D4CDE3",
           indicatorStyle: { backgroundColor: "#632DF1" },
           labelStyle: {
             fontFamily: "NexaXBold",
@@ -299,7 +300,8 @@ const OrderTab = (props) => {
     return (
       <MaterialTopTabs.Navigator
         tabBarOptions={{
-          activeTintColor: "#3E315A",
+          activeTintColor: "#632DF1",
+          inactiveTintColor: "#D4CDE3",
           indicatorStyle: { backgroundColor: "#632DF1" },
           labelStyle: {
             fontFamily: "NexaXBold",
@@ -334,8 +336,9 @@ const OrderTab = (props) => {
       <MaterialTopTabs.Navigator
         style={{ backgroundColor: "white" }}
         tabBarOptions={{
-          activeTintColor: "#3E315A",
-          indicatorStyle: { backgroundColor: "#632DF1" },
+          activeTintColor: "#632DF1",
+          inactiveTintColor: "#D4CDE3",
+          indicatorStyle: { backgroundColor: "#D4CDE3" },
           labelStyle: {
             fontFamily: "NexaXBold",
             textTransform: "capitalize",
